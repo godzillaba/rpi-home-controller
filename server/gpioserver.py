@@ -1,8 +1,9 @@
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import socket
 
 debug = False
-
+GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
 
 # SOCKET INITIALIZATION STUFF
 TCP_IP = '0.0.0.0'
@@ -53,7 +54,7 @@ while 1:
                     conn.send("\nInvalid Syntax - High/Low not specified as binary\n\n")
                     break
                 
-                """# GPIO STUFF
+                # GPIO STUFF
                 try:
                     GPIO.setup(pin, GPIO.OUT)
                     if pintype == "OUT":
@@ -66,7 +67,7 @@ while 1:
                     print "\nERROR: Invalid RPi GPIO Pin\n"
                     conn.send("\nERROR: Invalid RPi GPIO Pin\n\n")
                     break
-                """
+                
             elif data == "GPIO-CLEANUP/EXIT":
                 fin = True
                 break
@@ -82,4 +83,4 @@ while 1:
     if fin:
         break
 if debug: print "cleanup!"
-#GPIO.cleanup()
+GPIO.cleanup()
