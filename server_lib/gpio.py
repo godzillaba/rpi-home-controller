@@ -1,5 +1,7 @@
 import RPi.GPIO as GPIO
 
+GPIO.setmode(GPIO.BOARD)
+
 class pin(object):
 	def __init__(self, num, iotype, state):
 		self.num = num
