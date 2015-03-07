@@ -1,33 +1,37 @@
 from datetime import datetime
 import time
-import os
 import RPi.GPIO as GPIO
 
-alarmtime = "17:57"
 
-pins = [37, 40]
+class alarm(object):
+	def __init__(self, time, pnum, status):
+		self.time = time
+		self.pnum = pnum
+		self.status = status
 
-for pin in pins:
-	GPIO.setup(pin, GPIO.OUT)
+
+def parse(data):
+	time = data.split(',')[0]
+	pnum = int(data.split(',')[1])
+	status = int(data.split(',')[2])
+	a = alarm(time, pnum, status)
+	return a
+
 
 def ring():
-	print "ringing!"
-	for pin in pins:
-		GPIO.output(pin, 1)
-	print "done"
+	GPIO.output(a.pnum, 1)
 
-
-
-while 1:
-	time.sleep(30)
+def parsetime():
 	t = ((str(datetime.now())).split(' ')[1])
 	hours = t.split(':')[0]
 	minutes = t.split(':')[1]
 	parsedtime = "%s:%s" % (hours, minutes)
-	print parsedtime
-	
-	if parsedtime == alarmtime:
-		ring()
-		break
+	return parsedtime
 
-
+def wait(a):
+	while 1:
+		time.sleep(30)
+		print parsetime()
+		if parsetime() == a.time:
+			ring()
+			break

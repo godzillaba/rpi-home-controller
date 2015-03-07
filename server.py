@@ -20,12 +20,13 @@ while 1:
     print(data)
     
     if data:
-        
         cmd = data.split('=')[0]
        
         if cmd == "PIN":
             p = gpio.parse(data)
             gpio.toggle(p)
+
+        
 
     else:
         break
