@@ -1,9 +1,12 @@
-from server_lib import gpio
+#from server_lib import gpio
+from server_lib import config as conf
 import socket
 
-TCP_IP = '0.0.0.0'
-TCP_PORT = 5432
-BUFFER_SIZE = 1024
+f = "server_lib/config.conf"
+
+TCP_IP = conf.arg(f, "LISTENADDR")
+TCP_PORT = int(conf.arg(f, "PORT"))
+BUFFER_SIZE = int(conf.arg(f, "BUFFERSIZE"))
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -17,7 +20,7 @@ while 1:
     print 'Connection address:', addr
     
     data = (conn.recv(BUFFER_SIZE)).strip()
-    print(data)
+    print data
     
     if data:
         cmd = data.split('=')[0]
@@ -25,8 +28,6 @@ while 1:
         if cmd == "PIN":
             p = gpio.parse(data)
             gpio.toggle(p)
-
-        
 
     else:
         break
