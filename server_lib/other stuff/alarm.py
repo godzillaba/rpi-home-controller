@@ -29,7 +29,10 @@ def parsetime():
 	return parsedtime
 
 def wait(a):
-	while 1:
+	# write 1 to file 
+	run = True
+	while run == True:
+		# read from (run) file
 		time.sleep(30)
 		print parsetime()
 		if parsetime() == a.time:
