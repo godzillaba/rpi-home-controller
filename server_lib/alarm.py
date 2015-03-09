@@ -20,6 +20,7 @@ def parse(data):
 
 
 def ring(a):
+	GPIO.setup(p.num, GPIO.OUT)
 	GPIO.output(a.pnum, 1)
 
 def parsetime():
