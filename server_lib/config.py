@@ -1,6 +1,6 @@
 def arg(configfile, arg):
 	f = open(configfile)
-
+	value = ""
 	for line in f:
 	    line = line.strip()
 	    
@@ -8,8 +8,10 @@ def arg(configfile, arg):
 	        if line[0] == "#":
 	        	value = ""
 
-	        else:
+	        elif "=" in line:
 	        	value = line.split('=')[1]
+	        else:
+	        	value = line
 
 
 	f.close()

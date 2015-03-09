@@ -1,4 +1,5 @@
 from datetime import datetime
+import config as conf
 import time
 import RPi.GPIO as GPIO
 
@@ -29,12 +30,14 @@ def parsetime():
 	return parsedtime
 
 def wait(a):
-	# write 1 to file 
+	
 	run = True
 	while run == True:
-		# read from (run) file
+		alarmfile = "server_lib/alarms"
+		run = bool(conf.arg(alarmfile, a.time))
+		print run
 		time.sleep(30)
 		print parsetime()
 		if parsetime() == a.time:
-			ring()
+			ring(a)
 			break
