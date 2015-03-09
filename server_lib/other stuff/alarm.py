@@ -18,7 +18,7 @@ def parse(data):
 	return a
 
 
-def ring():
+def ring(a):
 	GPIO.output(a.pnum, 1)
 
 def parsetime():
