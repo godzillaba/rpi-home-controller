@@ -1,5 +1,7 @@
 import RPi.GPIO as GPIO
 
+
+# get layout from conf
 GPIO.setmode(GPIO.BOARD)
 
 class pin(object):
