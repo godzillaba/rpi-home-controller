@@ -1,8 +1,8 @@
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 
 
 # get layout from conf
-GPIO.setmode(GPIO.BOARD)
+#GPIO.setmode(GPIO.BOARD)
 
 class pin(object):
 	def __init__(self, num, iotype, state):
