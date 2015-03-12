@@ -12,8 +12,8 @@ class pin(object):
 
 	def toggle(self):
 		if self.iotype == "OUT":
-       		GPIO.setup(self.num, GPIO.OUT)
-        	GPIO.output(self.num, self.state)
+       			GPIO.setup(self.num, GPIO.OUT)
+        		GPIO.output(self.num, self.state)
 
 		elif self.iotype == "IN":
 			return GPIO.input(self.num)
