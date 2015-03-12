@@ -1,4 +1,4 @@
-#from server_lib import gpio
+from server_lib import gpio
 from server_lib import config as conf
 import socket
 
