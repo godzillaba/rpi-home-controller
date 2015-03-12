@@ -1,8 +1,15 @@
-from server_lib import gpio
+#from server_lib import gpio
 from server_lib import config as conf
 import socket
 
 f = "server_lib/config.conf"
+
+
+# relay init
+relaypins = (conf.arg(f, "RELAYPINS")).split()
+for pin in relaypins:
+    rp = gpio.pin(int(pin), "OUT", 1)
+    rp.toggle()
 
 TCP_IP = conf.arg(f, "LISTENADDR")
 TCP_PORT = int(conf.arg(f, "PORT"))
@@ -27,7 +34,7 @@ while 1:
        
         if cmd == "PIN":
             p = gpio.parse(data)
-            gpio.toggle(p)
+            p.toggle()
 
     else:
         break

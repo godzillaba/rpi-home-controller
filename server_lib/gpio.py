@@ -10,17 +10,18 @@ class pin(object):
 		self.iotype = iotype
 		self.state = state
 
+	def toggle(self):
+		if self.iotype == "OUT":
+       		GPIO.setup(self.num, GPIO.OUT)
+        	GPIO.output(self.num, self.state)
+
+		elif self.iotype == "IN":
+			return GPIO.input(self.num)
+
+
 def parse(data):
 	pnumber = int((data.split('=')[1]).split(',')[0])
 	ptype = data.split(',')[1]
 	pstate = int(data.split(',')[2])
 	p = pin(pnumber, ptype, pstate)
 	return p
-
-def toggle(p):
-	if p.iotype == "OUT":
-       		GPIO.setup(p.num, GPIO.OUT)
-        	GPIO.output(p.num, p.state)
-
-	elif p.iotype == "IN":
-		return GPIO.input(p.num)
