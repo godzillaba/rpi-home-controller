@@ -4,11 +4,11 @@ host='pi'
 port='5432'
 
 sendcmd () {
-	echo "PIN=$1,OUT,$2" | nc $host $port
+	echo "PIN=$1,OUT,$2" | busybox nc $host $port
 }
 
 getstate () {
-	state=$(echo "PIN=$1,IN,0" | nc $host $port)
+	state=$(echo "PIN=$1,IN,0" | busybox nc $host $port)
 	echo $state
 }
 
