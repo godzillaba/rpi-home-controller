@@ -1,9 +1,11 @@
 from server_lib import gpio
 from server_lib import config as conf
 import socket
+import logging
 
 f = "server_lib/config.conf"
 
+logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 # relay init
 relaypins = (conf.arg(f, "RELAYPINS")).split()
@@ -24,10 +26,9 @@ s.listen(1)
 
 while 1:
     conn, addr = s.accept()
-    print 'Connection address:', addr
-    
+    logging.debug('Connection address %s', addr)
     data = (conn.recv(BUFFER_SIZE)).strip()
-    print data
+    logging.debug('Received "%s" from %s', data, addr)
     
     if data:
         cmd = data.split('=')[0]

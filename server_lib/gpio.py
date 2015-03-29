@@ -14,6 +14,7 @@ class pin(object):
 		if self.iotype == "OUT":
        			GPIO.setup(self.num, GPIO.OUT)
         		GPIO.output(self.num, self.state)
+        		#add logging statement here
 
 		elif self.iotype == "IN":
 			return GPIO.input(self.num)
