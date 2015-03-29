@@ -10,6 +10,9 @@ Connect to socket (by default listens on 0.0.0.0:5432) by means of telnet or a p
 
 ```PIN=<pin number>,IN,0``` - Returns current state of pin (ex if pin 40 is high it will return 1)
 
+#### NAT
+If you wish to have control outside of your local network, you could use dmz host or port forwarding, but if you are like me and already have a media server or something as a dmz host, you can use ```proxy_server.py``` to relay your commands!
+
 #### More to come...
 * sensor support (temperature + humidity and all that good stuff)
 * web interface
