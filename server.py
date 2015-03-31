@@ -12,6 +12,8 @@ relaypins = (conf.arg(f, "RELAYPINS")).split()
 for pin in relaypins:
     rp = gpio.pin(int(pin), "OUT", 1)
     rp.toggle()
+    logging.info('Initializing relay pin %s', pin)
+    logging.debug('Pin %s set logical HIGH', pin)
 
 TCP_IP = conf.arg(f, "LISTENADDR")
 TCP_PORT = int(conf.arg(f, "PORT"))
@@ -23,10 +25,11 @@ s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 s.bind((TCP_IP, TCP_PORT))
 s.listen(1)
 
+logging.info('TCP server listening on %s:%s', TCP_IP, TCP_PORT)
 
 while 1:
     conn, addr = s.accept()
-    logging.debug('Connection address %s', addr)
+    logging.info('Connection address %s', addr)
     data = (conn.recv(BUFFER_SIZE)).strip()
     logging.debug('Received "%s" from %s', data, addr)
     

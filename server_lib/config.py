@@ -1,5 +1,10 @@
+import logging
 def arg(configfile, arg):
-	f = open(configfile)
+	try:
+            f = open(configfile)
+	except IOError as e:
+            logging.critical("Config file not found: %s", e)
+            exit()
 	value = ""
 	for line in f:
 	    line = line.strip()

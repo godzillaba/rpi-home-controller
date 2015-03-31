@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-
+import logging
 
 # get layout from conf
 GPIO.setmode(GPIO.BOARD)
@@ -14,7 +14,7 @@ class pin(object):
 		if self.iotype == "OUT":
        			GPIO.setup(self.num, GPIO.OUT)
         		GPIO.output(self.num, self.state)
-        		#add logging statement here
+        		logging.info('Pin %s set %s', self.num, self.state)
 
 		elif self.iotype == "IN":
 			return GPIO.input(self.num)
