@@ -2,6 +2,7 @@ from server_lib import gpio
 from server_lib import config as conf
 import socket
 import logging
+import RPi.GPIO as GPIO
 
 f = "server_lib/config.conf"
 
@@ -27,20 +28,26 @@ s.listen(1)
 
 logging.info('TCP server listening on %s:%s', TCP_IP, TCP_PORT)
 
-while 1:
-    conn, addr = s.accept()
-    logging.info('Connection address %s', addr)
-    data = (conn.recv(BUFFER_SIZE)).strip()
-    logging.debug('Received "%s" from %s', data, addr)
+try:
+    while 1:
+        conn, addr = s.accept()
+        logging.info('Connection address %s', addr)
+        data = (conn.recv(BUFFER_SIZE)).strip()
+        logging.debug('Received "%s" from %s', data, addr)
+        
+        if data:
+            cmd = data.split('=')[0]
+           
+            if cmd == "PIN":
+                p = gpio.parse(data)
+                p.toggle()
     
-    if data:
-        cmd = data.split('=')[0]
-       
-        if cmd == "PIN":
-            p = gpio.parse(data)
-            p.toggle()
-
-    else:
-        break
-    
-    conn.close()
+        else:
+            break
+        
+        conn.close()
+        
+except KeyboardInterrupt:
+    print '\n'
+    logging.info('^C received! Running GPIO.cleanup()')
+    GPIO.cleanup()
