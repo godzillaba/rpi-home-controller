@@ -5,21 +5,27 @@ import logging
 import RPi.GPIO as GPIO
 
 f = "server_lib/config.conf"
-
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
+
+
+relaypins = (conf.arg(f, "RELAYPINS")).split()
+for pin in relaypins:
+    rp = gpio.pin(int(pin), "OUT", 1)
+    rp.toggle()
+    logging.info('Initializing relay pin %s', pin)
 
 
 TCP_IP = conf.arg(f, "LISTENADDR")
 TCP_PORT = int(conf.arg(f, "PORT"))
 BUFFER_SIZE = int(conf.arg(f, "BUFFERSIZE"))
 
+
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-
 s.bind((TCP_IP, TCP_PORT))
 s.listen(1)
-
 logging.info('TCP server listening on %s:%s', TCP_IP, TCP_PORT)
+
 
 try:
     while 1:
