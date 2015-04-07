@@ -14,9 +14,9 @@ getstate () {
 
 if [ "$2" == '-' ]; then
 	pinstate=$(getstate $1)
-	if [ $pinstate == '0' ]; then
+	if [ "$pinstate" == '0' ]; then
 		sendcmd $1 1
-	elif [ $pinstate == '1' ]; then
+	elif [ "$pinstate" == '1' ]; then
 		sendcmd $1 0
 	fi
 else
