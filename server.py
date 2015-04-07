@@ -40,8 +40,8 @@ try:
            
             if cmd == "PIN":
                 p = gpio.parse(data)
-                p.toggle()
-    
+                toggle_output = str(p.toggle())
+    		conn.send(toggle_output)
         else:
             break
         
