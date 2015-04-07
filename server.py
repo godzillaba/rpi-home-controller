@@ -8,13 +8,6 @@ f = "server_lib/config.conf"
 
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
-# relay init
-relaypins = (conf.arg(f, "RELAYPINS")).split()
-for pin in relaypins:
-    rp = gpio.pin(int(pin), "OUT", 1)
-    rp.toggle()
-    logging.info('Initializing relay pin %s', pin)
-    logging.debug('Pin %s set logical HIGH', pin)
 
 TCP_IP = conf.arg(f, "LISTENADDR")
 TCP_PORT = int(conf.arg(f, "PORT"))
