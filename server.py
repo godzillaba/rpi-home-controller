@@ -17,21 +17,21 @@ def toggle_all_relays(hilo):
 def serve_forever():
     while 1:
     	conn, addr = s.accept()
-	logging.info('Connection address %s', addr)
-	data = (conn.recv(BUFFER_SIZE)).strip()
-	logging.debug('Received "%s" from %s', data, addr)
-	
-	if data:
-	    cmd = data.split('=')[0]
-	   
-	    if cmd == "PIN":
-	        p = gpio.parse(data)
-	        toggle_output = str(p.toggle())
-	        conn.send(toggle_output)
-	else:
-	    break
-	
-	conn.close()
+		logging.info('Connection address %s', addr)
+		data = (conn.recv(BUFFER_SIZE)).strip()
+		logging.debug('Received "%s" from %s', data, addr)
+		
+		if data:
+		    cmd = data.split('=')[0]
+		   
+		    if cmd == "PIN":
+		        p = gpio.parse(data)
+		        toggle_output = str(p.toggle())
+		        conn.send(toggle_output)
+		else:
+		    break
+		
+		conn.close()
 
 toggle_all_relays(1)
 
