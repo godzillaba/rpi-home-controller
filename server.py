@@ -50,7 +50,7 @@ s.listen(1)
 logging.info('TCP server listening on %s:%s', TCP_IP, TCP_PORT)
 
 # SET UP RELAYS
-toggle_all_relays(0)
+toggle_all_relays(1)
 
 
 # SERVE
