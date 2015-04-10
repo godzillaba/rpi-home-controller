@@ -1,0 +1,14 @@
+body {
+  background-color: #333;
+}
+
+
+div.switchgroup {
+  border: 0px dashed white;
+}
+
+div.switchgroup p {
+  color: white;
+  font-size: 24px;
+  font-family: Lato, Helvetica, Arial, sans-serif
+}

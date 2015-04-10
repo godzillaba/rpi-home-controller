@@ -17,10 +17,16 @@ wss.on('connection', function(ws) {
     		console.log('CONNECTED TO: ' + HOST + ':' + PORT);
     		// Write a message to the socket as soon as the client is connected, the server will receive it as message from the client 
     		tcp.write(message);
-
+			tcp.on('data', function(data) {
+			    
+			    console.log('DATA: ' + data);
+			    ws.send('' + data)
+			    // Close the client socket completely
+			    
+			});
 		});
     });
-    ws.send('something');
+    
 });
 
 
