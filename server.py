@@ -9,13 +9,7 @@ f = "server_lib/config.conf"
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 
-# FUNCTIONS
-def toggle_all_relays(hilo):
-	relaypins = (conf.arg(f, "RELAYPINS")).split()
-	for pin in relaypins:
-	    rp = gpio.pin(int(pin), "OUT", hilo)
-	    rp.toggle()
-	    logging.info('Initializing relay pin %s', pin)
+
 
 def serve_forever():
     while 1:
@@ -50,7 +44,7 @@ s.listen(1)
 logging.info('TCP server listening on %s:%s', TCP_IP, TCP_PORT)
 
 # SET UP RELAYS
-toggle_all_relays(1)
+gpio.toggle_all_relays(1)
 
 
 # SERVE

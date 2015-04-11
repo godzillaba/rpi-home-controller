@@ -1,8 +1,12 @@
 import RPi.GPIO as GPIO
 import logging
+import config as conf
 
 # get layout from conf
 GPIO.setmode(GPIO.BOARD)
+
+f = "server_lib/config.conf"
+
 
 class pin(object):
 	def __init__(self, num, iotype, state):
@@ -27,3 +31,11 @@ def parse(data):
 	pstate = int(data.split(',')[2])
 	p = pin(pnumber, ptype, pstate)
 	return p
+
+
+def toggle_all_relays(hilo):
+	relaypins = (conf.arg(f, "RELAYPINS")).split()
+	for p in relaypins:
+	    rp = pin(int(p), "OUT", hilo)
+	    rp.toggle()
+	    logging.info('Initializing relay pin %s', p)
