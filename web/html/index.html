@@ -19,7 +19,7 @@
         
         
          var get_switch_stats = function() {
-            for (var x = 0; x<8 ; x++) {
+            for (var x = 1; x<9 ; x++) {
                 socket.send("PIN=" + document.getElementsByTagName('input')[x].name + ",IN,0")
             }
          }
@@ -71,6 +71,14 @@
                 socket.send('PIN=' + box.name + ',OUT,1')
             }
         }
+        var master_switch_onclick = function(box) {
+            if (box.checked === true) {
+                socket.send('ALLRELAYS=0')
+            }
+            else if (box.checked === false) {
+                socket.send('ALLRELAYS=1')
+            }
+        }
         
 
         
@@ -93,7 +101,18 @@
 <!-- switch div naming/id scheme: name=(gpio pin number) id=(Text above switch eg. "TV") -->
 
 <div id='content'>
-   
+   <div class='switchgroup'>
+      <p>The Master Switch</p>
+      <div class="onoffswitch">
+          <input type="checkbox" name="-" class="onoffswitch-checkbox" id="0" onclick="master_switch_onclick(this)">
+          <label class="onoffswitch-label" for="0">
+              <span class="onoffswitch-inner">
+                  <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
+                  <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
+              </span>
+          </label>
+      </div>   
+   </div>
 
    <div class='switchgroup'>
       <p>1</p>
