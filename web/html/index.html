@@ -16,16 +16,34 @@
     <script type="text/javascript">
          var socket = null;
          var isopen = false;
+        
+        
+         var get_switch_stats = function() {
+            for (var x = 0; x<8 ; x++) {
+                socket.send("PIN=" + document.getElementsByTagName('input')[x].name + ",IN,0")
+            }
+         }
          window.onload = function() {
             socket = new WebSocket("ws://192.168.1.230:9000");
             socket.binaryType = "arraybuffer";
             socket.onopen = function() {
                console.log("Connected!");
                isopen = true;
+               get_switch_stats()
             }
             socket.onmessage = function(e) {
                if (typeof e.data == "string") {
-                  console.log("Text message received: " + e.data);
+                    console.log("Message received: " + e.data);
+                    if (e.data.split(" ")[0] === "PIN") {
+                        var pin_number = e.data.split(" ")[1]
+                        var pin_status = e.data.split(" ")[2]
+                        var pin_switch = (document.getElementsByName(pin_number)[0])
+                        if (pin_status === "0") {
+                            pin_switch.checked = true
+                        } else if (pin_status === "1") {
+                            pin_switch.checked = false
+                        }
+                    }
                }
             }
             socket.onclose = function(e) {
@@ -53,6 +71,9 @@
                 socket.send('PIN=' + box.name + ',OUT,1')
             }
         }
+        
+
+        
       </script>
 </head>
 <body>

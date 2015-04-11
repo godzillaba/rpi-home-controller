@@ -19,8 +19,8 @@ class MyServerProtocol(WebSocketServerProtocol):
         if cmd == "PIN":
             p = gpio.parse(payload)
             toggle_output = str(p.toggle())
-            print toggle_output
-            self.sendMessage(toggle_output)
+            if p.iotype == "IN":
+                self.sendMessage("PIN %s %s" % (p.num, toggle_output))
         elif cmd == "ALLRELAYS":
             gpio.toggle_all_relays(int(payload.split('=')[1]))
 
