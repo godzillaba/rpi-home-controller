@@ -35,14 +35,14 @@
     position: absolute; top: 0; bottom: 0;
 }
 .onoffswitch-active .onoffswitch-switch {
-    background: #7AB900; left: 0;
+    background: #ff0000; left: 0;
 }
 .onoffswitch-inactive .onoffswitch-switch {
     background: #A1A1A1; right: 0;
 }
 .onoffswitch-active .onoffswitch-switch:before {
     content: " "; position: absolute; top: 0; left: 40px; 
-    border-style: solid; border-color: #7AB900 transparent transparent #7AB900; border-width: 10px 7px;
+    border-style: solid; border-color: #ff0000 transparent transparent #ff0000; border-width: 10px 7px;
 }
 .onoffswitch-inactive .onoffswitch-switch:before {
     content: " "; position: absolute; top: 0; right: 40px; 

@@ -24,7 +24,7 @@
   font-family: Verdana, Helvetica, Arial, sans-serif;
   margin: 0;
   padding: 0;
-  border-bottom: 1px solid #7ab900;
+  border-bottom: 1px solid #ff0000;
   zoom: 1;
 }
 #navbar ul:before {
@@ -53,7 +53,7 @@
 #navbar li:hover,
 #navbar .active {
   text-decoration: none;
-  border-bottom: 2px solid #7ab900;
+  border-bottom: 2px solid #ff0000;
 }
 #navbar li:hover a {
   color: #fff;
