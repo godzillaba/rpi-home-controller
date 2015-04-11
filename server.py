@@ -25,6 +25,8 @@ def serve_forever():
 	        p = gpio.parse(data)
 	        toggle_output = str(p.toggle())
 	        conn.send(toggle_output)
+	    elif cmd == "ALLRELAYS":
+            	gpio.toggle_all_relays(int(data.split('=')[1]))
 	else:
 	    break
 	

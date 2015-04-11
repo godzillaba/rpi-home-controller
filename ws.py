@@ -14,12 +14,15 @@ class MyServerProtocol(WebSocketServerProtocol):
     def onMessage(self, payload, isBinary):
         print("Text message received: {0}".format(payload.decode('utf8')))
         cmd = payload.split('=')[0]
+
        
         if cmd == "PIN":
             p = gpio.parse(payload)
             toggle_output = str(p.toggle())
             print toggle_output
             self.sendMessage(toggle_output)
+        elif cmd == "ALLRELAYS":
+            gpio.toggle_all_relays(int(payload.split('=')[1]))
 
         
         # self.sendMessage(payload, isBinary)
