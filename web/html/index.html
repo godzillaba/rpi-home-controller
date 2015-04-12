@@ -8,7 +8,6 @@
    <link rel="stylesheet" type="text/css" href="switches.css">
    <link rel="stylesheet" type="text/css" href="custom.css">
    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-   <script src="script.js"></script>
    <title>Control Panel</title>
     
     
@@ -17,14 +16,17 @@
          var socket = null;
          var isopen = false;
         
-        
+		 window.setInterval(function(){
+		 	get_switch_stats()
+		 }, 2000);
          var get_switch_stats = function() {
             for (var x = 1; x<9 ; x++) {
                 socket.send("PIN=" + document.getElementsByTagName('input')[x].name + ",IN,0")
             }
          }
          window.onload = function() {
-            socket = new WebSocket("ws://192.168.1.230:9000");
+            hostname = window.location.hostname
+			socket = new WebSocket("ws://" + hostname + ":9000");
             socket.binaryType = "arraybuffer";
             socket.onopen = function() {
                console.log("Connected!");
@@ -78,6 +80,7 @@
             else if (box.checked === false) {
                 socket.send('ALLRELAYS=1')
             }
+			get_switch_stats()
         }
         
 
