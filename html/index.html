@@ -17,12 +17,12 @@
     var socket = null;
     var isopen = false;
 
-    window.setInterval(function() {
-        get_switch_stats()
-    }, 2000);
-    var get_switch_stats = function() {
+    // window.setInterval(function() {
+    //     get_switch_stats()
+    // }, 2000);
+    var get_switch_stats = function(check) {
         for (var x = 1; x < 9; x++) {
-            socket.send("PIN=" + document.getElementsByTagName('input')[x].name + ",IN,0")
+            document.getElementsByTagName('input')[x].checked = check
         }
     }
     window.onload = function() {
@@ -76,11 +76,10 @@
     }
     var master_switch_onclick = function(box) {
         if (box.checked === true) {
-            socket.send('ALLRELAYS=0')
+            get_switch_stats(true)
         } else if (box.checked === false) {
-            socket.send('ALLRELAYS=1')
+            get_switch_stats(false)
         }
-        get_switch_stats()
     }
     </script>
 </head>
