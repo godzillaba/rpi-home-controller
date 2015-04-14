@@ -102,11 +102,15 @@
     <!-- switch div naming/id scheme: name=(gpio pin number) id=(Text above switch eg. "TV") -->
 
     <div id='content'>
+        
+        
+          
+        
         <div class='switchgroup'>
-            <p>The Master Switch</p>
+            <p>Switch 1</p>
             <div class="onoffswitch">
-                <input type="checkbox" name="-" class="onoffswitch-checkbox" id="0" onclick="master_switch_onclick(this)">
-                <label class="onoffswitch-label" for="0">
+                <input type="checkbox" name="40" class="onoffswitch-checkbox" id="Switch 1" onclick="switch_onclick(this)">
+                <label class="onoffswitch-label" for="Switch 1">
                     <span class="onoffswitch-inner">
                   <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
                     <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
@@ -114,12 +118,14 @@
                 </label>
             </div>
         </div>
-
+        
+          
+        
         <div class='switchgroup'>
-            <p>1</p>
+            <p>Switch 2</p>
             <div class="onoffswitch">
-                <input type="checkbox" name="40" class="onoffswitch-checkbox" id="1" onclick="switch_onclick(this)">
-                <label class="onoffswitch-label" for="1">
+                <input type="checkbox" name="22" class="onoffswitch-checkbox" id="Switch 2" onclick="switch_onclick(this)">
+                <label class="onoffswitch-label" for="Switch 2">
                     <span class="onoffswitch-inner">
                   <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
                     <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
@@ -127,101 +133,7 @@
                 </label>
             </div>
         </div>
-
-
-        <div class='switchgroup'>
-            <p>2</p>
-            <div class="onoffswitch">
-                <input type="checkbox" name="22" class="onoffswitch-checkbox" id="2" onclick="switch_onclick(this)">
-                <label class="onoffswitch-label" for="2">
-                    <span class="onoffswitch-inner">
-                  <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
-                    <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
-                    </span>
-                </label>
-            </div>
-        </div>
-
-        <div class='switchgroup'>
-            <p>3</p>
-            <div class="onoffswitch">
-                <input type="checkbox" name="18" class="onoffswitch-checkbox" id="3" onclick="switch_onclick(this)">
-                <label class="onoffswitch-label" for="3">
-                    <span class="onoffswitch-inner">
-                  <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
-                    <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
-                    </span>
-                </label>
-            </div>
-        </div>
-
-        <div class='switchgroup'>
-            <p>4</p>
-            <div class="onoffswitch">
-                <input type="checkbox" name="15" class="onoffswitch-checkbox" id="4" onclick="switch_onclick(this)">
-                <label class="onoffswitch-label" for="4">
-                    <span class="onoffswitch-inner">
-                  <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
-                    <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
-                    </span>
-                </label>
-            </div>
-        </div>
-
-
-        <div class='switchgroup'>
-            <p>5</p>
-            <div class="onoffswitch">
-                <input type="checkbox" name="13" class="onoffswitch-checkbox" id="5" onclick="switch_onclick(this)">
-                <label class="onoffswitch-label" for="5">
-                    <span class="onoffswitch-inner">
-                  <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
-                    <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
-                    </span>
-                </label>
-            </div>
-        </div>
-
-
-        <div class='switchgroup'>
-            <p>6</p>
-            <div class="onoffswitch">
-                <input type="checkbox" name="12" class="onoffswitch-checkbox" id="6" onclick="switch_onclick(this)">
-                <label class="onoffswitch-label" for="6">
-                    <span class="onoffswitch-inner">
-                  <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
-                    <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
-                    </span>
-                </label>
-            </div>
-        </div>
-
-        <div class='switchgroup'>
-            <p>7</p>
-            <div class="onoffswitch">
-                <input type="checkbox" name="11" class="onoffswitch-checkbox" id="7" onclick="switch_onclick(this)">
-                <label class="onoffswitch-label" for="7">
-                    <span class="onoffswitch-inner">
-                  <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
-                    <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
-                    </span>
-                </label>
-            </div>
-        </div>
-
-        <div class='switchgroup'>
-            <p>8</p>
-            <div class="onoffswitch">
-                <input type="checkbox" name="7" class="onoffswitch-checkbox" id="8" onclick="switch_onclick(this)">
-                <label class="onoffswitch-label" for="8">
-                    <span class="onoffswitch-inner">
-                  <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
-                    <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
-                    </span>
-                </label>
-            </div>
-        </div>
+        
     </div>
-
 </body>
 <html>
