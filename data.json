@@ -1,0 +1,12 @@
+{
+	"Groups": [
+		{
+			"description": "Switch 1",
+			"gpiopin": "40"
+		},
+		{
+		    "description": "Switch 2",
+		    "gpiopin": "22"
+		}
+	]
+}

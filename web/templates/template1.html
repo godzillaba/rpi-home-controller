@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang=''>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="switches.css">
+    <link rel="stylesheet" type="text/css" href="custom.css">
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <title>Control Panel</title>
+
+
+
+    <script type="text/javascript">
+    var socket = null;
+    var isopen = false;
+
+    window.setInterval(function() {
+        get_switch_stats()
+    }, 3000);
+    var get_switch_stats = function() {
+        for (var x = 1; x < 9; x++) {
+            socket.send("PIN=" + document.getElementsByTagName('input')[x].name + ",IN,0")
+        }
+    }
+    window.onload = function() {
+        hostname = window.location.hostname
+        socket = new WebSocket("ws://" + hostname + ":9000");
+        socket.binaryType = "arraybuffer";
+        socket.onopen = function() {
+            console.log("Connected!");
+            isopen = true;
+            get_switch_stats()
+        }
+        socket.onmessage = function(e) {
+            if (typeof e.data == "string") {
+                console.log("Message received: " + e.data);
+                if (e.data.split(" ")[0] === "PIN") {
+                    var pin_number = e.data.split(" ")[1]
+                    var pin_status = e.data.split(" ")[2]
+                    var pin_switch = (document.getElementsByName(pin_number)[0])
+                    if (pin_status === "0") {
+                        pin_switch.checked = true
+                    } else if (pin_status === "1") {
+                        pin_switch.checked = false
+                    }
+                }
+            }
+        }
+        socket.onclose = function(e) {
+            console.log("Connection closed.");
+            socket = null;
+            isopen = false;
+        }
+    };
+
+    function sendText() {
+        if (isopen) {
+            socket.send("Hello, world!");
+            console.log("Text message sent.");
+        } else {
+            console.log("Connection not opened.")
+        }
+    };
+
+    //        begin custom stuff
+
+    var switch_onclick = function(box) {
+        if (box.checked === true) {
+            socket.send('PIN=' + box.name + ',OUT,0')
+        } else if (box.checked === false) {
+            socket.send('PIN=' + box.name + ',OUT,1')
+        }
+    }
+    var master_switch_onclick = function(box) {
+        if (box.checked === true) {
+            socket.send('ALLRELAYS=0')
+        } else if (box.checked === false) {
+            socket.send('ALLRELAYS=1')
+        }
+        get_switch_stats()
+    }
+    </script>
+</head>
+
+<body>
+
+
+    <div id='navbar'>
+        <ul>
+            <li class='active'><a href='#'><span>Home</span></a></li>
+            <li><a href='#'><span>Settings</span></a></li>
+            <li><a href='https://github.com/therealtylerdurden/rpi-home-automation-server'><span>GitHub</span></a></li>
+            <li><a href='#'><span>About</span></a></li>
+        </ul>
+    </div>
+
+    <!-- begin "body" -->
+
+    <!-- switch div naming/id scheme: name=(gpio pin number) id=(Text above switch eg. "TV") -->
+
+    <div id='content'>
+        
+        {% for group in groups %}
+          
+        
+        <div class='switchgroup'>
+            <p>{{ group.description }}</p>
+            <div class="onoffswitch">
+                <input type="checkbox" name="{{ group.gpiopin }}" class="onoffswitch-checkbox" id="{{ group.description }}" onclick="switch_onclick(this)">
+                <label class="onoffswitch-label" for="{{ group.description }}">
+                    <span class="onoffswitch-inner">
+                  <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
+                    <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
+                    </span>
+                </label>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+<html>
