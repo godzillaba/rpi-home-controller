@@ -1,19 +1,31 @@
 import SimpleHTTPServer
 import SocketServer
-import compile_html
+import os
+import render_html
 
-PORT = 8001
+PORT = 8080
 
-class compile_handler(SimpleHTTPServer.SimpleHTTPRequestHandler):
+class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
 	def do_GET(self):
-		print "Compiling page"
-		compile_html.main()
-		if self.path == "/":
-			self.path = "/web/html"
+		relative_path = "." + self.path
+		is_file = os.path.isfile(relative_path)
+		is_dir = os.path.isdir(relative_path)
+		
+		if is_file:
+			if relative_path.split('.')[1] == "html":
+				print "Compiling page"
+				render_html.main(relative_path)
+		elif is_dir:
+			ls = os.listdir(relative_path)
+			if "index.html" in ls:
+				print "Compiling page"
+				render_html.main(relative_path + "index.html")
+
+		
 		SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
 		
 
-Handler = compile_handler
+Handler = render
 
 httpd = SocketServer.TCPServer(("", PORT), Handler)
 

@@ -2,7 +2,7 @@ from jinja2 import Environment, PackageLoader
 import json
 
 
-def main():
+def main(path):
 	env = Environment(loader=PackageLoader('web', 'templates'))
 	template = env.get_template('template1.html')
 
@@ -13,6 +13,6 @@ def main():
 	groups = (data['Groups'])
 	html = template.render(groups=groups)
 
-	with open('web/html/index.html', 'w') as html_file:
+	with open(path, 'w') as html_file:
 		html_file.truncate()
 		html_file.write(html)
