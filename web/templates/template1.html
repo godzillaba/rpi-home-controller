@@ -21,8 +21,9 @@
         get_switch_stats()
     }, 3000);
     var get_switch_stats = function() {
-        for (var x = 1; x < 9; x++) {
-            socket.send("PIN=" + document.getElementsByTagName('input')[x].name + ",IN,0")
+	var boxes = document.getElementsByTagName('input')
+        for (var x = 0; x < boxes.length; x ++) {
+            socket.send("PIN=" + boxes[x].name + ",IN,0")
         }
     }
     window.onload = function() {
