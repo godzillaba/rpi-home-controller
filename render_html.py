@@ -9,9 +9,7 @@ def main(path):
 	with open('data.json') as data_file:    
 	    data = json.load(data_file)
 
-
-	groups = (data['Groups'])
-	html = template.render(groups=groups)
+	html = template.render(data=data)
 
 	with open(path, 'w') as html_file:
 		html_file.truncate()

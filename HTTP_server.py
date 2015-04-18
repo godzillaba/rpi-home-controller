@@ -2,8 +2,12 @@ import SimpleHTTPServer
 import SocketServer
 import os
 import render_html
+import json
 
-PORT = 8080
+with open('data.json') as data_file:    
+	    data = json.load(data_file)
+
+PORT = int(data["HTTP"]['port'])
 
 class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
 	def do_GET(self):
@@ -13,12 +17,12 @@ class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
 		
 		if is_file:
 			if relative_path.split('.')[1] == "html":
-				print "Compiling page"
+				print "Compiling %s" % relative_path
 				render_html.main(relative_path)
 		elif is_dir:
 			ls = os.listdir(relative_path)
 			if "index.html" in ls:
-				print "Compiling page"
+				print "Compiling %sindex.html" % relative_path
 				render_html.main(relative_path + "index.html")
 
 		
