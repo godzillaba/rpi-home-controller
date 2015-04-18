@@ -1,12 +1,25 @@
 {
-	"Groups": [
-		{
-			"description": "Switch 1",
-			"gpiopin": "40"
-		},
-		{
-		    "description": "Switch 2",
-		    "gpiopin": "22"
-		}
-	]
+	"HTTP": {
+        "port": "8080"
+    },
+    "Web": {
+        "Groups": [
+            {
+                "description": "AC",
+                "gpiopin": "40"
+            },
+            {
+                "description": "TV",
+                "gpiopin": "22"
+            },
+            {
+                "description": "Desk Lamp",
+                "gpiopin": "18"
+            },
+            {
+                "description": "Bedside Lamp",
+                "gpiopin": "15"
+            }
+	   ]
+    }
 }
