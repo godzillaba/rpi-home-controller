@@ -1,7 +1,7 @@
 import SimpleHTTPServer
 import SocketServer
 import os
-import render_html
+from server_lib import render_html
 import json
 
 with open('data.json') as data_file:    
