@@ -17,6 +17,8 @@ window.onload = function() {
     socket.onopen = function() {
         console.log("Connected!");
         isopen = true;
+	var div = document.getElementById('connstatusdiv')
+	div.style.backgroundColor = 'green'
         get_switch_stats()
     }
     socket.onmessage = function(e) {
