@@ -11,6 +11,7 @@ PORT = int(data["HTTP"]['port'])
 
 class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
 	def do_GET(self):
+		self.path = "/web/html" + self.path
 		relative_path = "." + self.path
 		is_file = os.path.isfile(relative_path)
 		is_dir = os.path.isdir(relative_path)

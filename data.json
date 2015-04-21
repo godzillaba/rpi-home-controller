@@ -26,9 +26,9 @@
                 "gpiopin": "15"
             }
     	],
-	"UI": {
-		"TrimColor": "#00ddff"
-	}
+        "UI": {
+            "TrimColor": "#00ddff"
+        }
     }
     
 }
