@@ -1,5 +1,5 @@
 {
-	"HTTP": {
+    "HTTP": {
         "port": "8080"
     },
     "Web": {
@@ -20,6 +20,10 @@
                 "description": "Bedside Lamp",
                 "gpiopin": "15"
             }
-	   ]
+    	],
+	"UI": {
+		"TrimColor": "#00ddff"
+	}
     }
+    
 }

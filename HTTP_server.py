@@ -16,10 +16,11 @@ class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
 		is_dir = os.path.isdir(relative_path)
 		
 		if is_file:
-                        # if relative_path.split('.')[1] == "html":
-                        if True:
+                        extension = relative_path.split('.')[2]
+                        if extension == "html" or extension == "css":
 				print "Compiling %s" % relative_path
 				render_html.main(relative_path)
+                        
 		elif is_dir:
 			ls = os.listdir(relative_path)
 			if "index.html" in ls:
