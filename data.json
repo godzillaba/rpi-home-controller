@@ -1,4 +1,9 @@
 {
+    "TCP": {
+        "port": "5432",
+        "listen_address": "0.0.0.0",
+        "buffer_size": "1024"
+    },
     "HTTP": {
         "port": "8080"
     },

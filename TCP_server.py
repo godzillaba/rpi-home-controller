@@ -1,14 +1,14 @@
 from server_lib import gpio
-from server_lib import config as conf
+import json
 import socket
 import logging
 import RPi.GPIO as GPIO
 
 # LOGGING / CONFIG VARIABLES
-f = "server_lib/config.conf"
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
-
+with open('data.json') as data_file:
+	data = json.load(data_file)
 
 
 def serve_forever():
@@ -36,9 +36,9 @@ def serve_forever():
 ### START ###
 
 # SET UP TCP SOCKET
-TCP_IP = conf.arg(f, "LISTENADDR")
-TCP_PORT = int(conf.arg(f, "PORT"))
-BUFFER_SIZE = int(conf.arg(f, "BUFFERSIZE"))
+TCP_IP = data['TCP']['listen_address']
+TCP_PORT = int(data['TCP']['port'])
+BUFFER_SIZE = int(data['TCP']['buffer_size'])
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 s.bind((TCP_IP, TCP_PORT))

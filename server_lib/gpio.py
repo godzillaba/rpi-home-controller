@@ -1,11 +1,12 @@
 import RPi.GPIO as GPIO
 import logging
-import config as conf
+import json
 
 # get layout from conf
 GPIO.setmode(GPIO.BOARD)
 
-f = "server_lib/config.conf"
+with open('data.json') as data_file:
+	data = json.load(data_file)
 
 
 class pin(object):
@@ -34,8 +35,8 @@ def parse(data):
 
 
 def toggle_all_relays(hilo):
-	relaypins = (conf.arg(f, "RELAYPINS")).split()
+	relaypins = data['Web']['Groups']
 	for p in relaypins:
-	    rp = pin(int(p), "OUT", hilo)
+	    rp = pin(int(p['gpiopin']), "OUT", hilo)
 	    rp.toggle()
-	    logging.info('Initializing relay pin %s', p)
+	    logging.info('Initializing relay pin %s (%s)', p['gpiopin'], p['description'])
