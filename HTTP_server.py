@@ -16,7 +16,8 @@ class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
 		is_dir = os.path.isdir(relative_path)
 		
 		if is_file:
-			if relative_path.split('.')[1] == "html":
+                        # if relative_path.split('.')[1] == "html":
+                        if True:
 				print "Compiling %s" % relative_path
 				render_html.main(relative_path)
 		elif is_dir:

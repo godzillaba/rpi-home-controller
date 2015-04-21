@@ -4,7 +4,7 @@ import json
 
 def main(path):
 	env = Environment(loader=PackageLoader('web', 'templates'))
-	template = env.get_template('template1.html')
+	template = env.get_template(path)
 
 	with open('data.json') as data_file:    
 	    data = json.load(data_file)
