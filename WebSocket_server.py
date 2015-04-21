@@ -1,7 +1,9 @@
-from autobahn.twisted.websocket import WebSocketServerProtocol, \
-    WebSocketServerFactory
+from autobahn.twisted.websocket import WebSocketServerProtocol, WebSocketServerFactory
+import sys
+from twisted.python import log
+from twisted.internet import reactor
 from server_lib import gpio
-
+import json
 
 class MyServerProtocol(WebSocketServerProtocol):
 
@@ -24,25 +26,20 @@ class MyServerProtocol(WebSocketServerProtocol):
         elif cmd == "ALLRELAYS":
             gpio.toggle_all_relays(int(payload.split('=')[1]))
 
-        
-        # self.sendMessage(payload, isBinary)
 
     def onClose(self, wasClean, code, reason):
         print("WebSocket connection closed: {0}".format(reason))
 
 
-if __name__ == '__main__':
+with open('data.json') as data_file:
+    data = json.load(data_file)
 
-    import sys
+port = int(data['WebSocket']['port'])
+address = "ws://localhost:%s" % port
 
-    from twisted.python import log
-    from twisted.internet import reactor
+log.startLogging(sys.stdout)
 
-    log.startLogging(sys.stdout)
-
-    factory = WebSocketServerFactory("ws://localhost:9000", debug=False)
-    factory.protocol = MyServerProtocol
-    # factory.setProtocolOptions(maxConnections=2)
-
-    reactor.listenTCP(9000, factory)
-    reactor.run()
+factory = WebSocketServerFactory(address, debug=False)
+factory.protocol = MyServerProtocol
+reactor.listenTCP(port, factory)
+reactor.run()

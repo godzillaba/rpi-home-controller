@@ -4,6 +4,9 @@
         "listen_address": "0.0.0.0",
         "buffer_size": "1024"
     },
+    "WebSocket": {
+        "port": "9000"
+    },
     "HTTP": {
         "port": "8080"
     },
