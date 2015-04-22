@@ -36,7 +36,7 @@
 </ul>
 
 <h3>
-<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h3>
+<a id="install-dependencies" class="anchor" href="#install-dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install Dependencies</h3>
 
 <pre><code># pip install twisted autobahn jinja2
 $ git clone https://github.com/therealtylerdurden/rpi-home-automation-server.git
@@ -45,10 +45,11 @@ $ git clone https://github.com/therealtylerdurden/rpi-home-automation-server.git
 <h3>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h3>
 
-<pre><code># cd rpi-home-automation-server
-# python TCP_server.py &amp; 
-# python WebSocket_server.py &amp;
-$ python HTTP_server.py &amp;
+<pre><code>$ git clone https://github.com/therealtylerdurden/rpi-home-automation-server.git
+$ cd rpi-home-automation-server
+# nohup python TCP_server.py &amp; 
+# nohup python WebSocket_server.py &amp;
+$ nohup python HTTP_server.py &amp;
 </code></pre>
 
 <h3>
