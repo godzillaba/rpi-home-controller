@@ -30,16 +30,15 @@ class MyServerProtocol(WebSocketServerProtocol):
     def onClose(self, wasClean, code, reason):
         print("WebSocket connection closed: {0}".format(reason))
 
-
 with open('data.json') as data_file:
     data = json.load(data_file)
 
 port = int(data['WebSocket']['port'])
 address = "ws://localhost:%s" % port
 
-log.startLogging(sys.stdout)
-
-factory = WebSocketServerFactory(address, debug=False)
-factory.protocol = MyServerProtocol
-reactor.listenTCP(port, factory)
-reactor.run()
+def main():
+	log.startLogging(sys.stdout)
+	factory = WebSocketServerFactory(address, debug=False)
+	factory.protocol = MyServerProtocol
+	reactor.listenTCP(port, factory)
+	reactor.run()
