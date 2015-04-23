@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import json
 import threading
 
 print "importing TCP_server..."
