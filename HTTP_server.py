@@ -33,6 +33,7 @@ class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
 		
 
 Handler = render
+Handler.allow_reuse_address = True
 
 httpd = SocketServer.TCPServer(("", PORT), Handler)
 

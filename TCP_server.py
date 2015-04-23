@@ -2,7 +2,6 @@ from server_lib import gpio
 import json
 import socket
 import logging
-import RPi.GPIO as GPIO
 
 # LOGGING / CONFIG VARIABLES
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
@@ -41,19 +40,13 @@ TCP_PORT = int(data['TCP']['port'])
 BUFFER_SIZE = int(data['TCP']['buffer_size'])
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-s.bind((TCP_IP, TCP_PORT))
-s.listen(1)
-logging.info('TCP server listening on %s:%s', TCP_IP, TCP_PORT)
 
-# SET UP RELAYS
-gpio.toggle_all_relays(1)
+def main():
+	s.bind((TCP_IP, TCP_PORT))
+	s.listen(1)
+	logging.info('TCP server listening on %s:%s', TCP_IP, TCP_PORT)
 
+	# SET UP RELAYS
+	gpio.toggle_all_relays(1)
 
-# SERVE
-try:
-    serve_forever()
-        
-except KeyboardInterrupt:
-    print '\n'
-    logging.info('^C received! Running GPIO.cleanup()')
-    GPIO.cleanup()
+    	serve_forever()
