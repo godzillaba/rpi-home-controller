@@ -11,10 +11,15 @@
     <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     <title>Control Panel</title>
     <script src="script.js"/></script>
+    
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+     
 </head>
 
 <body>
-
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
 
     <div id='navbar'>
         <ul>
@@ -36,13 +41,12 @@
         
         <div class='switchgroup'>
             <p>{{ group.description }}</p>
-            <div class="onoffswitch">
-                <input type="checkbox" name="{{ group.gpiopin }}" class="onoffswitch-checkbox" id="{{ group.description }}" onclick="switch_onclick(this)">
-                <label class="onoffswitch-label" for="{{ group.description }}">
-                    <span class="onoffswitch-inner">
-                  <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
-                    <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
-                    </span>
+            <div class="switch">
+                <label>
+                    
+                    <input type="checkbox" name="{{ group.gpiopin }}" id="{{ group.description }}" onclick="switch_onclick(this)">
+                    <span class="lever"></span>
+                    
                 </label>
             </div>
         </div>

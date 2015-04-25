@@ -9,8 +9,8 @@ div.switchgroup {
 
 div.switchgroup p {
   color: white;
-  font-size: 24px;
-  font-family: Lato, Helvetica, Arial, sans-serif
+  font-size: 15px;
+/*  font-family: Lato, Helvetica, Arial, sans-serif*/
 }
 
 #connstatusdiv {
