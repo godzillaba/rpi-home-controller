@@ -16,8 +16,7 @@ window.onload = function() {
     socket.onopen = function() {
         console.log("Connected!");
         isopen = true;
-		var statusdiv = document.getElementById('connstatusdiv')
-		statusdiv.style.backgroundColor = '#00ff00'
+		
         get_switch_stats()
     }
     socket.onmessage = function(e) {
@@ -37,8 +36,7 @@ window.onload = function() {
     }
     socket.onclose = function(e) {
         console.log("Connection closed.");
-        var statusdiv = document.getElementById('connstatusdiv')
-		statusdiv.style.backgroundColor = '#ff0000'
+        
 		socket = null;
         isopen = false;
     }
@@ -47,6 +45,9 @@ window.onload = function() {
 //        begin custom stuff
 
 var switch_onclick = function(box) {
+    if (isopen === false) {
+        alert("Not connected to WebSocket server")
+    }
     if (box.checked === true) {
         socket.send('PIN=' + box.name + ',OUT,0')
     } else if (box.checked === false) {
