@@ -39,6 +39,8 @@ class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
 				self.render(template_path + "index.html")
 			else:
 				SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
+		else:
+			SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
 
 		
 		
