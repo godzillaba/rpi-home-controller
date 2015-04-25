@@ -11,6 +11,5 @@ def main(path):
 
 	html = template.render(data=data)
 
-	with open(path, 'w') as html_file:
-		html_file.truncate()
-		html_file.write(html)
+	return html
+	
