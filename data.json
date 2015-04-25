@@ -30,7 +30,7 @@
             }
     	],
         "UI": {
-            "TrimColor": "#00ddff"
+            "NavColor": "teal lighten-2" 
         }
     }
     
