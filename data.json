@@ -30,7 +30,7 @@
             }
     	],
         "UI": {
-            "NavColor": "teal lighten-2",
+            "NavColor": "light-blue accent-2",
 			"BodyColor": "grey darken-3",
 			"LabelColor": "white-text",
 			"WaveType": "waves-light",
@@ -38,9 +38,10 @@
 			"DividerStyle": "solid",
 			"DividerThickness": "1px",
 			"SwitchKnobColorOff": "",
-			"SwitchKnobColorOn": "",
+			"SwitchKnobColorOn": "#00ddff",
 			"SwitchBGColorOff": "",
-			"SwitchBGColorOn": ""
+			"SwitchBGColorOn": "#0099cc",
+			"ChromeHeaderColor": "#1565c0"
 			
         }
     }
