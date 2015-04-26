@@ -11,12 +11,13 @@ window.setInterval(function () {
 }, 3000);
 window.onload = function() {
     hostname = window.location.hostname
-    socket = new WebSocket("ws://" + hostname + ":9000");
+	var wsport = document.getElementById("wsport").content
+    socket = new WebSocket("ws://" + hostname + ":" + wsport);
     socket.binaryType = "arraybuffer";
     socket.onopen = function() {
         console.log("Connected!");
         isopen = true;
-		Materialize.toast("Connected to ws://" + hostname + ":9000", 3000)
+		Materialize.toast("Connected to ws://" + hostname + ":" + wsport, 3000)
         get_switch_stats()
     }
     socket.onmessage = function(e) {
@@ -38,7 +39,7 @@ window.onload = function() {
         console.log("Connection closed.");
 		socket = null;
         isopen = false;
-		Materialize.toast("Connection to ws://" + hostname + ":9000 closed.", 5000)
+		Materialize.toast("Connection to ws://" + hostname + ":" + wsport + " closed.", 5000)
     }
 };
 
