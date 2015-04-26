@@ -58,8 +58,10 @@
             <div class="switch">
                 <label>
                     <span class="switchlabel">{{ group.description }}</span>
-                    <input type="checkbox" name="{{ group.gpiopin }}" id="{{ group.description }}" onclick="switch_onclick(this)">
-                    <div class="levercontainer"><span class="lever"></span></div>
+                    <div class="levercontainer">
+						<input type="checkbox" name="{{ group.gpiopin }}" id="{{ group.description }}" onclick="switch_onclick(this)">
+                    	<span class="lever"></span>
+					</div>
                     
                 </label>
             </div>
