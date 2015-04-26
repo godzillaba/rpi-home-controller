@@ -51,24 +51,28 @@
 
     <div id='content'>
         {% for group in data.Web.Groups %}
-          
-        <div class='divider'></div>
+
         <div class='switchgroup '>
-            <!-- <p>{{ group.description }}</p> -->
+			
             <div class="switch">
-                <label>
-                    <div class="switch-label-description-container"><span class="switchlabel">{{ group.description }}</span></div>
+                <label class="waves-effect waves-light" style="width:100%">
+                    <div class='divider'></div>
+					
+					<div><div class="switch-label-description-container"><span class="switchlabel">{{ group.description }}</span></div>
                     <div class="levercontainer">
 						<input type="checkbox" name="{{ group.gpiopin }}" id="{{ group.description }}" onclick="switch_onclick(this)">
                     	<span class="lever"></span>
-					</div>
-                    
+					</div></div>
+					
+                    <div class='divider'></div>
                 </label>
+				
             </div>
         </div>
-		<div class='divider'></div>
+		
 		<div class='divider-line'></div>
-        {% endfor %}
+        
+		{% endfor %}
     </div>
 	<style>
 	
