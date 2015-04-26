@@ -16,7 +16,7 @@ window.onload = function() {
     socket.onopen = function() {
         console.log("Connected!");
         isopen = true;
-		
+		Materialize.toast("Connected to ws://" + hostname + ":9000", 3000)
         get_switch_stats()
     }
     socket.onmessage = function(e) {
@@ -36,9 +36,9 @@ window.onload = function() {
     }
     socket.onclose = function(e) {
         console.log("Connection closed.");
-        
 		socket = null;
         isopen = false;
+		Materialize.toast("Connection to ws://" + hostname + ":9000 closed.", 5000)
     }
 };
 
@@ -46,7 +46,7 @@ window.onload = function() {
 
 var switch_onclick = function(box) {
     if (isopen === false) {
-        alert("Not connected to WebSocket server")
+        Materialize.toast("Not connected to WebSocket server", 5000)
     }
     if (box.checked === true) {
         socket.send('PIN=' + box.name + ',OUT,0')
