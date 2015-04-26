@@ -3,11 +3,7 @@
 
 <head>
     <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <!-- <link rel="stylesheet" type="text/css" href="custom.css"> -->
-    
+        
     <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
     
     <title>Control Panel</title>
@@ -55,14 +51,23 @@
         <div class='switchgroup '>
 			
             <div class="switch">
-                <label class="waves-effect waves-light" style="width:100%">
+                <label class="waves-effect {{ data.Web.UI.WaveType }}" style="width:100%">
                     <div class='divider'></div>
 					
-					<div><div class="switch-label-description-container"><span class="switchlabel">{{ group.description }}</span></div>
-                    <div class="levercontainer">
-						<input type="checkbox" name="{{ group.gpiopin }}" id="{{ group.description }}" onclick="switch_onclick(this)">
-                    	<span class="lever"></span>
-					</div></div>
+					<div>
+						<div class="switch-label-description-container">
+							{% if data.Web.UI.LabelColor[0] == "#" %}
+								<span class="switchlabel" style="color:{{ data.Web.UI.LabelColor }}">{{ group.description }}</span>
+							{% else %}
+								<span class="switchlabel {{ data.Web.UI.LabelColor }}">{{ group.description }}</span>
+								
+							{% endif %}
+						</div>
+                    	<div class="levercontainer">
+							<input type="checkbox" name="{{ group.gpiopin }}" id="{{ group.description }}" onclick="switch_onclick(this)">
+                    		<span class="lever"></span>
+						</div>
+					</div>
 					
                     <div class='divider'></div>
                 </label>
@@ -86,12 +91,11 @@
 	}
 	
 	div.divider-line {
-		border: 1px solid gray;
+		border: {{ data.Web.UI.DividerThickness }} {{ data.Web.UI.DividerStyle }} {{data.Web.UI.DividerColor}};
 		margin-left: 60px;
 	}
 	
 	div.switch label span.switchlabel {
-	  color: white;
 	  font-size: 2em;
 	}
 	

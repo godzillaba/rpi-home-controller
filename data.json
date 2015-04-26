@@ -31,7 +31,12 @@
     	],
         "UI": {
             "NavColor": "teal lighten-2",
-			"BodyColor": "grey darken-3" 
+			"BodyColor": "grey darken-3",
+			"LabelColor": "white-text",
+			"WaveType": "waves-light",
+			"DividerColor": "grey",
+			"DividerStyle": "solid",
+			"DividerThickness": "1px"
         }
     }
     
