@@ -30,7 +30,8 @@
             }
     	],
         "UI": {
-            "NavColor": "teal lighten-2" 
+            "NavColor": "teal lighten-2",
+			"BodyColor": "grey darken-3" 
         }
     }
     
