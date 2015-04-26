@@ -1,226 +1,155 @@
-<!doctype html>
-<html lang=''>
-
-<head>
-    <meta charset='utf-8'>
+<html lang=""><head>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" type="text/css" href="switches.css">
-    <link rel="stylesheet" type="text/css" href="custom.css">
-    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    
+    <!-- <link rel="stylesheet" type="text/css" href="custom.css"> -->
+    
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script><style type="text/css"></style>
+    
     <title>Control Panel</title>
-
-
-
-    <script type="text/javascript">
-    var socket = null;
-    var isopen = false;
-
-    // window.setInterval(function() {
-    //     get_switch_stats()
-    // }, 2000);
-    var get_switch_stats = function(check) {
-        for (var x = 1; x < 9; x++) {
-            document.getElementsByTagName('input')[x].checked = check
-        }
-    }
-    window.onload = function() {
-        hostname = window.location.hostname
-        socket = new WebSocket("ws://" + hostname + ":9000");
-        socket.binaryType = "arraybuffer";
-        socket.onopen = function() {
-            console.log("Connected!");
-            isopen = true;
-            get_switch_stats()
-        }
-        socket.onmessage = function(e) {
-            if (typeof e.data == "string") {
-                console.log("Message received: " + e.data);
-                if (e.data.split(" ")[0] === "PIN") {
-                    var pin_number = e.data.split(" ")[1]
-                    var pin_status = e.data.split(" ")[2]
-                    var pin_switch = (document.getElementsByName(pin_number)[0])
-                    if (pin_status === "0") {
-                        pin_switch.checked = true
-                    } else if (pin_status === "1") {
-                        pin_switch.checked = false
-                    }
-                }
-            }
-        }
-        socket.onclose = function(e) {
-            console.log("Connection closed.");
-            socket = null;
-            isopen = false;
-        }
-    };
-
-    function sendText() {
-        if (isopen) {
-            socket.send("Hello, world!");
-            console.log("Text message sent.");
-        } else {
-            console.log("Connection not opened.")
-        }
-    };
-
-    //        begin custom stuff
-
-    var switch_onclick = function(box) {
-        if (box.checked === true) {
-            socket.send('PIN=' + box.name + ',OUT,0')
-        } else if (box.checked === false) {
-            socket.send('PIN=' + box.name + ',OUT,1')
-        }
-    }
-    var master_switch_onclick = function(box) {
-        if (box.checked === true) {
-            get_switch_stats(true)
-        } else if (box.checked === false) {
-            get_switch_stats(false)
-        }
-    }
-    </script>
+    
+    <script src="script.js"></script>
+    
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.css" media="screen,projection">
+    
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+     
 </head>
 
-<body>
+
+	<body class="grey darken-3">
+		
 
 
-    <div id='navbar'>
-        <ul>
-            <li class='active'><a href='#'><span>Home</span></a></li>
-            <li><a href='#'><span>Settings</span></a></li>
-            <li><a href='https://github.com/therealtylerdurden/rpi-home-automation-server'><span>GitHub</span></a></li>
-            <li><a href='#'><span>About</span></a></li>
-        </ul>
-    </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
+
+    <nav>
+        <div class="nav-wrapper teal lighten-2">
+            <ul id="nav-mobile" class="left">
+                <li class="active"><a href="#!"><i class="mdi-action-home"></i></a></li>
+                <li><a href="#!" class="right"><i class="mdi-action-settings"></i></a></li>
+            </ul>
+            <ul id="nav-mobile" class="right">
+                <li><a href="https://github.com/therealtylerdurden/rpi-home-controller/"><i><img src="GH-mk.png"></i></a></li>
+            </ul>
+        </div>
+    </nav>
 
     <!-- begin "body" -->
 
     <!-- switch div naming/id scheme: name=(gpio pin number) id=(Text above switch eg. "TV") -->
 
-    <div id='content'>
-        <div class='switchgroup'>
-            <p>The Master Switch</p>
-            <div class="onoffswitch">
-                <input type="checkbox" name="-" class="onoffswitch-checkbox" id="0" onclick="master_switch_onclick(this)">
-                <label class="onoffswitch-label" for="0">
-                    <span class="onoffswitch-inner">
-                  <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
-                    <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
-                    </span>
+    <div id="content">
+        
+          
+        <div class="divider"></div>
+        <div class="switchgroup ">
+            <!-- <p>AC</p> -->
+            <div class="switch">
+                <label>
+                    <div class="switch-label-description-container"><span class="switchlabel">AC</span></div>
+                    <div class="levercontainer">
+						<input type="checkbox" name="40" id="AC" onclick="switch_onclick(this)">
+                    	<span class="lever"></span>
+					</div>
+                    
                 </label>
             </div>
         </div>
-
-        <div class='switchgroup'>
-            <p>1</p>
-            <div class="onoffswitch">
-                <input type="checkbox" name="40" class="onoffswitch-checkbox" id="1" onclick="switch_onclick(this)">
-                <label class="onoffswitch-label" for="1">
-                    <span class="onoffswitch-inner">
-                  <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
-                    <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
-                    </span>
+		<div class="divider"></div>
+		<div class="divider-line"></div>
+        
+          
+        <div class="divider"></div>
+        <div class="switchgroup ">
+            <!-- <p>TV</p> -->
+            <div class="switch">
+                <label>
+                    <div class="switch-label-description-container"><span class="switchlabel">TV</span></div>
+                    <div class="levercontainer">
+						<input type="checkbox" name="22" id="TV" onclick="switch_onclick(this)">
+                    	<span class="lever"></span>
+					</div>
+                    
                 </label>
             </div>
         </div>
-
-
-        <div class='switchgroup'>
-            <p>2</p>
-            <div class="onoffswitch">
-                <input type="checkbox" name="22" class="onoffswitch-checkbox" id="2" onclick="switch_onclick(this)" checked>
-                <label class="onoffswitch-label" for="2">
-                    <span class="onoffswitch-inner">
-                  <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
-                    <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
-                    </span>
+		<div class="divider"></div>
+		<div class="divider-line"></div>
+        
+          
+        <div class="divider"></div>
+        <div class="switchgroup ">
+            <!-- <p>Desk Lamp</p> -->
+            <div class="switch">
+                <label>
+                    <div class="switch-label-description-container"><span class="switchlabel">Desk Lamp</span></div>
+                    <div class="levercontainer">
+						<input type="checkbox" name="18" id="Desk Lamp" onclick="switch_onclick(this)">
+                    	<span class="lever"></span>
+					</div>
+                    
                 </label>
             </div>
         </div>
-
-        <div class='switchgroup'>
-            <p>3</p>
-            <div class="onoffswitch">
-                <input type="checkbox" name="18" class="onoffswitch-checkbox" id="3" onclick="switch_onclick(this)">
-                <label class="onoffswitch-label" for="3">
-                    <span class="onoffswitch-inner">
-                  <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
-                    <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
-                    </span>
+		<div class="divider"></div>
+		<div class="divider-line"></div>
+        
+          
+        <div class="divider"></div>
+        <div class="switchgroup ">
+            <!-- <p>Bedside Lamp</p> -->
+            <div class="switch">
+                <label>
+                    <div class="switch-label-description-container"><span class="switchlabel">Bedside Lamp</span></div>
+                    <div class="levercontainer">
+						<input type="checkbox" name="15" id="Bedside Lamp" onclick="switch_onclick(this)">
+                    	<span class="lever"></span>
+					</div>
+                    
                 </label>
             </div>
         </div>
-
-        <div class='switchgroup'>
-            <p>4</p>
-            <div class="onoffswitch">
-                <input type="checkbox" name="15" class="onoffswitch-checkbox" id="4" onclick="switch_onclick(this)" checked>
-                <label class="onoffswitch-label" for="4">
-                    <span class="onoffswitch-inner">
-                  <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
-                    <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
-                    </span>
-                </label>
-            </div>
-        </div>
-
-
-        <div class='switchgroup'>
-            <p>5</p>
-            <div class="onoffswitch">
-                <input type="checkbox" name="13" class="onoffswitch-checkbox" id="5" onclick="switch_onclick(this)">
-                <label class="onoffswitch-label" for="5">
-                    <span class="onoffswitch-inner">
-                  <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
-                    <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
-                    </span>
-                </label>
-            </div>
-        </div>
-
-
-        <div class='switchgroup'>
-            <p>6</p>
-            <div class="onoffswitch">
-                <input type="checkbox" name="12" class="onoffswitch-checkbox" id="6" onclick="switch_onclick(this)">
-                <label class="onoffswitch-label" for="6">
-                    <span class="onoffswitch-inner">
-                  <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
-                    <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
-                    </span>
-                </label>
-            </div>
-        </div>
-
-        <div class='switchgroup'>
-            <p>7</p>
-            <div class="onoffswitch">
-                <input type="checkbox" name="11" class="onoffswitch-checkbox" id="7" onclick="switch_onclick(this)">
-                <label class="onoffswitch-label" for="7">
-                    <span class="onoffswitch-inner">
-                  <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
-                    <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
-                    </span>
-                </label>
-            </div>
-        </div>
-
-        <div class='switchgroup'>
-            <p>8</p>
-            <div class="onoffswitch">
-                <input type="checkbox" name="7" class="onoffswitch-checkbox" id="8" onclick="switch_onclick(this)">
-                <label class="onoffswitch-label" for="8">
-                    <span class="onoffswitch-inner">
-                  <span class="onoffswitch-active"><span class="onoffswitch-switch">ON</span></span>
-                    <span class="onoffswitch-inactive"><span class="onoffswitch-switch">OFF</span></span>
-                    </span>
-                </label>
-            </div>
-        </div>
+		<div class="divider"></div>
+		<div class="divider-line"></div>
+        
     </div>
+	<style>
+	
+	div.switchgroup {
+	  border: 0px dashed white;
+	}
+	
+	div.divider {
+		height: 1.5em;
+		background-color: transparent;
+	}
+	
+	div.divider-line {
+		border: 1px solid gray;
+		margin-left: 60px;
+	}
+	
+	div.switch label span.switchlabel {
+	  color: white;
+	  font-size: 2em;
+	}
+	
+	div.switch-label-description-container {
+		margin-left: 60px;
+		display: inline;
+	}
+	
+	div.switch label div.levercontainer {
+		margin-top: 5px;
+		display: inline;
+		float: right;
+	}
 
-</body>
-<html>
+	</style>
+
+<div class="hiddendiv common"></div></body></html>
