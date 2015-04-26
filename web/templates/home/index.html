@@ -57,7 +57,7 @@
             <!-- <p>{{ group.description }}</p> -->
             <div class="switch">
                 <label>
-                    <span class="switchlabel">{{ group.description }}</span>
+                    <div class="switch-label-description-container"><span class="switchlabel">{{ group.description }}</span></div>
                     <div class="levercontainer">
 						<input type="checkbox" name="{{ group.gpiopin }}" id="{{ group.description }}" onclick="switch_onclick(this)">
                     	<span class="lever"></span>
@@ -83,12 +83,17 @@
 	
 	div.divider-line {
 		border: 1px solid gray;
-		margin-left: 50px;
+		margin-left: 60px;
 	}
 	
 	div.switch label span.switchlabel {
 	  color: white;
 	  font-size: 2em;
+	}
+	
+	div.switch-label-description-container {
+		margin-left: 60px;
+		display: inline;
 	}
 	
 	div.switch label div.levercontainer {
