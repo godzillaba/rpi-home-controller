@@ -36,7 +36,12 @@
 			"WaveType": "waves-light",
 			"DividerColor": "grey",
 			"DividerStyle": "solid",
-			"DividerThickness": "1px"
+			"DividerThickness": "1px",
+			"SwitchKnobColorOff": "",
+			"SwitchKnobColorOn": "",
+			"SwitchBGColorOff": "",
+			"SwitchBGColorOn": ""
+			
         }
     }
     

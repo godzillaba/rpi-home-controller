@@ -109,7 +109,22 @@
 		display: inline;
 		float: right;
 	}
-
+	
+	.switch label .lever::after {
+		background-color: {{ data.Web.UI.SwitchKnobColorOff }};
+	}
+	.switch label input[type=checkbox]:checked + .lever::after {
+		background-color: {{ data.Web.UI.SwitchKnobColorOn }};
+	}
+	
+	.switch label .lever {
+		background-color: {{ data.Web.UI.SwitchBGColorOff }};
+	}
+	
+	.switch label input[type=checkbox]:checked + .lever {
+		background-color: {{ data.Web.UI.SwitchBGColorOn }};
+	}
+	
 	</style>
 </body>
 <html>
