@@ -16,6 +16,8 @@ var send_json_data = function () {
 	jsonstring = JSON.stringify(json)
 	console.log(jsonstring)
 	socket.send("SAVEJSON=" + jsonstring)
+	Materialize.toast("Sent JSON data", 3000)
+	
 }
 
 window.onload = function() {
