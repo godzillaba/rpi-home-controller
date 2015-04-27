@@ -58,7 +58,7 @@
 			
             <div class="switch">
                 <label class="waves-effect {{ data.Web.UI.WaveType }}" style="width:100%">
-                    <div class='divider'></div>
+                    <div class='divider-spacer'></div>
 					
 					<div>
 						<div class="switch-label-description-container">
@@ -75,13 +75,13 @@
 						</div>
 					</div>
 					
-                    <div class='divider'></div>
+                    <div class='divider-spacer'></div>
                 </label>
 				
             </div>
         </div>
 		
-		<div class='divider-line'></div>
+		<div class='divider'></div>
         
 		{% endfor %}
     </div>
@@ -91,13 +91,12 @@
 	  border: 0px dashed white;
 	}
 	
-	div.divider {
+	div.divider-spacer {
 		height: 1.5em;
 		background-color: transparent;
 	}
 	
-	div.divider-line {
-		border: {{ data.Web.UI.DividerThickness }} {{ data.Web.UI.DividerStyle }} {{data.Web.UI.DividerColor}};
+	div.divider {
 		margin-left: 60px;
 	}
 	

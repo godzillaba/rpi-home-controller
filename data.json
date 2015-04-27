@@ -1,49 +1,44 @@
 {
-    "TCP": {
-        "port": "5432",
-        "listen_address": "0.0.0.0",
-        "buffer_size": "1024"
-    },
-    "WebSocket": {
-        "port": "9000"
-    },
     "HTTP": {
         "port": "8080"
-    },
+    }, 
+    "WebSocket": {
+        "port": "9000"
+    }, 
+    "TCP": {
+        "buffer_size": "1024", 
+        "listen_address": "0.0.0.0", 
+        "port": "5432"
+    }, 
     "Web": {
+        "UI": {
+            "NavColor": "light-blue accent-2", 
+            "SwitchBGColorOff": "", 
+            "ChromeHeaderColor": "#1565c0", 
+            "BodyColor": "grey darken-3", 
+            "WaveType": "waves-light", 
+            "SwitchKnobColorOn": "#00ddff", 
+            "LabelColor": "white-text", 
+            "SwitchKnobColorOff": "", 
+            "SwitchBGColorOn": "#0099cc"
+        }, 
         "Groups": [
             {
-                "description": "AC",
+                "description": "AC", 
                 "gpiopin": "40"
-            },
+            }, 
             {
-                "description": "TV",
+                "description": "TV", 
                 "gpiopin": "22"
-            },
+            }, 
             {
-                "description": "Desk Lamp",
+                "description": "Desk Lamp", 
                 "gpiopin": "18"
-            },
+            }, 
             {
-                "description": "Bedside Lamp",
+                "description": "Bedside Lamp", 
                 "gpiopin": "15"
             }
-    	],
-        "UI": {
-            "NavColor": "light-blue accent-2",
-			"BodyColor": "grey darken-3",
-			"LabelColor": "white-text",
-			"WaveType": "waves-light",
-			"DividerColor": "grey",
-			"DividerStyle": "solid",
-			"DividerThickness": "1px",
-			"SwitchKnobColorOff": "",
-			"SwitchKnobColorOn": "#00ddff",
-			"SwitchBGColorOff": "",
-			"SwitchBGColorOn": "#0099cc",
-			"ChromeHeaderColor": "#1565c0"
-			
-        }
+        ]
     }
-    
 }
