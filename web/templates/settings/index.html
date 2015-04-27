@@ -51,6 +51,8 @@
 
 
     <div id='content'>
+		
+		<div style="margin-top:30px"></div>
 		<form id='form1'>
 		<div class="row">
 		    <div class="input-field col s4">
@@ -109,29 +111,44 @@
 		</div>
 		
 		<div class="row">
-		    <div class="input-field col s3">
+		    <div class="input-field col s6">
 		      <input value="{{ data.Web.UI.SwitchKnobColorOff }}" id="SwitchKnobColorOff" type="text" class="validate">
-		      <label class="active" for="SwitchKnobColorOff">Switch Knob Color (OFF)</label>
+		      <label class="active" for="SwitchKnobColorOff">Switch Knob (OFF)</label>
 		    </div>
-		    <div class="input-field col s3">
+		    <div class="input-field col s6">
 		      <input value="{{ data.Web.UI.SwitchKnobColorOn }}" id="SwitchKnobColorOn" type="text" class="validate">
-		      <label class="active" for="SwitchKnobColorOn">Switch Knob Color (ON)</label>
+		      <label class="active" for="SwitchKnobColorOn">Switch Knob (ON)</label>
 		    </div>
-		    <div class="input-field col s3">
+		</div>
+		<div class="row">
+			<div class="input-field col s6">
 		      <input value="{{ data.Web.UI.SwitchBGColorOff }}" id="SwitchBGColorOff" type="text" class="validate">
-		      <label class="active" for="SwitchBGColorOff">Switch Background Color (OFF)</label>
+		      <label class="active" for="SwitchBGColorOff">Switch Background (OFF)</label>
 		    </div>
-		    <div class="input-field col s3">
+		    <div class="input-field col s6">
 		      <input value="{{ data.Web.UI.SwitchBGColorOn }}" id="SwitchBGColorOn" type="text" class="validate">
-		      <label class="active" for="SwitchBGColorOn">Switch Background Color (ON)</label>
+		      <label class="active" for="SwitchBGColorOn">Switch Background (ON)</label>
 		    </div>
 		</div>
 		
-		<a class="btn waves-effect waves-light" name="submitbutton" onclick="send_json_data()">Submit
-		    <i class="mdi-content-send right"></i>
-		</a>
+		<div class="submitcontainer">
+			<a class="btn waves-effect waves-light" name="submitbutton" onclick="send_json_data()">Submit
+		    	<i class="mdi-content-send right"></i>
+			</a>
+		</div>
 		</form>
     </div>
+	
+	
+	<style type='text/css'>
+	
+	div.submitcontainer {
+		float: right;
+		margin-bottom: 30px;
+		margin-right: 30px;
+	}
+	
+	</style>
 	
 	
 	
