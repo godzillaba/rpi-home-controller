@@ -38,7 +38,7 @@
     	    <div class="nav-wrapper {{ data.Web.UI.NavColor }}">
     	        <ul id="nav-mobile" class="left">
     	            <li class="active"><a href="#!"><i class="mdi-action-home"></i></a></li>
-    	            <li><a href="/settings/" class="right"><i class="mdi-action-settings"></i></a></li>
+    	            <li><a href="/settings/" class="dropdown-button" data-activates='dropdown1'><i class="mdi-action-settings"></i></a></li>
     	        </ul>
     	        <ul id="nav-mobile" class="right">
     	            <li><a href="https://github.com/therealtylerdurden/rpi-home-controller/"><i><img src="GH-mk.png"/></i></a></li>
@@ -46,6 +46,13 @@
     	    </div>
     	</nav>
 	</div>
+	
+	
+	<ul id='dropdown1' class='dropdown-content'>
+	    <li><a href="/settings/UI-settings.html">UI</a></li>
+	    <li><a href="/settings/Network-settings.html">Network</a></li>
+	    <li><a href="#!">Groups</a></li>
+	</ul>
 
     <!-- begin "body" -->
 
