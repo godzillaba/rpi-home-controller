@@ -133,9 +133,41 @@
 		
 		</div>
 		
-		<div class="addbuttoncontainer">
-			<a class="btn-floating btn-large waves-effect waves-light teal"><i class="mdi-content-add"></i></a>
+		<div id="GroupsFrom">
+			{% for group in data.Web.Groups %}
+			
+				<div class="row">
+					<div class="input-field col s6">
+	  			      <input value="{{ group.description }}" id="{{ group.description }}-description" type="text" class="validate">
+	  			      <label class="active" for="{{group.description}}-desctipion">Label</label>
+					</div>
+					
+					<div class="input-field col s6">
+	  			      <input value="{{ group.gpiopin }}" id="{{ group.description }}-gpiopin" type="text" class="validate">
+	  			      <label class="active" for="{{group.description}}-gpiopin">GPIO Pin</label>
+					</div>
+					
+				</div>
+			
+			
+			{% endfor %}
+			
+			<div class="row">
+				<div class="input-field col s6">
+	  		      <input value="" id="NEW-description" type="text" class="validate">
+	  		      <label class="active" for="NEW-desctipion">Label</label>
+				</div>
+				
+				<div class="input-field col s6">
+	  		      <input value="" id="NEW-gpiopin" type="text" class="validate">
+	  		      <label class="active" for="NEW-gpiopin">GPIO Pin</label>
+				</div>
+				
+			</div>
+			
 		</div>
+		
+		
 		<div class="submitcontainer">
 			<a class="btn waves-effect waves-light" name="submitbutton" onclick="send_json_data()">Submit
 		    	<i class="mdi-content-send right"></i>
@@ -146,12 +178,6 @@
 	
 	
 	<style type='text/css'>
-	
-	div.addbuttoncontainer {
-		float: right;
-		margin-bottom:10px;
-		margin-right: 30px;
-	}
 	
 	div.submitcontainer {
 		float: right;
