@@ -12,6 +12,11 @@ var send_json_data = function () {
 	
 	json.Web.UI.NavColor = document.getElementById("NavColor").value
 	json.Web.UI.BodyColor = document.getElementById("BodyColor").value
+	json.Web.UI.DividerColor = document.getElementById("DividerColor").value
+	json.Web.UI.DividerStyle = document.getElementById("DividerStyle").value
+	json.Web.UI.DividerThickness = document.getElementById("DividerThickness").value
+	
+	
 	
 	jsonstring = JSON.stringify(json)
 	console.log(jsonstring)

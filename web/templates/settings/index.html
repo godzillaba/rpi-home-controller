@@ -77,11 +77,40 @@
 		    </div>
 		</div>
 		
+		
+		<div class="row">
+		    <div class="input-field col s6">
+		      <input value="{{ data.Web.UI.LabelColor }}" id="LabelColor" type="text" class="validate">
+		      <label class="active" for="LabelColor">Group Label Text Color</label>
+		    </div>
+		    <div class="input-field col s6">
+		      <input value="{{ data.Web.UI.WaveType }}" id="WaveType" type="text" class="validate">
+		      <label class="active" for="WaveType">Switch Wave Effect Type</label>
+		    </div>
+		</div>
+		
+		<div class="row">
+		    <div class="input-field col s4">
+		      <input value="{{ data.Web.UI.DividerColor }}" id="DividerColor" type="text" class="validate">
+		      <label class="active" for="DividerColor">Group Divider Color</label>
+		    </div>
+		    <div class="input-field col s4">
+		      <input value="{{ data.Web.UI.DividerStyle }}" id="DividerStyle" type="text" class="validate">
+		      <label class="active" for="DividerStyle">Group Divider Style</label>
+		    </div>
+		    <div class="input-field col s4">
+		      <input value="{{ data.Web.UI.DividerThickness }}" id="DividerThickness" type="text" class="validate">
+		      <label class="active" for="DividerThickness">Group Divider Thickness</label>
+		    </div>
+		</div>
+		
 		<a class="btn waves-effect waves-light" name="submitbutton" onclick="send_json_data()">Submit
 		    <i class="mdi-content-send right"></i>
 		</a>
 		</form>
     </div>
+	
+	
 	
 </body>
 <html>
