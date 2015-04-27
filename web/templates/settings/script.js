@@ -12,11 +12,17 @@ var send_json_data = function () {
 	
 	json.Web.UI.NavColor = document.getElementById("NavColor").value
 	json.Web.UI.BodyColor = document.getElementById("BodyColor").value
+	json.Web.UI.ChromeHeaderColor = document.getElementById("ChromeHeaderColor").value
+	
+	
 	json.Web.UI.DividerColor = document.getElementById("DividerColor").value
 	json.Web.UI.DividerStyle = document.getElementById("DividerStyle").value
 	json.Web.UI.DividerThickness = document.getElementById("DividerThickness").value
 	
-	
+	json.Web.UI.SwitchKnobColorOff = document.getElementById("SwitchKnobColorOff").value
+	json.Web.UI.SwitchKnobColorOn = document.getElementById("SwitchKnobColorOn").value
+	json.Web.UI.SwitchBGColorOff = document.getElementById("SwitchBGColorOff").value
+	json.Web.UI.SwitchBGColorOn = document.getElementById("SwitchBGColorOn").value
 	
 	jsonstring = JSON.stringify(json)
 	console.log(jsonstring)
