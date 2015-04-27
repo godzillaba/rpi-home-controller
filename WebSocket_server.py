@@ -14,6 +14,7 @@ class MyServerProtocol(WebSocketServerProtocol):
         print("WebSocket connection open.")
 
     def onMessage(self, payload, isBinary):
+        global json_out
         print("Text message received: {0}".format(payload.decode('utf8')))
         cmd = payload.split('=')[0]
 
@@ -25,6 +26,15 @@ class MyServerProtocol(WebSocketServerProtocol):
                 self.sendMessage("PIN %s %s" % (p.num, toggle_output))
         elif cmd == "ALLRELAYS":
             gpio.toggle_all_relays(int(payload.split('=')[1]))
+        elif cmd == "GETJSON":
+                self.sendMessage("JSON----------" + json_out)
+        elif cmd == "SAVEJSON":
+                jsontext = payload.split('=')[1]
+                json_in = json.loads(jsontext)
+                json_out = json.dumps(json_in, indent=4)
+                with open('data.json', 'w') as data_file:
+                        data_file.truncate()
+                        data_file.write(json_out)
 
 
     def onClose(self, wasClean, code, reason):
@@ -32,6 +42,7 @@ class MyServerProtocol(WebSocketServerProtocol):
 
 with open('data.json') as data_file:
     data = json.load(data_file)
+    json_out = json.dumps(data, indent=4)
 
 port = int(data['WebSocket']['port'])
 address = "ws://localhost:%s" % port
