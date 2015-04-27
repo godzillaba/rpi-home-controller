@@ -48,9 +48,9 @@
 	</div>
 	
 	<ul id='dropdown1' class='dropdown-content'>
-	    <li><a href="#!">UI</a></li>
+	    <li><a href="UI-settings.html">UI</a></li>
 	    <li><a href="Network-settings.html">Network</a></li>
-	    <li><a href="Groups-settings.html">Groups</a></li>
+	    <li><a href="#!">Groups</a></li>
 	  </ul>
 	
     <!-- begin "body" -->
@@ -80,7 +80,7 @@
 		
 		</div>
 		
-		<div id="UIForm">
+		<div id="UIForm" class='hide'>
 		
 			<div class="row">
 			    <div class="input-field col s4">
@@ -133,6 +133,9 @@
 		
 		</div>
 		
+		<div class="addbuttoncontainer">
+			<a class="btn-floating btn-large waves-effect waves-light teal"><i class="mdi-content-add"></i></a>
+		</div>
 		<div class="submitcontainer">
 			<a class="btn waves-effect waves-light" name="submitbutton" onclick="send_json_data()">Submit
 		    	<i class="mdi-content-send right"></i>
@@ -144,10 +147,17 @@
 	
 	<style type='text/css'>
 	
+	div.addbuttoncontainer {
+		float: right;
+		margin-bottom:10px;
+		margin-right: 30px;
+	}
+	
 	div.submitcontainer {
 		float: right;
 		margin-bottom: 30px;
 		margin-right: 30px;
+		clear: both;
 	}
 	
 	</style>
