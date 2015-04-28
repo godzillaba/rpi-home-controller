@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block nav_settings_active %}active{% endblock %}
+
+{% block content %}
+
+
+    <div id='content'>
+		
+		<div style="margin-top:30px"></div>
+		<form id='form1'>
+		
+		<div id="NetworkForm" class='{% block NetworkForm_show %}hide{% endblock %}'>
+		
+			<div class="row">
+			    <div class="input-field col s4">
+			      <input value="{{ data.HTTP.port }}" id="HTTP_Port" type="text" class="validate">
+			      <label class="active" for="HTTP_Port">HTTP Port</label>
+			    </div>
+			    <div class="input-field col s4">
+			      <input value="{{ data.WebSocket.port }}" id="WebSocket_Port" type="text" class="validate">
+			      <label class="active" for="HTTP_Port">WebSocket Port</label>
+			    </div>
+			    <div class="input-field col s4">
+			      <input value="{{ data.TCP.port }}" id="TCP_Port" type="text" class="validate">
+			      <label class="active" for="HTTP_Port">TCP Port</label>
+			    </div>
+			</div>
+		
+		</div>
+		
+		<div id="UIForm" class='{% block UIForm_show %}hide{% endblock %}'>
+		
+			<div class="row">
+			    <div class="input-field col s4">
+			      <input value="{{ data.Web.UI.NavColor }}" id="NavColor" type="text" class="validate">
+			      <label class="active" for="NavColor">Navigation Bar Color</label>
+			    </div>
+			    <div class="input-field col s4">
+			      <input value="{{ data.Web.UI.BodyColor }}" id="BodyColor" type="text" class="validate">
+			      <label class="active" for="BodyColor">Body Color</label>
+			    </div>
+			    <div class="input-field col s4">
+			      <input value="{{ data.Web.UI.ChromeHeaderColor }}" id="ChromeHeaderColor" type="text" class="validate">
+			      <label class="active" for="ChromeHeaderColor">Android 5 Chrome Header Color</label>
+			    </div>
+			</div>
+			
+			
+			<div class="row">
+			    <div class="input-field col s4">
+			      <input value="{{ data.Web.UI.LabelColor }}" id="LabelColor" type="text" class="validate">
+			      <label class="active" for="LabelColor">Group Label Text Color</label>
+			    </div>
+			    <div class="input-field col s4">
+			      <input value="{{ data.Web.UI.WaveType }}" id="WaveType" type="text" class="validate">
+			      <label class="active" for="WaveType">Switch Wave Effect Type</label>
+			    </div>
+			    <div class="input-field col s4">
+			      <input value="{{ data.Web.UI.CardColor }}" id="CardColor" type="text" class="validate">
+			      <label class="active" for="CardColor">Card Color</label>
+			    </div>
+			</div>
+			
+			
+			<div class="row">
+			    <div class="input-field col s6">
+			      <input value="{{ data.Web.UI.SwitchKnobColorOff }}" id="SwitchKnobColorOff" type="text" class="validate">
+			      <label class="active" for="SwitchKnobColorOff">Switch Knob (OFF)</label>
+			    </div>
+			    <div class="input-field col s6">
+			      <input value="{{ data.Web.UI.SwitchKnobColorOn }}" id="SwitchKnobColorOn" type="text" class="validate">
+			      <label class="active" for="SwitchKnobColorOn">Switch Knob (ON)</label>
+			    </div>
+			</div>
+			<div class="row">
+				<div class="input-field col s6">
+			      <input value="{{ data.Web.UI.SwitchBGColorOff }}" id="SwitchBGColorOff" type="text" class="validate">
+			      <label class="active" for="SwitchBGColorOff">Switch Background (OFF)</label>
+			    </div>
+			    <div class="input-field col s6">
+			      <input value="{{ data.Web.UI.SwitchBGColorOn }}" id="SwitchBGColorOn" type="text" class="validate">
+			      <label class="active" for="SwitchBGColorOn">Switch Background (ON)</label>
+			    </div>
+			</div>
+		
+		</div>
+		
+		<div id="GroupsForm" class="{% block GroupsForm_show %}hide{% endblock %}">
+			{% for group in data.Web.Groups %}
+			
+				<div class="row switchgroupdata">
+					<div class="input-field col s6">
+	  			      <input value="{{ group.description }}" id="{{ group.description }}_description" type="text" class="validate desc">
+	  			      <label class="active" for="{{group.description}}_desctipion">Label</label>
+					</div>
+					
+					<div class="input-field col s6">
+	  			      <input value="{{ group.gpiopin }}" id="{{ group.description }}_gpiopin" type="text" class="validate gpiopin">
+	  			      <label class="active" for="{{group.description}}_gpiopin">GPIO Pin</label>
+					</div>
+					
+				</div>
+			
+			
+			{% endfor %}
+			
+			<div class="row switchgroupdata">
+				<div class="input-field col s6">
+	  		      <input value="" id="NEW_description" type="text" class="validate desc">
+	  		      <label class="active" for="NEW_desctipion">Label</label>
+				</div>
+				
+				<div class="input-field col s6">
+	  		      <input value="" id="NEW_gpiopin" type="text" class="validate gpiopin">
+	  		      <label class="active" for="NEW_gpiopin">GPIO Pin</label>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+		
+		<div class="submitcontainer">
+			<a class="btn waves-effect waves-light" name="submitbutton" onclick="send_json_data()">Submit
+		    	<i class="mdi-content-send right"></i>
+			</a>
+		</div>
+		</form>
+    </div>
+	
+	
+	<style type='text/css'>
+	
+	div.submitcontainer {
+		float: right;
+		margin-bottom: 30px;
+		margin-right: 30px;
+		clear: both;
+	}
+	
+	html {
+		color: white;
+	}
+	
+	</style>
+
+
+
+
+{% endblock %}
