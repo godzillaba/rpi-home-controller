@@ -20,7 +20,8 @@
             "SwitchKnobColorOn": "#00ddff", 
             "LabelColor": "white-text", 
             "SwitchKnobColorOff": "", 
-            "SwitchBGColorOn": "#0099cc"
+            "SwitchBGColorOn": "#0099cc",
+			"CardColor": "grey darken-2"
         }, 
         "Groups": [
             {
