@@ -24,6 +24,7 @@ var send_json_data = function () {
 	json.Web.UI.SwitchBGColorOn = document.getElementById("SwitchBGColorOn").value
 
 	json.Web.UI.SettingsFontColor = document.getElementById("SettingsFontColor").value
+	json.Web.UI.FontWeight = document.getElementById("FontWeight").value
 	
 	
 	var GroupInputs = document.getElementById('GroupsForm').getElementsByClassName('switchgroupdata')

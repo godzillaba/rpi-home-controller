@@ -18,11 +18,12 @@
             "ChromeHeaderColor": "#26a69a", 
             "BodyColor": "white", 
             "WaveType": "", 
-            "SwitchKnobColorOn": "#ab47bc", 
-            "LabelColor": "black-text", 
-            "SettingsFontColor": "black", 
+            "SwitchKnobColorOn": "", 
+            "LabelColor": "#616161", 
+            "SettingsFontColor": "", 
             "SwitchKnobColorOff": "", 
-            "SwitchBGColorOn": "#ce93d8"
+            "FontWeight": "300", 
+            "SwitchBGColorOn": ""
         }, 
         "Groups": [
             {
