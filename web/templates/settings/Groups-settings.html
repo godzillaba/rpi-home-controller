@@ -133,18 +133,18 @@
 		
 		</div>
 		
-		<div id="GroupsFrom">
+		<div id="GroupsForm">
 			{% for group in data.Web.Groups %}
 			
-				<div class="row">
+				<div class="row switchgroupdata">
 					<div class="input-field col s6">
-	  			      <input value="{{ group.description }}" id="{{ group.description }}-description" type="text" class="validate">
-	  			      <label class="active" for="{{group.description}}-desctipion">Label</label>
+	  			      <input value="{{ group.description }}" id="{{ group.description }}_description" type="text" class="validate desc">
+	  			      <label class="active" for="{{group.description}}_desctipion">Label</label>
 					</div>
 					
 					<div class="input-field col s6">
-	  			      <input value="{{ group.gpiopin }}" id="{{ group.description }}-gpiopin" type="text" class="validate">
-	  			      <label class="active" for="{{group.description}}-gpiopin">GPIO Pin</label>
+	  			      <input value="{{ group.gpiopin }}" id="{{ group.description }}_gpiopin" type="text" class="validate gpiopin">
+	  			      <label class="active" for="{{group.description}}_gpiopin">GPIO Pin</label>
 					</div>
 					
 				</div>
@@ -152,15 +152,15 @@
 			
 			{% endfor %}
 			
-			<div class="row">
+			<div class="row switchgroupdata">
 				<div class="input-field col s6">
-	  		      <input value="" id="NEW-description" type="text" class="validate">
-	  		      <label class="active" for="NEW-desctipion">Label</label>
+	  		      <input value="" id="NEW_description" type="text" class="validate desc">
+	  		      <label class="active" for="NEW_desctipion">Label</label>
 				</div>
 				
 				<div class="input-field col s6">
-	  		      <input value="" id="NEW-gpiopin" type="text" class="validate">
-	  		      <label class="active" for="NEW-gpiopin">GPIO Pin</label>
+	  		      <input value="" id="NEW_gpiopin" type="text" class="validate gpiopin">
+	  		      <label class="active" for="NEW_gpiopin">GPIO Pin</label>
 				</div>
 				
 			</div>

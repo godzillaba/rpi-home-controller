@@ -19,11 +19,29 @@ var send_json_data = function () {
 	json.Web.UI.SwitchBGColorOff = document.getElementById("SwitchBGColorOff").value
 	json.Web.UI.SwitchBGColorOn = document.getElementById("SwitchBGColorOn").value
 	
+	var GroupInputs = document.getElementById('GroupsForm').getElementsByClassName('switchgroupdata')
+	
+	
+	
+	json.Web.Groups = []
+	
+	for (var i=0; i<GroupInputs.length; i++) {
+	    var d = GroupInputs[i]
+		console.log(d)
+		var inputs = d.getElementsByTagName("input")
+		var desc = inputs[0].value
+		var gpin = inputs[1].value
+		if (desc && gpin){
+			json["Web"]["Groups"].push({"description":desc, "gpiopin":gpin})
+		}
+	}
+		
+	
 	jsonstring = JSON.stringify(json)
 	console.log(jsonstring)
 	socket.send("SAVEJSON=" + jsonstring)
 	Materialize.toast("Sent JSON data", 3000)
-	
+
 }
 
 window.onload = function() {
