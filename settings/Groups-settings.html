@@ -1,0 +1,269 @@
+<html lang=""><head>
+    <meta charset="utf-8">
+    <meta id="wsport" content="9000">  
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    
+    <title>Control Panel - Settings</title>
+    
+    <script src="script.js"></script><style type="text/css"></style>
+    
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.css" media="screen,projection">
+    
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+     
+	 
+	 
+	<!-- lollipop chrome top bar color -->
+	<meta name="theme-color" content="#26a69a">
+</head>
+
+
+	<body class="white">
+		
+
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
+	
+	<div class="navbar-fixed">
+    	<nav>
+    	    <div class="nav-wrapper teal">
+    	        <ul id="nav-mobile" class="left">
+    	            <li class=""><a href="/home/"><i class="mdi-action-home"></i></a></li>
+    	            <li class="active"><a href="#!" class="dropdown-button" data-activates="dropdown1"><i class="mdi-action-settings"></i></a><ul id="dropdown1" class="dropdown-content">
+	    <li><a href="/settings/UI-settings.html">UI</a></li>
+	    <li><a href="/settings/Network-settings.html">Network</a></li>
+	    <li><a href="/settings/Groups-settings.html">Groups</a></li>
+	</ul></li>
+    	        </ul>
+    	        <ul id="nav-mobile" class="right">
+    	            <li><a href="https://github.com/therealtylerdurden/rpi-home-controller/"><i><img src="/GH-mk.png"></i></a></li>
+    	        </ul>
+    	    </div>
+    	</nav>
+	</div>
+	
+	
+	
+
+    <!-- begin "body" -->
+
+    <!-- switch div naming/id scheme: name=(gpio pin number) id=(Text above switch eg. "TV") -->
+	
+
+
+    <div id="content">
+		
+		<div style="margin-top:30px"></div>
+		<form id="form1">
+		
+		<div id="NetworkForm" class="hide">
+		
+			<div class="row">
+			    <div class="input-field col s4">
+			      <input value="8080" id="HTTP_Port" type="text" class="validate">
+			      <label class="active" for="HTTP_Port">HTTP Port</label>
+			    </div>
+			    <div class="input-field col s4">
+			      <input value="9000" id="WebSocket_Port" type="text" class="validate">
+			      <label class="active" for="HTTP_Port">WebSocket Port</label>
+			    </div>
+			    <div class="input-field col s4">
+			      <input value="5432" id="TCP_Port" type="text" class="validate">
+			      <label class="active" for="HTTP_Port">TCP Port</label>
+			    </div>
+			</div>
+		
+		</div>
+		
+		<div id="UIForm" class="hide">
+		
+			<div class="row">
+			    <div class="input-field col s4">
+			      <input value="teal" id="NavColor" type="text" class="validate">
+			      <label class="active tooltipped" for="NavColor" data-position="right" data-delay="50" data-tooltip="Materialize Color Pallete - materializecss.com">Navigation Bar Color (Materialize)</label>
+			    </div>
+			    <div class="input-field col s4">
+			      <input value="white" id="BodyColor" type="text" class="validate">
+			      <label class="active" for="BodyColor">Body Color</label>
+			    </div>
+			    <div class="input-field col s4">
+			      <input value="#26a69a" id="ChromeHeaderColor" type="text" class="validate">
+			      <label class="active" for="ChromeHeaderColor">Lollipop Header Color (hex)</label>
+			    </div>
+			</div>
+			
+			
+			<div class="row">
+			    <div class="input-field col s4">
+			      <input value="#616161" id="LabelColor" type="text" class="validate">
+			      <label class="active" for="LabelColor">Group Label Text Color</label>
+			    </div>
+			    <div class="input-field col s4">
+			      <input value="" id="WaveType" type="text" class="validate">
+			      <label class="" for="WaveType">Switch Wave Effect Type</label>
+			    </div>
+			    <div class="input-field col s4">
+			      <input value="grey lighten-3" id="CardColor" type="text" class="validate">
+			      <label class="active tooltipped" for="NavColor" data-position="left" data-delay="50" data-tooltip="Materialize Color Pallete - materializecss.com">Card Color (Materialize)</label>
+			    </div>
+			</div>
+			
+			
+			<div class="row">
+			    <div class="input-field col s6">
+			      <input value="" id="SwitchKnobColorOff" type="text" class="validate">
+			      <label class="" for="SwitchKnobColorOff">Switch Knob (OFF) (hex)</label>
+			    </div>
+			    <div class="input-field col s6">
+			      <input value="" id="SwitchKnobColorOn" type="text" class="validate">
+			      <label class="" for="SwitchKnobColorOn">Switch Knob (ON) (hex)</label>
+			    </div>
+			</div>
+			<div class="row">
+				<div class="input-field col s6">
+			      <input value="" id="SwitchBGColorOff" type="text" class="validate">
+			      <label class="" for="SwitchBGColorOff">Switch Background (OFF) (hex)</label>
+			    </div>
+			    <div class="input-field col s6">
+			      <input value="" id="SwitchBGColorOn" type="text" class="validate">
+			      <label class="" for="SwitchBGColorOn">Switch Background (ON) (hex)</label>
+			    </div>
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s6">
+			      <input value="" id="SettingsFontColor" type="text" class="validate">
+			      <label class="" for="SettingsFontColor">Settings Font Color (hex)</label>
+			    </div>
+				<div class="input-field col s6">
+			      <input value="300" id="FontWeight" type="text" class="validate">
+			      <label class="active" for="FontWeight">Font Weight</label>
+			    </div>
+			</div>		
+		</div>
+		
+		<div id="GroupsForm" class="">
+			
+			
+				<div class="row switchgroupdata">
+					<div class="input-field col s6">
+	  			      <input value="AC" id="AC_description" type="text" class="validate desc">
+	  			      <label class="active" for="AC_desctipion">Label</label>
+					</div>
+					
+					<div class="input-field col s6">
+	  			      <input value="40" id="AC_gpiopin" type="text" class="validate gpiopin">
+	  			      <label class="active" for="AC_gpiopin">GPIO Pin</label>
+					</div>
+					
+				</div>
+			
+			
+			
+			
+				<div class="row switchgroupdata">
+					<div class="input-field col s6">
+	  			      <input value="TV" id="TV_description" type="text" class="validate desc">
+	  			      <label class="active" for="TV_desctipion">Label</label>
+					</div>
+					
+					<div class="input-field col s6">
+	  			      <input value="22" id="TV_gpiopin" type="text" class="validate gpiopin">
+	  			      <label class="active" for="TV_gpiopin">GPIO Pin</label>
+					</div>
+					
+				</div>
+			
+			
+			
+			
+				<div class="row switchgroupdata">
+					<div class="input-field col s6">
+	  			      <input value="Desk Lamp" id="Desk Lamp_description" type="text" class="validate desc">
+	  			      <label class="active" for="Desk Lamp_desctipion">Label</label>
+					</div>
+					
+					<div class="input-field col s6">
+	  			      <input value="18" id="Desk Lamp_gpiopin" type="text" class="validate gpiopin">
+	  			      <label class="active" for="Desk Lamp_gpiopin">GPIO Pin</label>
+					</div>
+					
+				</div>
+			
+			
+			
+			
+				<div class="row switchgroupdata">
+					<div class="input-field col s6">
+	  			      <input value="Bedside Lamp" id="Bedside Lamp_description" type="text" class="validate desc">
+	  			      <label class="active" for="Bedside Lamp_desctipion">Label</label>
+					</div>
+					
+					<div class="input-field col s6">
+	  			      <input value="15" id="Bedside Lamp_gpiopin" type="text" class="validate gpiopin">
+	  			      <label class="active" for="Bedside Lamp_gpiopin">GPIO Pin</label>
+					</div>
+					
+				</div>
+			
+			
+			
+			
+			<div class="row switchgroupdata">
+				<div class="input-field col s6">
+	  		      <input value="" id="NEW_description" type="text" class="validate desc">
+	  		      <label class="" for="NEW_desctipion">Label</label>
+				</div>
+				
+				<div class="input-field col s6">
+	  		      <input value="" id="NEW_gpiopin" type="text" class="validate gpiopin">
+	  		      <label class="" for="NEW_gpiopin">GPIO Pin</label>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+		
+		<div class="submitcontainer">
+			<a class="btn waves-effect waves-light" name="submitbutton" onclick="send_json_data()">Submit
+		    	<i class="mdi-content-send right"></i>
+			</a>
+		</div>
+		</form>
+    </div>
+	
+	
+	<style type="text/css">
+	
+	div.submitcontainer {
+		float: right;
+		margin-bottom: 30px;
+		margin-right: 30px;
+		clear: both;
+	}
+	
+	html {
+		color: ;
+	}
+	
+	</style>
+
+
+
+
+
+	
+	<style>
+	
+	html {
+		font-weight: 300;
+	}
+	
+	</style>
+	
+
+<div class="material-tooltip"><span>Materialize Color Pallete - materializecss.com</span><div class="backdrop" style="top: 0px; left: 0px;"></div></div><div class="material-tooltip"><span>Materialize Color Pallete - materializecss.com</span><div class="backdrop" style="top: 0px; left: 0px;"></div></div><div class="hiddendiv common"></div><div id="toast-container"></div></body></html>
