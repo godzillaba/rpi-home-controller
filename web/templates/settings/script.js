@@ -16,6 +16,7 @@ var send_json_data = function () {
 	
 	json.Web.UI.LabelColor = document.getElementById("LabelColor").value
 	json.Web.UI.WaveType = document.getElementById("WaveType").value
+	json.Web.UI.CardColor = document.getElementById("CardColor").value
 	
 	json.Web.UI.SwitchKnobColorOff = document.getElementById("SwitchKnobColorOff").value
 	json.Web.UI.SwitchKnobColorOn = document.getElementById("SwitchKnobColorOn").value
