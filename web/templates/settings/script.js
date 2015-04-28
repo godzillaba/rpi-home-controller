@@ -22,6 +22,8 @@ var send_json_data = function () {
 	json.Web.UI.SwitchKnobColorOn = document.getElementById("SwitchKnobColorOn").value
 	json.Web.UI.SwitchBGColorOff = document.getElementById("SwitchBGColorOff").value
 	json.Web.UI.SwitchBGColorOn = document.getElementById("SwitchBGColorOn").value
+
+	json.Web.UI.SettingsFontColor = document.getElementById("SettingsFontColor").value
 	
 	
 	var GroupInputs = document.getElementById('GroupsForm').getElementsByClassName('switchgroupdata')

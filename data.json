@@ -12,16 +12,17 @@
     }, 
     "Web": {
         "UI": {
-            "NavColor": "purple lighten-1", 
+            "NavColor": "teal", 
             "SwitchBGColorOff": "", 
-            "CardColor": "grey darken-3", 
-            "ChromeHeaderColor": "#ba68c8", 
-            "BodyColor": "grey darken-4", 
-            "WaveType": "waves-purple", 
+            "CardColor": "grey lighten-3", 
+            "ChromeHeaderColor": "#26a69a", 
+            "BodyColor": "white", 
+            "WaveType": "", 
             "SwitchKnobColorOn": "#ab47bc", 
-            "LabelColor": "purple-text text-lighten-3", 
+            "LabelColor": "black-text", 
+            "SettingsFontColor": "black", 
             "SwitchKnobColorOff": "", 
-            "SwitchBGColorOn": "AC1"
+            "SwitchBGColorOn": "#ce93d8"
         }, 
         "Groups": [
             {
