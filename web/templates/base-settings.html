@@ -95,7 +95,19 @@
 			      <input value="{{ data.Web.UI.FontWeight }}" id="FontWeight" type="text" class="validate">
 			      <label class="active" for="FontWeight">Font Weight</label>
 			    </div>
-			</div>		
+			</div>
+			
+			<div class="row">
+				<div class="input-field col s6">
+			      <input value="{{ data.Web.UI.DropDownColor }}" id="DropDownColor" type="text" class="validate">
+			      <label class="active" for="DropDownColor">Settings Menu Color</label>
+			    </div>
+				<div class="input-field col s6">
+			      <input value="{{ data.Web.UI.DropDownText }}" id="DropDownText" type="text" class="validate">
+			      <label class="active" for="DropDownText">Drop Down Text Color</label>
+			    </div>
+			</div>
+					
 		</div>
 		
 		<div id="GroupsForm" class="{% block GroupsForm_show %}hide{% endblock %}">

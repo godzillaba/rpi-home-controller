@@ -26,6 +26,9 @@ var send_json_data = function () {
 	json.Web.UI.SettingsFontColor = document.getElementById("SettingsFontColor").value
 	json.Web.UI.FontWeight = document.getElementById("FontWeight").value
 	
+	json.Web.UI.DropDownColor = document.getElementById("DropDownColor").value
+	json.Web.UI.DropDownText = document.getElementById("DropDownText").value
+	
 	
 	var GroupInputs = document.getElementById('GroupsForm').getElementsByClassName('switchgroupdata')
 	json.Web.Groups = []

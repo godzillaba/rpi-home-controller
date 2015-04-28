@@ -12,18 +12,20 @@
     }, 
     "Web": {
         "UI": {
-            "NavColor": "teal", 
+            "NavColor": "", 
             "SwitchBGColorOff": "", 
-            "CardColor": "grey lighten-3", 
-            "ChromeHeaderColor": "#26a69a", 
-            "BodyColor": "white", 
-            "WaveType": "", 
-            "SwitchKnobColorOn": "", 
-            "LabelColor": "#616161", 
-            "SettingsFontColor": "", 
+            "CardColor": "grey darken-3", 
+            "ChromeHeaderColor": "#ef9a9a", 
+            "BodyColor": "grey darken-4", 
+            "WaveType": "waves-red", 
+            "DropDownColor": "white", 
+            "DropDownText": "red-text text-lighten-1", 
+            "SwitchKnobColorOn": "#e57373", 
+            "LabelColor": "red-text text-lighten-2", 
+            "SettingsFontColor": "white", 
             "SwitchKnobColorOff": "", 
             "FontWeight": "300", 
-            "SwitchBGColorOn": ""
+            "SwitchBGColorOn": "#ef9a9a"
         }, 
         "Groups": [
             {
