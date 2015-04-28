@@ -16,7 +16,7 @@
             "SwitchBGColorOff": "", 
             "ChromeHeaderColor": "#1565c0", 
             "BodyColor": "grey darken-3", 
-            "WaveType": "waves-light", 
+            "WaveType": "waves-holo", 
             "SwitchKnobColorOn": "#00ddff", 
             "LabelColor": "white-text", 
             "SwitchKnobColorOff": "", 
