@@ -5,7 +5,7 @@ from twisted.internet import reactor
 from server_lib import gpio
 import json
 
-class MyServerProtocol(WebSocketServerProtocol):
+class ws_server(WebSocketServerProtocol):
 
     def onConnect(self, request):
         print("Client connecting: {0}".format(request.peer))
@@ -50,6 +50,6 @@ address = "ws://localhost:%s" % port
 def main():
 	log.startLogging(sys.stdout)
 	factory = WebSocketServerFactory(address, debug=False)
-	factory.protocol = MyServerProtocol
+	factory.protocol = ws_server
 	reactor.listenTCP(port, factory)
 	reactor.run()

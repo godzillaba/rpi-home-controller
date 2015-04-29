@@ -5,31 +5,13 @@ from server_lib import render_html
 import json
 import base64
 
-with open('data.json') as data_file:    
-	    data = json.load(data_file)
-
-PORT = int(data["HTTP"]['port'])
-
-
-with open('users.json') as users_file:
-	users = json.load(users_file)["Users"]
-
-keys = []
-
-for user in users:
-	key = base64.b64encode(user)
-	keys.append(key)
-
 class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
 	def render(self, template_path):
-		self.send_response(200)
-        	self.send_header('Content-type','text/html')
-        	self.end_headers()
+		self.do_HEAD()
         	self.wfile.write(render_html.main(template_path))
         	return
                 
         def do_HEAD(self):
-                print "send header"
                 self.send_response(200)
                 self.send_header('Content-type', 'text/html')
                 self.end_headers()
@@ -41,9 +23,9 @@ class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
                 self.send_header('Content-type', 'text/html')
                 self.end_headers()
  
-        def do_GET(self):
-                global key
-                if self.headers.getheader('Authorization') == None:
+        def auth(self):
+        	global key
+        	if self.headers.getheader('Authorization') == None:
                         self.do_AUTHHEAD()
                         self.wfile.write('no auth header received')
                         pass
@@ -54,7 +36,22 @@ class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
                         self.do_AUTHHEAD()
                         self.wfile.write(self.headers.getheader('Authorization'))
                         self.wfile.write('not authenticated')
-                        pass         
+                        pass
+
+        def do_GET(self):
+                global exempt_subnets
+
+                addr = self.client_address[0]
+                subnet = addr.rsplit('.',1)[0]
+
+                print addr, subnet, exempt_subnets
+
+                if subnet in exempt_subnets:
+                	self.do_GET_authed()
+
+                else:
+                	self.auth()
+                        
 
 	def do_GET_authed(self):
 		template_path = self.path
@@ -80,7 +77,25 @@ class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
 				SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
 		else:
 			SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
-	
+
+
+
+with open('data.json') as data_file:
+	data = json.load(data_file)
+
+with open('users.json') as users_file:
+	users = json.load(users_file)["Users"]
+
+PORT = int(data["HTTP"]['port'])
+
+keys = []
+
+for user in users:
+	key = base64.b64encode(user)
+	keys.append(key)
+
+
+exempt_subnets = data["Web"]["Exempt_Subnets"]
 
 Handler = render
 Handler.allow_reuse_address = True

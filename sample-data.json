@@ -24,7 +24,7 @@
             "LabelColor": "red-text text-lighten-2", 
             "SettingsFontColor": "white", 
             "SwitchKnobColorOff": "", 
-            "FontWeight": "300", 
+            "FontWeight": "200", 
             "SwitchBGColorOn": "#ef9a9a"
         }, 
         "Groups": [
@@ -44,6 +44,9 @@
                 "description": "Bedside Lamp", 
                 "gpiopin": "15"
             }
+        ],
+        "Exempt_Subnets": [
+            "192.168.1"
         ]
     }
 }
