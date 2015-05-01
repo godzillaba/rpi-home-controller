@@ -1,2 +1,2 @@
 # RPi Home Controller
-http://therealtylerdurden.github.io/rpi-home-controller/
+http://c0depizza.github.io/rpi-home-controller/
