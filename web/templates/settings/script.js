@@ -30,20 +30,36 @@ var send_json_data = function () {
 	json.Web.UI.DropDownText = document.getElementById("DropDownText").value
 	
 	
-	var GroupInputs = document.getElementById('GroupsForm').getElementsByClassName('switchgroupdata')
-	json.Web.Groups = []
-		
-	for (var i=0; i<GroupInputs.length; i++) {
-	    var d = GroupInputs[i]
-		console.log(d)
-		var inputs = d.getElementsByTagName("input")
-		var desc = inputs[0].value
-		var gpin = inputs[1].value
-		if (desc && gpin){
-			json["Web"]["Groups"].push({"description":desc, "gpiopin":gpin})
-		}
-	}
-		
+    var addressdivs = document.getElementsByClassName('address_group')
+    var GroupInputs = document.getElementById('GroupsForm').getElementsByClassName('switchgroupdata')
+ 	json.Web.Groups = []
+    
+    for (var x = 0; x < addressdivs.length; x ++) {
+        
+        var addr = addressdivs[x].getElementsByClassName('addr')[0].value
+        console.log(addr)
+        json.Web.Groups[x] = []
+        
+        json["Web"]["Groups"][x].push(addr)
+        
+        var addr_groups = addressdivs[x].getElementsByClassName('switchgroupdata')
+        console.log(addr_groups)
+        
+        for (var i=0; i<addr_groups.length; i++) {
+            var d = addr_groups[i]
+            console.log(d)
+            var inputs = d.getElementsByTagName("input")
+            var desc = inputs[0].value
+            var gpin = inputs[1].value
+            if (desc && gpin){
+            	json["Web"]["Groups"][x].push({"description":desc, "gpiopin":gpin})
+            }
+        }
+    }
+    
+    
+
+    console.log(json)
 	
 	jsonstring = JSON.stringify(json)
 	console.log(jsonstring)

@@ -111,8 +111,19 @@
 		</div>
 		
 		<div id="GroupsForm" class="{% block GroupsForm_show %}hide{% endblock %}">
-			{% for group in data.Web.Groups %}
-			
+			{% for address in data.Web.Groups %}
+				<div class="card grey darken-3 address_group">
+				
+				<div class="row">
+				<div class="input-field col s12">
+  			      <input value="{{ address[0] }}" id="{{ address[0] }}" type="text" class="validate addr">
+  			      <label class="active" for="{{ address[0] }}">Address</label>
+				</div>
+				</div>
+				
+				{% for group in address %}
+				
+				{% if group.description and group.gpiopin %}
 				<div class="row switchgroupdata">
 					<div class="input-field col s6">
 	  			      <input value="{{ group.description }}" id="{{ group.description }}_description" type="text" class="validate desc">
@@ -125,9 +136,13 @@
 					</div>
 					
 				</div>
-			
-			
+				{% endif %}
+				{% endfor %}
+				</div>
 			{% endfor %}
+			
+			
+			<!-- revise add new section -->
 			
 			<div class="row switchgroupdata">
 				<div class="input-field col s6">
