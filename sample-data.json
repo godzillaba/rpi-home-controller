@@ -28,22 +28,26 @@
             "SwitchBGColorOn": "#ef9a9a"
         }, 
         "Groups": [
-            {
-                "description": "AC", 
-                "gpiopin": "40"
-            }, 
-            {
-                "description": "TV", 
-                "gpiopin": "22"
-            }, 
-            {
-                "description": "Desk Lamp", 
-                "gpiopin": "18"
-            }, 
-            {
-                "description": "Bedside Lamp", 
-                "gpiopin": "15"
-            }
+            [
+				"self",
+				{
+            	    "description": "AC", 
+            	    "gpiopin": "40"
+            	}, 
+            	{
+            	    "description": "TV", 
+            	    "gpiopin": "22"
+            	}, 
+            	{
+            	    "description": "Desk Lamp", 
+            	    "gpiopin": "18"
+            	},
+            	{
+            	    "description": "Bedside Lamp", 
+            	    "gpiopin": "15"
+            	}
+            	
+			]
         ],
         "Exempt_Subnets": [
             "192.168.1"
