@@ -6,8 +6,13 @@
 
 {% block content %}
 	<div id='content'>
-        {% for group in data.Web.Groups %}
-
+        
+		{% for address in data.Web.Groups %}
+		<!-- <p>{{ address[0] }}</p> -->
+		<div class="address" id="{{ address[0] }}">
+		{% for group in address %}
+		
+		{% if group.description and group.gpiopin %}
         <div class='switchgroup'>
 			
             <div class="switch">
@@ -36,6 +41,9 @@
 				
             </div>
         </div>
+		{% endif %}
+		{% endfor %}
+	</div>
 		{% endfor %}
     </div>
 	
