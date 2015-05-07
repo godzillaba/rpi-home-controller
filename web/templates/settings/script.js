@@ -38,21 +38,25 @@ var send_json_data = function () {
         
         var addr = addressdivs[x].getElementsByClassName('addr')[0].value
         console.log(addr)
-        json.Web.Groups[x] = []
         
-        json["Web"]["Groups"][x].push(addr)
         
         var addr_groups = addressdivs[x].getElementsByClassName('switchgroupdata')
-        console.log(addr_groups)
         
-        for (var i=0; i<addr_groups.length; i++) {
-            var d = addr_groups[i]
-            console.log(d)
-            var inputs = d.getElementsByTagName("input")
-            var desc = inputs[0].value
-            var gpin = inputs[1].value
-            if (desc && gpin){
-            	json["Web"]["Groups"][x].push({"description":desc, "gpiopin":gpin})
+        if (addr_groups.length > 0 && addr) {
+            json.Web.Groups[x] = []
+            json["Web"]["Groups"][x].push(addr)
+
+            console.log(addr_groups)
+            
+            for (var i=0; i<addr_groups.length; i++) {
+                var d = addr_groups[i]
+                console.log(d)
+                var inputs = d.getElementsByTagName("input")
+                var desc = inputs[0].value
+                var gpin = inputs[1].value
+                if (desc && gpin){
+                	json["Web"]["Groups"][x].push({"description":desc, "gpiopin":gpin})
+                }
             }
         }
     }
