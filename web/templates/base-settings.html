@@ -113,7 +113,7 @@
 		<div id="GroupsForm" class="{% block GroupsForm_show %}hide{% endblock %}">
 			{% for address in data.Web.Groups %}
             
-            <div class="card grey darken-3 address_group">
+            <div class="card address_group {{ data.Web.UI.CardColor }}">
 				
 				<div class="row">
 				<div class="input-field col s12">
@@ -160,7 +160,7 @@
 			
 			<!-- revise add new section -->
 			
-            <div class="card grey darken-3 address_group">
+            <div class="card address_group {{ data.Web.UI.CardColor }}">
 				
 				<div class="row">
 				<div class="input-field col s12">
