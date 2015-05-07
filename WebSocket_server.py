@@ -17,7 +17,7 @@ class ws_server(WebSocketServerProtocol):
         print("Text message received: {0}".format(payload.decode('utf8')))
         cmd = payload.split('=')[0]
 
-       
+
         if cmd == "PIN":
             p = gpio.parse(payload)
             toggle_output = str(p.toggle())
@@ -26,16 +26,16 @@ class ws_server(WebSocketServerProtocol):
         elif cmd == "ALLRELAYS":
             gpio.toggle_all_relays(int(payload.split('=')[1]))
         elif cmd == "GETJSON":
-                with open('data.json') as data_file:
-                    json_out = json.dumps(json.load(data_file))
-                self.sendMessage("JSON----------" + json_out)
+            with open('data.json') as data_file:
+                json_out = json.dumps(json.load(data_file))
+            self.sendMessage("JSON----------" + json_out)
         elif cmd == "SAVEJSON":
-                jsontext = payload.split('=')[1]
-                json_in = json.loads(jsontext)
-                json_to_file = json.dumps(json_in, indent=4)
-                with open('data.json', 'w') as data_file:
-                        data_file.truncate()
-                        data_file.write(json_to_file)
+            jsontext = payload.split('=')[1]
+            json_in = json.loads(jsontext)
+            json_to_file = json.dumps(json_in, indent=4)
+            with open('data.json', 'w') as data_file:
+                data_file.truncate()
+                data_file.write(json_to_file)
 
 
     def onClose(self, wasClean, code, reason):
@@ -48,8 +48,8 @@ port = int(data['WebSocket']['port'])
 address = "ws://localhost:%s" % port
 
 def main():
-	log.startLogging(sys.stdout)
-	factory = WebSocketServerFactory(address, debug=False)
-	factory.protocol = ws_server
-	reactor.listenTCP(port, factory)
-	reactor.run()
+    log.startLogging(sys.stdout)
+    factory = WebSocketServerFactory(address, debug=False)
+    factory.protocol = ws_server
+    reactor.listenTCP(port, factory)
+    reactor.run()

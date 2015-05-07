@@ -28,5 +28,3 @@ http_thread.start()
 
 print "starting ws server on main thread..."
 WebSocket_server.main()
-
-
