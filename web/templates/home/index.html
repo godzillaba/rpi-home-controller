@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<div id='content'>
+<div id='content' class='row'>
 
     {% for address in data.Web.Groups %}
     <div class="address" id="{{ address[0] }}">
@@ -15,7 +15,7 @@
         {% if group.description and group.gpiopin %}
             <div class='switchgroup'>
 
-                <div class="switch">
+                <div class="switch col s12 l6">
                     
                     <div class="card {{ data.Web.UI.CardColor }}">
                     
@@ -52,19 +52,9 @@
 </div>
 
 <style>
-    div.switchgroup {
-        border: 0px dashed white;
-        width: 95%;
-        margin-left: 2.5%;
-    }
-    
     div.divider-spacer {
         height: 1.5em;
         background-color: transparent;
-    }
-    
-    div.divider {
-        margin-left: 60px;
     }
     
     div.switch label span.switchlabel {
