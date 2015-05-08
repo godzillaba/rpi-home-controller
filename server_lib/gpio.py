@@ -35,8 +35,9 @@ def parse(data):
 
 
 def toggle_all_relays(hilo):
-    relaypins = data['Web']['Groups']
+    relaypins = data['Web']['Groups'][0]
     for p in relaypins:
-        rp = pin(int(p['gpiopin']), "OUT", hilo)
-        rp.toggle()
-        logging.info('Initializing relay pin %s (%s)', p['gpiopin'], p['description'])
+        if p != 'self':
+            rp = pin(int(p['gpiopin']), "OUT", hilo)
+            rp.toggle()
+            logging.info('Initializing relay pin %s (%s)', p['gpiopin'], p['description'])
