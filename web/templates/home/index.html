@@ -5,99 +5,102 @@
 {% block nav_home_active %}active{% endblock %}
 
 {% block content %}
-	<div id='content'>
+
+<div id='content'>
+
+    {% for address in data.Web.Groups %}
+    <div class="address" id="{{ address[0] }}">
+        {% for group in address %}
         
-		{% for address in data.Web.Groups %}
-		<!-- <p>{{ address[0] }}</p> -->
-		<div class="address" id="{{ address[0] }}">
-		{% for group in address %}
-		
-		{% if group.description and group.gpiopin %}
-        <div class='switchgroup'>
-			
-            <div class="switch">
-                <div class="card {{ data.Web.UI.CardColor }}">
-				<label class="waves-effect {{ data.Web.UI.WaveType }}" style="width:100%">
-                    <div class='divider-spacer'></div>
-					
-					<div>
-						<div class="switch-label-description-container">
-							{% if data.Web.UI.LabelColor[0] == "#" %}
-								<span class="switchlabel" style="color:{{ data.Web.UI.LabelColor }}">{{ group.description }}</span>
-							{% else %}
-								<span class="switchlabel {{ data.Web.UI.LabelColor }}">{{ group.description }}</span>
-								
-							{% endif %}
-						</div>
-                    	<div class="levercontainer">
-							<input type="checkbox" name="{{ group.gpiopin }}" id="{{ group.description }}" onclick="switch_onclick(this)">
-                    		<span class="lever"></span>
-						</div>
-					</div>
-					
-                    <div class='divider-spacer'></div>
-                </label>
-				</div>
-				
+        {% if group.description and group.gpiopin %}
+            <div class='switchgroup'>
+
+                <div class="switch">
+                    
+                    <div class="card {{ data.Web.UI.CardColor }}">
+                    
+                        <label class="waves-effect {{ data.Web.UI.WaveType }}" style="width:100%">
+                            
+                            <div class='divider-spacer'></div>
+
+                            <div>
+                                <div class="switch-label-description-container">
+                                    {% if data.Web.UI.LabelColor[0] == "#" %}
+                                        <span class="switchlabel" style="color:{{ data.Web.UI.LabelColor }}">{{ group.description }}</span>
+                                    {% else %}
+                                        <span class="switchlabel {{ data.Web.UI.LabelColor }}">{{ group.description }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="levercontainer">
+                                    <input type="checkbox" name="{{ group.gpiopin }}" id="{{ group.description }}" onclick="switch_onclick(this)">
+                                    <span class="lever"></span>
+                                </div>
+                            </div>
+
+                            <div class='divider-spacer'></div>
+                            
+                        </label>
+                    </div>
+
+                </div>
             </div>
-        </div>
-		{% endif %}
-		{% endfor %}
-	</div>
-		{% endfor %}
+        {% endif %}
+        
+        {% endfor %}
     </div>
-	
-	<style>
-	
-	div.switchgroup {
-	  border: 0px dashed white;
-	  width: 95%;
-	  margin-left: 2.5%;
-	}
-	
-	div.divider-spacer {
-		height: 1.5em;
-		background-color: transparent;
-	}
-	
-	div.divider {
-		margin-left: 60px;
-	}
-	
-	div.switch label span.switchlabel {
-	  font-size: 2em;
-	}
-	
-	div.switch-label-description-container {
-		margin-left: 20px;
-		display: inline;
-	}
-	
-	div.switch label div.levercontainer {
-		margin-top: 5px;
-		display: inline;
-		float: right;
-	}
-	
-	.switch label .lever::after {
-		background-color: {{ data.Web.UI.SwitchKnobColorOff }};
-	}
-	.switch label input[type=checkbox]:checked + .lever::after {
-		background-color: {{ data.Web.UI.SwitchKnobColorOn }};
-	}
-	
-	.switch label .lever {
-		background-color: {{ data.Web.UI.SwitchBGColorOff }};
-	}
-	
-	.switch label input[type=checkbox]:checked + .lever {
-		background-color: {{ data.Web.UI.SwitchBGColorOn }};
-	}
-	
-	.waves-effect.waves-holo .waves-ripple {
-	    background-color: rgba(0, 153, 204, 0.5);
-	}
-	
-	</style>
+    {% endfor %}
+</div>
+
+<style>
+    div.switchgroup {
+        border: 0px dashed white;
+        width: 95%;
+        margin-left: 2.5%;
+    }
+    
+    div.divider-spacer {
+        height: 1.5em;
+        background-color: transparent;
+    }
+    
+    div.divider {
+        margin-left: 60px;
+    }
+    
+    div.switch label span.switchlabel {
+        font-size: 2em;
+    }
+    
+    div.switch-label-description-container {
+        margin-left: 20px;
+        display: inline;
+    }
+    
+    div.switch label div.levercontainer {
+        margin-top: 5px;
+        display: inline;
+        float: right;
+    }
+    
+    .switch label .lever::after {
+        background-color: {{ data.Web.UI.SwitchKnobColorOff }};
+    }
+    
+    .switch label input[type=checkbox]:checked + .lever::after {
+        background-color: {{ data.Web.UI.SwitchKnobColorOn }};
+    }
+    
+    .switch label .lever {
+        background-color: {{ data.Web.UI.SwitchBGColorOff }};
+    }
+    
+    .switch label input[type=checkbox]:checked + .lever {
+        background-color: {{ data.Web.UI.SwitchBGColorOn }};
+    }
+    
+    .waves-effect.waves-holo .waves-ripple {
+        background-color: rgba(0, 153, 204, 0.5);
+    }
+</style>
 
 {% endblock %}
