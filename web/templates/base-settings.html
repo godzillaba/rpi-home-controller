@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% import "macros.html" as m %}
+
 {% block nav_settings_active %}active{% endblock %}
 
 {% block title %}Settings{% endblock %}
@@ -15,18 +17,9 @@
         <div id="NetworkForm" class='{% block NetworkForm_show %}hide{% endblock %}'>
 
             <div class="row">
-                <div class="input-field col s4">
-                    <input value="{{ data.HTTP.port }}" id="HTTP_Port" type="text" class="validate">
-                    <label class="active" for="HTTP_Port">HTTP Port</label>
-                </div>
-                <div class="input-field col s4">
-                    <input value="{{ data.WebSocket.port }}" id="WebSocket_Port" type="text" class="validate">
-                    <label class="active" for="HTTP_Port">WebSocket Port</label>
-                </div>
-                <div class="input-field col s4">
-                    <input value="{{ data.TCP.port }}" id="TCP_Port" type="text" class="validate">
-                    <label class="active" for="HTTP_Port">TCP Port</label>
-                </div>
+                {{ m.input_text(data.HTTP.port, "HTTP Port", "s4", "HTTP_Port") }}
+                {{ m.input_text(data.WebSocket.port, "WebSocket Port", "s4", "WebSocket_Port") }}
+				{{ m.input_text(data.TCP.port, "TCP Port", "s4", "TCP_Port") }}
             </div>
 
         </div>
@@ -34,78 +27,38 @@
         <div id="UIForm" class='{% block UIForm_show %}hide{% endblock %}'>
 
             <div class="row">
-                <div class="input-field col s4">
-                    <input value="{{ data.Web.UI.NavColor }}" id="NavColor" type="text" class="validate">
-                    <label class="active tooltipped" for="NavColor" data-position="right" data-delay="50" data-tooltip="Materialize Color Pallete - materializecss.com">NavBar Color (Materialize)</label>
-                </div>
-                <div class="input-field col s4">
-                    <input value="{{ data.Web.UI.BodyColor }}" id="BodyColor" type="text" class="validate">
-                    <label class="active" for="BodyColor">Body Color</label>
-                </div>
-                <div class="input-field col s4">
-                    <input value="{{ data.Web.UI.ChromeHeaderColor }}" id="ChromeHeaderColor" type="text" class="validate">
-                    <label class="active" for="ChromeHeaderColor">Lollipop Header Color (hex)</label>
-                </div>
+                {{ m.input_text(data.Web.UI.NavColor, "NavBar Color (Materialize)", "s6 l4", "NavColor") }}
+				{{ m.input_text(data.Web.UI.BodyColor, "Body Color", "s6 l4", "BodyColor") }}
+				{{ m.input_text(data.Web.UI.ChromeHeaderColor, "Lollipop Header Color (hex)", "s6 l4", "ChromeHeaderColor") }}
+				
+				{{ m.input_text(data.Web.UI.LabelColor, "Group Label Text Color", "s6 l4", "LabelColor") }}
+				{{ m.input_text(data.Web.UI.WaveType, "Switch Wave Effect Type", "s6 l4", "WaveType") }}
+				{{ m.input_text(data.Web.UI.CardColor, "Card Color (Materialize)", "s6 l4", "CardColor") }}
             </div>
-
-
+            
+			
+		    <div class="row">
+            <div class="divider col offset-s1 s10"></div>
+		    </div>
+			
             <div class="row">
-                <div class="input-field col s4">
-                    <input value="{{ data.Web.UI.LabelColor }}" id="LabelColor" type="text" class="validate">
-                    <label class="active" for="LabelColor">Group Label Text Color</label>
-                </div>
-                <div class="input-field col s4">
-                    <input value="{{ data.Web.UI.WaveType }}" id="WaveType" type="text" class="validate">
-                    <label class="active" for="WaveType">Switch Wave Effect Type</label>
-                </div>
-                <div class="input-field col s4">
-                    <input value="{{ data.Web.UI.CardColor }}" id="CardColor" type="text" class="validate">
-                    <label class="active tooltipped" for="NavColor" data-position="left" data-delay="50" data-tooltip="Materialize Color Pallete - materializecss.com" for="CardColor">Card Color (Materialize)</label>
-                </div>
+                {{ m.input_text(data.Web.UI.SwitchKnobColorOff, "Switch Knob (OFF) (hex)", "s6", "SwitchKnobColorOff") }}
+				{{ m.input_text(data.Web.UI.SwitchKnobColorOn, "Switch Knob (ON) (hex)", "s6", "SwitchKnobColorOn") }}
+				
+				{{ m.input_text(data.Web.UI.SwitchBGColorOff, "Switch Background (OFF) (hex)", "s6", "SwitchBGColorOff") }}
+				{{ m.input_text(data.Web.UI.SwitchBGColorOn, "Switch Background (ON) (hex)", "s6", "SwitchBGColorOn") }}
             </div>
-
-
+			
+		    <div class="row">
+            <div class="divider col offset-s1 s10"></div>
+		    </div>
+			
             <div class="row">
-                <div class="input-field col s6">
-                    <input value="{{ data.Web.UI.SwitchKnobColorOff }}" id="SwitchKnobColorOff" type="text" class="validate">
-                    <label class="active" for="SwitchKnobColorOff">Switch Knob (OFF) (hex)</label>
-                </div>
-                <div class="input-field col s6">
-                    <input value="{{ data.Web.UI.SwitchKnobColorOn }}" id="SwitchKnobColorOn" type="text" class="validate">
-                    <label class="active" for="SwitchKnobColorOn">Switch Knob (ON) (hex)</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s6">
-                    <input value="{{ data.Web.UI.SwitchBGColorOff }}" id="SwitchBGColorOff" type="text" class="validate">
-                    <label class="active" for="SwitchBGColorOff">Switch Background (OFF) (hex)</label>
-                </div>
-                <div class="input-field col s6">
-                    <input value="{{ data.Web.UI.SwitchBGColorOn }}" id="SwitchBGColorOn" type="text" class="validate">
-                    <label class="active" for="SwitchBGColorOn">Switch Background (ON) (hex)</label>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="input-field col s6">
-                    <input value="{{ data.Web.UI.SettingsFontColor }}" id="SettingsFontColor" type="text" class="validate">
-                    <label class="active" for="SettingsFontColor">Settings Font Color (hex)</label>
-                </div>
-                <div class="input-field col s6">
-                    <input value="{{ data.Web.UI.FontWeight }}" id="FontWeight" type="text" class="validate">
-                    <label class="active" for="FontWeight">Font Weight</label>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="input-field col s6">
-                    <input value="{{ data.Web.UI.DropDownColor }}" id="DropDownColor" type="text" class="validate">
-                    <label class="active" for="DropDownColor">Settings Menu Color</label>
-                </div>
-                <div class="input-field col s6">
-                    <input value="{{ data.Web.UI.DropDownText }}" id="DropDownText" type="text" class="validate">
-                    <label class="active" for="DropDownText">Drop Down Text Color</label>
-                </div>
+				{{ m.input_text(data.Web.UI.SettingsFontColor, "Settings Font Color (hex)", "s6", "SettingsFontColor") }}
+				{{ m.input_text(data.Web.UI.FontWeight, "Font Weight", "s6", "FontWeight") }}
+			
+				{{ m.input_text(data.Web.UI.DropDownColor, "Settings Menu Color", "s6", "DropDownColor") }}
+				{{ m.input_text(data.Web.UI.DropDownText, "Drop Down Text Color", "s6", "DropDownText") }}
             </div>
 
         </div>
@@ -116,38 +69,22 @@
             <div class="card address_group {{ data.Web.UI.CardColor }}">
 
                 <div class="row">
-                    <div class="input-field col s12">
-                        <input value="{{ address[0] }}" id="{{ address[0] }}" type="text" class="validate addr">
-                        <label class="active" for="{{ address[0] }}">Address</label>
-                    </div>
+					{{ m.input_text(address[0], "Address", "s12", "address[0]", class='addr') }}
                 </div>
 
                 {% for group in address %} {% if group.description and group.gpiopin %}
-                <div class="row switchgroupdata">
-                    <div class="input-field col s6">
-                        <input value="{{ group.description }}" id="{{ group.description }}_description" type="text" class="validate desc">
-                        <label class="active" for="{{group.description}}_desctipion">Label</label>
-                    </div>
-
-                    <div class="input-field col s6">
-                        <input value="{{ group.gpiopin }}" id="{{ group.description }}_gpiopin" type="text" class="validate gpiopin">
-                        <label class="active" for="{{group.description}}_gpiopin">GPIO Pin</label>
-                    </div>
-
+                
+				<div class="row switchgroupdata">
+                    {{ m.input_text(group.description, "Label", "s6", group.description + "_description") }}
+					
+					{{ m.input_text(group.gpiopin, "GPIO Pin", "s6", group.description + "_gpiopin") }}
                 </div>
-                {% endif %} {% endfor %}
+                
+				{% endif %} {% endfor %}
 
                 <div class="row switchgroupdata">
-                    <div class="input-field col s6">
-                        <input value="" id="NEW_description" type="text" class="validate desc">
-                        <label class="active" for="NEW_desctipion">Label</label>
-                    </div>
-
-                    <div class="input-field col s6">
-                        <input value="" id="NEW_gpiopin" type="text" class="validate gpiopin">
-                        <label class="active" for="NEW_gpiopin">GPIO Pin</label>
-                    </div>
-
+                    {{ m.input_text("", "Label", "s6", "NEW_description") }}
+					{{ m.input_text("", "GPIO Pin", "s6", "NEW_gpiopin") }}
                 </div>
 
             </div>
@@ -160,23 +97,12 @@
             <div class="card address_group {{ data.Web.UI.CardColor }}">
 
                 <div class="row">
-                    <div class="input-field col s12">
-                        <input value="" id="NEW_addr" type="text" class="validate addr">
-                        <label class="active" for="NEW_addr">Address</label>
-                    </div>
+                    {{ m.input_text("", "Address", "s12", "NEW_addr", class='addr') }}
                 </div>
 
                 <div class="row switchgroupdata">
-                    <div class="input-field col s6">
-                        <input value="" id="NEW_description" type="text" class="validate desc">
-                        <label class="active" for="NEW_desctipion">Label</label>
-                    </div>
-
-                    <div class="input-field col s6">
-                        <input value="" id="NEW_gpiopin" type="text" class="validate gpiopin">
-                        <label class="active" for="NEW_gpiopin">GPIO Pin</label>
-                    </div>
-
+                    {{ m.input_text("", "Label", "s6", "NEW_description") }}
+					{{ m.input_text("", "GPIO Pin", "s6", "NEW_gpiopin") }}
                 </div>
             </div>
 

@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% import "macros.html" as m %}
+
 {% block title %}Home{% endblock %}
 
 {% block nav_home_active %}active{% endblock %}
@@ -15,10 +17,10 @@
         {% if group.description and group.gpiopin %}
             <div class='switch'>
 
-                <div class="card_container col s12 l6">
-                    
-                    <div class="card {{ data.Web.UI.CardColor }}">
-                    
+                <!-- <div class="card_container col s12 l6">
+
+                    <div class="card {{ data.Web.UI.CardColor }}"> -->
+                    {% call m.card(data) %}
                         <label class="waves-effect {{ data.Web.UI.WaveType }}" style="width:100%">
                             
                             <div class='divider-spacer'></div>
@@ -40,9 +42,10 @@
                             <div class='divider-spacer'></div>
                             
                         </label>
-                    </div>
+						{% endcall %}
+                    <!-- </div>
 
-                </div>
+                </div> -->
             </div>
         {% endif %}
         

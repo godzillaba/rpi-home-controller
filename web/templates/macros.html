@@ -1,0 +1,17 @@
+{% macro card(data) -%}
+<div class="card_container col s12 l6">
+    <div class="card {{ data.Web.UI.CardColor }}">
+        {{ caller() }}
+    </div>
+</div>
+{%- endmacro %}
+
+
+
+{% macro input_text(variable, label, sizing, id, class='') -%}
+<div class="input-field col {{ sizing }}">
+    <input value="{{ variable }}" id="{{ id }}" type="text" class="{{ class }}">
+    <label class="active" for="{{ id }}">{{ label }}</label>
+</div>
+
+{%- endmacro %}
