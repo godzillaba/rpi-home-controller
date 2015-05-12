@@ -4,6 +4,7 @@ from twisted.python import log
 from twisted.internet import reactor
 from server_lib import gpio
 import json
+import os
 
 class ws_server(WebSocketServerProtocol):
 
@@ -36,6 +37,29 @@ class ws_server(WebSocketServerProtocol):
             with open('data.json', 'w') as data_file:
                 data_file.truncate()
                 data_file.write(json_to_file)
+        elif cmd == "GETPEOPLE":
+            
+            with open('data.json') as data_file:
+                json_data = json.load(data_file)
+            
+            people = json_data['Web']['People']
+            
+            for person in people:
+                
+                ip = os.system("ping -c 1 " + person['hostname'])
+                
+                print "ip %s" % ip
+                
+                if ip == 0:
+                    msg = str("PERSON ," + person['name'] + ",IN")
+                    
+                    self.sendMessage(msg)
+                else:
+                    msg = str("PERSON ," + person['name'] + ",OUT")
+                    
+                    self.sendMessage(msg)
+                    
+                    
 
 
     def onClose(self, wasClean, code, reason):

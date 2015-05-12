@@ -27,30 +27,35 @@
             "FontWeight": "200", 
             "SwitchBGColorOn": "#ef9a9a"
         }, 
-        "Groups": [
-            [
-				"self",
-				{
-            	    "description": "AC", 
-            	    "gpiopin": "40"
-            	}, 
-            	{
-            	    "description": "TV", 
-            	    "gpiopin": "22"
-            	}, 
-            	{
-            	    "description": "Desk Lamp", 
-            	    "gpiopin": "18"
-            	},
-            	{
-            	    "description": "Bedside Lamp", 
-            	    "gpiopin": "15"
-            	}
-            	
-			]
-        ],
         "Exempt_Subnets": [
             "192.168.1"
-        ]
+        ], 
+        "Groups": [
+            [
+                "self", 
+                {
+                    "description": "AC", 
+                    "gpiopin": "40"
+                }, 
+                {
+                    "description": "TV", 
+                    "gpiopin": "22"
+                }, 
+                {
+                    "description": "Desk Lamp", 
+                    "gpiopin": "18"
+                }, 
+                {
+                    "description": "Bedside Lamp", 
+                    "gpiopin": "15"
+                }
+            ]
+        ],
+		"People": [
+			{
+				"name": "Person",
+				"hostname": "PersonsiPhone"
+			}
+		]
     }
 }

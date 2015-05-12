@@ -17,16 +17,14 @@
         {% if group.description and group.gpiopin %}
             <div class='switch'>
 
-                <!-- <div class="card_container col s12 l6">
-
-                    <div class="card {{ data.Web.UI.CardColor }}"> -->
+                
                     {% call m.card(data) %}
                         <label class="waves-effect {{ data.Web.UI.WaveType }}" style="width:100%">
                             
                             <div class='divider-spacer'></div>
 
                             <div>
-                                <div class="switch-label-description-container">
+                                <div class="label-description-container">
                                     {% if data.Web.UI.LabelColor[0] == "#" %}
                                         <span class="switchlabel" style="color:{{ data.Web.UI.LabelColor }}">{{ group.description }}</span>
                                     {% else %}
@@ -42,16 +40,47 @@
                             <div class='divider-spacer'></div>
                             
                         </label>
-						{% endcall %}
-                    <!-- </div>
-
-                </div> -->
+					{% endcall %}
+                    
             </div>
         {% endif %}
         
         {% endfor %}
     </div>
     {% endfor %}
+	
+	{% for person in data.Web.People %}
+	    <div class='person'>
+		{% call m.card(data) %}
+            <label class="waves-effect {{ data.Web.UI.WaveType }}" style="width:100%">
+                
+                <div class='divider-spacer'></div>
+
+                <div>
+                    <div class="label-description-container">
+                        {% if data.Web.UI.LabelColor[0] == "#" %}
+                            <span class="personlabel" style="color:{{ data.Web.UI.LabelColor }}">{{ person.name }}</span>
+                        {% else %}
+                            <span class="personlabel {{ data.Web.UI.LabelColor }}">{{ person.name }}</span>
+                        {% endif %}
+                    </div>
+                    <div style="float:right; display:inline; margin-right:20px">
+                        {% if data.Web.UI.LabelColor[0] == "#" %}
+                            <span id='{{ person.name }}_io' style="color:{{ data.Web.UI.LabelColor }}">OUT</span>
+                        {% else %}
+                            <span id='{{ person.name }}_io' class="{{ data.Web.UI.LabelColor }}">OUT</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class='divider-spacer'></div>
+                
+            </label>
+	
+	    {% endcall %}
+		</div>
+	{% endfor %}
+	
 </div>
 
 <style>
@@ -60,11 +89,11 @@
         background-color: transparent;
     }
     
-    div.switch label span.switchlabel {
+    div label span {
         font-size: 2em;
     }
     
-    div.switch-label-description-container {
+    div.label-description-container {
         margin-left: 20px;
         display: inline;
     }

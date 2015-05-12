@@ -6,6 +6,7 @@ function create(s, addr_self) {
         console.log("Connected!");
         Materialize.toast("Connected to " + s.url, 3000)
         get_switch_stats()
+		sockets['self'].send("GETPEOPLE")
     }
 
     s.onmessage = function(e) {
@@ -39,6 +40,14 @@ function create(s, addr_self) {
                 pin_switch.checked = false
             }
         }
+		else if (e.data.split(" ")[0] === "PERSON") {
+			var person_name = e.data.split(",")[1]
+			var person_status = e.data.split(",")[2]
+			
+			var indicator = document.getElementById(person_name + "_io")
+			
+			indicator.innerHTML = person_status
+		}
 
     }
 
@@ -81,6 +90,7 @@ var get_switch_stats_ofaddr = function(boxes, sock) {
 // get status at an interval
 window.setInterval(function() {
     get_switch_stats()
+	sockets['self'].send("GETPEOPLE")
 }, 10000);
 
 
@@ -126,4 +136,5 @@ window.onload = function() {
             sockets[sock.url] = sock
         }
     }
+	
 };
