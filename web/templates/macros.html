@@ -1,3 +1,35 @@
+{% macro body(data) -%}
+
+{% if data.Web.UI.BodyColor[0] == "#" %}
+<body style="background-color:{{ data.Web.UI.BodyColor }}">
+{% else %}
+<body class="{{ data.Web.UI.BodyColor }}">
+{% endif %}
+    
+{{ caller() }}
+
+</body>
+
+{%- endmacro %}
+
+
+{% macro dropdown(data) -%}
+
+<li>
+    <a class="{{ data.Web.UI.DropDownText }}" href="/settings/UI-settings.html">UI</a>
+</li>
+
+<li>
+    <a class="{{ data.Web.UI.DropDownText }}" href="/settings/Network-settings.html">Network</a>
+</li>
+
+<li>
+    <a class="{{ data.Web.UI.DropDownText }}" href="/settings/Groups-settings.html">Groups</a>
+</li>
+
+{%- endmacro%}
+
+
 {% macro card(data) -%}
 <div class="card_container col s12 l6">
     <div class="card {{ data.Web.UI.CardColor }}">

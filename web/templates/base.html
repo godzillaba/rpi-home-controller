@@ -1,3 +1,5 @@
+{% import "macros.html" as m %}
+
 <!doctype html>
 <html lang=''>
 
@@ -20,52 +22,75 @@
     <meta name="theme-color" content="{{ data.Web.UI.ChromeHeaderColor }}">
 </head>
 
-{% if data.Web.UI.BodyColor[0] == "#" %}
-<body style="background-color:{{ data.Web.UI.BodyColor }}">
-{% else %}
-<body class="{{ data.Web.UI.BodyColor }}">
-{% endif %}
+{% call m.body(data) %}
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
 
-    <div class="navbar-fixed">
-        <nav>
-            <div class="nav-wrapper {{ data.Web.UI.NavColor }}">
-                <ul id="nav-mobile" class="left">
-                    <li class="{% block nav_home_active %}{% endblock %}"><a href="/home/"><i class="mdi-action-home"></i></a>
-                    </li>
-                    <li class="{% block nav_settings_active %}{% endblock %}"><a href="#!" class="dropdown-button" data-activates='dropdown1'><i class="mdi-action-settings"></i></a>
-                    </li>
-                </ul>
-                <ul id="nav-mobile" class="right">
-                    <li><a href="https://github.com/therealtylerdurden/rpi-home-controller/"><i><img src="/GH-mk.png"/></i></a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </div>
+<div class='hide-on-large-only'>
+    <nav class='{{ data.Web.UI.NavColor }}'>
+        <ul id="slide-out" class="side-nav collapsible">
+            <li class="no-padding">
+                <a class="collapsible-header {{ data.Web.UI.DropDownText }}" href="/home/"><i class="mdi-action-home"></i>Home</a>
+            </li>
+
+            <li class="no-padding">
+                <a class="collapsible-header {{ data.Web.UI.DropDownText }}"><i class="mdi-action-settings"></i>Settings</a>
+
+                <div class="collapsible-body">
+                    <ul>
+                        {{ m.dropdown(data) }}
+                    </ul>
+                </div>
+
+            </li>
+
+        </ul>
+
+        <a href="#" data-activates="slide-out" class="button-collapse" style='margin-left:10px'>
+            <i class="mdi-navigation-menu"></i>
+        </a>
+    </nav>
+</div>
+
+<script>
+    $(".button-collapse").sideNav();
+</script>
 
 
-    <ul id='dropdown1' class='dropdown-content {{ data.Web.UI.DropDownColor }}'>
-        <li><a class="{{ data.Web.UI.DropDownText }}" href="/settings/UI-settings.html">UI</a>
-        </li>
-        <li><a class="{{ data.Web.UI.DropDownText }}" href="/settings/Network-settings.html">Network</a>
-        </li>
-        <li><a class="{{ data.Web.UI.DropDownText }}" href="/settings/Groups-settings.html">Groups</a>
-        </li>
-    </ul>
+<div class="navbar-fixed hide-on-med-and-down">
+    <nav>
+        <div class="nav-wrapper {{ data.Web.UI.NavColor }}">
+            <ul id="nav-mobile" class="left">
+                <li class="{% block nav_home_active %}{% endblock %}">
+                    <a href="/home/"><i class="mdi-action-home"></i></a>
+                </li>
+                <li class="{% block nav_settings_active %}{% endblock %}">
+                    <a href="#!" class="dropdown-button" data-activates='dropdown1'><i class="mdi-action-settings"></i></a>
+                </li>
+            </ul>
+            <ul id="nav-mobile" class="right">
+                <li>
+                    <a href="https://github.com/therealtylerdurden/rpi-home-controller/"><i><img src="/GH-mk.png"/></i></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
 
-    <!-- begin "body" -->
 
-    <!-- switch div naming/id scheme: name=(gpio pin number) id=(Text above switch eg. "TV") -->
-    {% block content %} {% endblock %}
+<ul id='dropdown1' class='dropdown-content {{ data.Web.UI.DropDownColor }}'>
+    {{ m.dropdown(data) }}
+</ul>
 
-    <style>
-        html {
-            font-weight: {{ data.Web.UI.FontWeight }};
-        }
-    </style>
+{% block content %} {% endblock %}
 
-</body>
+<style>
+    html {
+        font-weight: {{ data.Web.UI.FontWeight }};
+    }
+</style>
+
+{% endcall %}
+
 </html>
