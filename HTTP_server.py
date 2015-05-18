@@ -19,7 +19,7 @@ class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
     def do_AUTHHEAD(self):
         print "send header"
         self.send_response(401)
-        self.send_header('WWW-Authenticate', 'Basic realm=\"Test\"')
+        self.send_header('WWW-Authenticate', 'Basic realm=\"Home Controller\"')
         self.send_header('Content-type', 'text/html')
         self.end_headers()
 
