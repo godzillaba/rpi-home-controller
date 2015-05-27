@@ -16,15 +16,15 @@
 {% macro dropdown(data) -%}
 
 <li>
-    <a class="{{ data.Web.UI.DropDownText }}" href="/settings/UI-settings.html">UI</a>
+    <a class="{{ data.Web.UI.DropDownText }}" href="#!" onclick="hide('main_section'); hideforms(); show('settings_section'); show('UIForm'); nav_activate('topnav_settings')">UI</a>
 </li>
 
 <li>
-    <a class="{{ data.Web.UI.DropDownText }}" href="/settings/Network-settings.html">Network</a>
+    <a class="{{ data.Web.UI.DropDownText }}" href="#!" onclick="hide('main_section'); hideforms(); show('settings_section'); show('NetworkForm'); nav_activate('topnav_settings')">Network</a>
 </li>
 
 <li>
-    <a class="{{ data.Web.UI.DropDownText }}" href="/settings/Groups-settings.html">Groups</a>
+    <a class="{{ data.Web.UI.DropDownText }}" href="#!" onclick="hide('main_section'); hideforms(); show('settings_section'); show('GroupsForm'); nav_activate('topnav_settings')">Groups</a>
 </li>
 
 {%- endmacro%}

@@ -10,7 +10,7 @@
 
     <title>Control Panel - {% block title %}{% endblock %}</title>
 
-    <script src="script.js" /></script>
+    <script src="script.js"></script>
 
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.css" media="screen,projection" />
@@ -27,15 +27,16 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
 
+
 <div class='hide-on-large-only'>
     <nav class='{{ data.Web.UI.NavColor }}'>
         <ul id="slide-out" class="side-nav collapsible">
             <li class="no-padding">
-                <a class="collapsible-header {{ data.Web.UI.DropDownText }}" href="/home/"><i class="mdi-action-home"></i>Home</a>
+                <a id='sidenav_home' class="collapsible-header {{ data.Web.UI.DropDownText }}" href="#!" onclick="hide('settings_section'); show('main_section')"><i class="mdi-action-home"></i>Home</a>
             </li>
 
             <li class="no-padding">
-                <a class="collapsible-header {{ data.Web.UI.DropDownText }}"><i class="mdi-action-settings"></i>Settings</a>
+                <a id='sidenav_settings' class="collapsible-header {{ data.Web.UI.DropDownText }}"><i class="mdi-action-settings"></i>Settings</a>
 
                 <div class="collapsible-body">
                     <ul>
@@ -54,7 +55,10 @@
 </div>
 
 <script>
-    $(".button-collapse").sideNav();
+    $('.button-collapse').sideNav({
+      closeOnClick: true
+    }
+  );
 </script>
 
 
@@ -62,10 +66,10 @@
     <nav>
         <div class="nav-wrapper {{ data.Web.UI.NavColor }}">
             <ul id="nav-mobile" class="left">
-                <li class="{% block nav_home_active %}{% endblock %}">
-                    <a href="/home/"><i class="mdi-action-home"></i></a>
+                <li id='topnav_home' class="active">
+                    <a href="#!" onclick="hide('settings_section'); show('main_section'); nav_activate('topnav_home')"><i class="mdi-action-home"></i></a>
                 </li>
-                <li class="{% block nav_settings_active %}{% endblock %}">
+                <li id='topnav_settings' class="">
                     <a href="#!" class="dropdown-button" data-activates='dropdown1'><i class="mdi-action-settings"></i></a>
                 </li>
             </ul>
