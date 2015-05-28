@@ -62,7 +62,7 @@ class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
         is_dir = os.path.isdir(self.path)
 
         if is_file:
-            extension = self.path.split('.')[2]
+            extension = self.path.split('.')[1]
             if extension == "html":
                 print "Compiling %s (%s)" % (template_path, self.path)
                 self.render(template_path)
