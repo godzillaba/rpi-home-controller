@@ -56,23 +56,25 @@ class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
     def do_GET_authed(self):
         
         template_path = self.path
-        self.path = fullpath + "/web/templates" + self.path
+        self.path = "/web/templates" + self.path
+        absolute_path = fullpath + self.path
+
         
-        is_file = os.path.isfile(self.path)
-        is_dir = os.path.isdir(self.path)
+        is_file = os.path.isfile(absolute_path)
+        is_dir = os.path.isdir(absolute_path)
 
         if is_file:
-            extension = self.path.split('.')[1]
+            extension = absolute_path.split('.')[1]
             if extension == "html":
-                print "Compiling %s (%s)" % (template_path, self.path)
+                print "Compiling %s (%s)" % (template_path, absolute_path)
                 self.render(template_path)
             else:
                 SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
 
         elif is_dir:
-            ls = os.listdir(self.path)
+            ls = os.listdir(absolute_path)
             if "index.html" in ls:
-                print "Compiling %s (%s)" % (template_path, self.path)
+                print "Compiling %s (%s)" % (template_path, absolute_path)
                 self.render(template_path + "index.html")
             else:
                 SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
