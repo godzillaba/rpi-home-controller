@@ -7,9 +7,21 @@ import base64
 
 class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
     def render(self, template_path):
-        self.do_HEAD()
+#        self.do_HEAD()
+        print "Serving dynamic file %s" % template_path
+    
         self.wfile.write(render_html.main(template_path))
         return
+    
+    def render_static(self, filepath):
+#        self.do_HEAD()
+        
+        print "Serving static file %s" % filepath
+        
+        with open(filepath) as static_file:
+            file_contents = static_file.read()
+        
+        self.wfile.write(file_contents)
 
     def do_HEAD(self):
         self.send_response(200)
@@ -56,12 +68,15 @@ class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
     def do_GET_authed(self):
         
         template_path = self.path
-        self.path = "/web/templates" + self.path
-        absolute_path = fullpath + self.path
 
+        self.path = fullpath + "/web/templates" + self.path
+        
+        absolute_path = self.path
         
         is_file = os.path.isfile(absolute_path)
         is_dir = os.path.isdir(absolute_path)
+        
+        print "is_file( %s ), is_dir( %s )" % (is_file, is_dir)
 
         if is_file:
             extension = absolute_path.split('.')[1]
@@ -69,7 +84,7 @@ class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
                 print "Compiling %s (%s)" % (template_path, absolute_path)
                 self.render(template_path)
             else:
-                SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
+                self.render_static(absolute_path)
 
         elif is_dir:
             ls = os.listdir(absolute_path)
@@ -77,9 +92,12 @@ class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
                 print "Compiling %s (%s)" % (template_path, absolute_path)
                 self.render(template_path + "index.html")
             else:
-                SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
+                stringio_obj = self.list_directory(absolute_path)                
+                self.wfile.write(stringio_obj.getvalue())
+                
         else:
-            SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
+            stringio_obj = self.list_directory(absolute_path)                
+            self.wfile.write(stringio_obj.getvalue())
 
 
 pathname = os.path.dirname(sys.argv[0])        
