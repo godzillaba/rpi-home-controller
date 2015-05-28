@@ -1,6 +1,6 @@
 import SimpleHTTPServer
 import SocketServer
-import os
+import os, sys
 from server_lib import render_html
 import json
 import base64
@@ -54,24 +54,25 @@ class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
 
 
     def do_GET_authed(self):
+        
         template_path = self.path
-        self.path = "/web/templates" + self.path
-        relative_path = "." + self.path
-        is_file = os.path.isfile(relative_path)
-        is_dir = os.path.isdir(relative_path)
+        self.path = fullpath + "/web/templates" + self.path
+        
+        is_file = os.path.isfile(self.path)
+        is_dir = os.path.isdir(self.path)
 
         if is_file:
-            extension = relative_path.split('.')[2]
+            extension = self.path.split('.')[2]
             if extension == "html":
-                print "Compiling %s" % template_path
+                print "Compiling %s (%s)" % (template_path, self.path)
                 self.render(template_path)
             else:
                 SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
 
         elif is_dir:
-            ls = os.listdir(relative_path)
+            ls = os.listdir(self.path)
             if "index.html" in ls:
-                print "Compiling %sindex.html" % relative_path
+                print "Compiling %s (%s)" % (template_path, self.path)
                 self.render(template_path + "index.html")
             else:
                 SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
@@ -79,11 +80,16 @@ class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
             SimpleHTTPServer.SimpleHTTPRequestHandler.do_GET(self)
 
 
+pathname = os.path.dirname(sys.argv[0])        
+fullpath = os.path.abspath(pathname)
 
-with open('data.json') as data_file:
+config_file = fullpath + "/data.json"
+users_file = fullpath + "/users.json"
+
+with open(config_file) as data_file:
     data = json.load(data_file)
 
-with open('users.json') as users_file:
+with open(users_file) as users_file:
     users = json.load(users_file)["Users"]
 
 PORT = int(data["HTTP"]['port'])

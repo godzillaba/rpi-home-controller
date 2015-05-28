@@ -28,19 +28,19 @@ class ws_server(WebSocketServerProtocol):
         elif cmd == "ALLRELAYS":
             gpio.toggle_all_relays(int(payload.split('=')[1]))
         elif cmd == "GETJSON":
-            with open('data.json') as data_file:
+            with open(config_file) as data_file:
                 json_out = json.dumps(json.load(data_file))
             self.sendMessage("JSON----------" + json_out)
         elif cmd == "SAVEJSON":
             jsontext = payload.split('=')[1]
             json_in = json.loads(jsontext)
             json_to_file = json.dumps(json_in, indent=4)
-            with open('data.json', 'w') as data_file:
+            with open(config_file, 'w') as data_file:
                 data_file.truncate()
                 data_file.write(json_to_file)
         elif cmd == "GETPEOPLE":
             
-            with open('data.json') as data_file:
+            with open(config_file) as data_file:
                 json_data = json.load(data_file)
             
             people = json_data['Web']['People']
@@ -87,7 +87,12 @@ def pinghost(self, person):
         print "exeption occurred"
 
 
-with open('data.json') as data_file:
+pathname = os.path.dirname(sys.argv[0])        
+fullpath = os.path.abspath(pathname)
+
+config_file = fullpath + "/data.json"
+
+with open(config_file) as data_file:
     data = json.load(data_file)
 
 port = int(data['WebSocket']['port'])

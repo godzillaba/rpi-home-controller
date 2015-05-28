@@ -15,7 +15,7 @@
 
                 
                     {% call m.card(data) %}
-                        <label class="waves-effect {{ data.Web.UI.WaveType }}" style="width:100%">
+                        <label class="{% if data.Web.UI.SwitchWaveEffect %}waves-effect{% endif %} {{ data.Web.UI.WaveType }}" style="width:100%">
                             
                             <div class='divider-spacer'></div>
 

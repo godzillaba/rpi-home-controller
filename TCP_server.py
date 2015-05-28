@@ -2,11 +2,17 @@ from server_lib import gpio
 import json
 import socket
 import logging
+import os, sys
 
 # LOGGING / CONFIG VARIABLES
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
-with open('data.json') as data_file:
+pathname = os.path.dirname(sys.argv[0])        
+fullpath = os.path.abspath(pathname)
+
+config_file = fullpath + "/data.json"
+
+with open(config_file) as data_file:
     data = json.load(data_file)
 
 
