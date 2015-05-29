@@ -32,12 +32,43 @@ class pin(object):
             return GPIO.input(self.num)
 
 
-def parse(data):
-    pnumber = int((data.split('=')[1]).split(',')[0])
-    ptype = data.split(',')[1]
-    pstate = int(data.split(',')[2])
-    p = pin(pnumber, ptype, pstate)
-    return p
+        
+        
+        
+# tested working
+def cmd_pin_out(obj):
+    pnumber = int(obj['pin_number'])
+    pvalue = int(obj['value'])
+    
+    GPIO.setup(pnumber, GPIO.OUT)
+    GPIO.output(pnumber, pvalue)
+
+    
+# tested working
+def q_pin_out(obj):
+    pnumber = int(obj['pin_number'])
+    
+    GPIO.setup(pnumber, GPIO.OUT)
+    pvalue = int(GPIO.input(pnumber))
+    
+    reply_object = {
+        "MessageType": "QueryReply",
+        "Query": "pin_out",
+        "pin_number": pnumber,
+        "value": pvalue
+    }
+    
+    reply_string = json.dumps(reply_object)
+    
+    return reply_string
+
+
+#def parse(data):
+#    pnumber = int((data.split('=')[1]).split(',')[0])
+#    ptype = data.split(',')[1]
+#    pstate = int(data.split(',')[2])
+#    p = pin(pnumber, ptype, pstate)
+#    return p
 
 
 def toggle_all_relays(hilo):

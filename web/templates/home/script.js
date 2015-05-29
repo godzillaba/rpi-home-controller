@@ -8,9 +8,17 @@ function create(s, addr_self) {
         get_switch_stats()
 		
         if (addr_self) {
-        
-            sockets['self'].send("GETPEOPLE")
-            sockets['self'].send("GETJSON")    
+            
+            query_object = {
+                "MessageType": "Query",
+                "Query": "People"
+            }
+            
+            sockets['self'].send(JSON.stringify(query_object))
+            
+            query_object.Query = "Config"
+            
+            sockets['self'].send(JSON.stringify(query_object))    
         
         }
     }
@@ -26,41 +34,74 @@ function create(s, addr_self) {
 
 
         // parse received data
-        if (e.data.split(" ")[0] === "PIN") {
-            var pin_number = e.data.split(" ")[1]
-            var pin_status = e.data.split(" ")[2]
+        recvd_data = JSON.parse(e.data)
+        
+        if (recvd_data.MessageType === "QueryReply") {
+            
+            if (recvd_data.Query === "pin_out") {
+                
+                var pin_number = recvd_data.pin_number
+                var value = recvd_data.value
+                
+                // elms = all inputs of a certain address
+                var elms = addressdiv.getElementsByTagName('input')
 
-            // select checkbox pertaining to gpiopin and toggle
-            var elms = addressdiv.getElementsByTagName('input')
-
-
-            for (var i = 0; i < elms.length; i++) {
-                if (elms[i].name === pin_number) {
-                    var pin_switch = elms[i]
+                // select input based on pin number
+                for (var i = 0; i < elms.length; i++) {
+                    if (elms[i].name == pin_number) {
+                        var pin_switch = elms[i]
+                    }
                 }
+                                
+                pin_switch.checked = !(Boolean(value)) 
             }
-
-            if (pin_status === "0") {
-                pin_switch.checked = true
-            } else if (pin_status === "1") {
-                pin_switch.checked = false
+            else if (recvd_data.Query === "Config") {
+                
+                json = recvd_data.ConfigData
+                console.log(json)
+                Materialize.toast("Received JSON data", 3000)
+                
+                
             }
+            
+            
         }
-		else if (e.data.split(" ")[0] === "PERSON") {
-			var person_name = e.data.split(",")[1]
-			var person_status = e.data.split(",")[2]
-			
-			var indicator = document.getElementById(person_name + "_io")
-			
-			indicator.innerHTML = person_status
-		}
-
-        if (e.data.split("----------")[0] === "JSON") {
-            data = e.data.split("----------")[1];
-            json = JSON.parse(data)
-            console.log(json)
-            Materialize.toast("Received JSON data", 3000)
-        }
+        
+//        if (e.data.split(" ")[0] === "PIN") {
+//            var pin_number = e.data.split(" ")[1]
+//            var pin_status = e.data.split(" ")[2]
+//
+//            // select checkbox pertaining to gpiopin and toggle
+//            var elms = addressdiv.getElementsByTagName('input')
+//
+//
+//            for (var i = 0; i < elms.length; i++) {
+//                if (elms[i].name === pin_number) {
+//                    var pin_switch = elms[i]
+//                }
+//            }
+//
+//            if (pin_status === "0") {
+//                pin_switch.checked = true
+//            } else if (pin_status === "1") {
+//                pin_switch.checked = false
+//            }
+//        }
+//		else if (e.data.split(" ")[0] === "PERSON") {
+//			var person_name = e.data.split(",")[1]
+//			var person_status = e.data.split(",")[2]
+//			
+//			var indicator = document.getElementById(person_name + "_io")
+//			
+//			indicator.innerHTML = person_status
+//		}
+//
+//        if (e.data.split("----------")[0] === "JSON") {
+//            data = e.data.split("----------")[1];
+//            json = JSON.parse(data)
+//            console.log(json)
+//            Materialize.toast("Received JSON data", 3000)
+//        }
         
 
     }
@@ -70,8 +111,6 @@ function create(s, addr_self) {
         Materialize.toast("Connection to " + s.url + " closed.", 5000)
     }
 }
-
-
 
 // get status of each switch's gpiopin
 // var get_switch_stats = function () {
@@ -96,7 +135,20 @@ var get_switch_stats = function() {
 
 var get_switch_stats_ofaddr = function(boxes, sock) {
     for (var x = 0; x < boxes.length; x++) {
-        sock.send("PIN=" + boxes[x].name + ",IN,0")
+
+//        sock.send("PIN=" + boxes[x].name + ",IN,0")
+        var pnumber = boxes[x].name
+        
+        var query_object = {
+            "MessageType": "Query",
+            "Query": "pin_out",
+            "pin_number": pnumber
+        }
+        
+        var query_string = JSON.stringify(query_object)
+        
+        sock.send(query_string)
+        
     }
 }
 
@@ -104,7 +156,14 @@ var get_switch_stats_ofaddr = function(boxes, sock) {
 // get status at an interval
 window.setInterval(function() {
     get_switch_stats()
-	sockets['self'].send("GETPEOPLE")
+	    
+    query_object = {
+        "MessageType": "Query",
+        "Query": "People"
+    }
+            
+    sockets['self'].send(JSON.stringify(query_object))
+    
 }, 10000);
 
 
@@ -116,11 +175,23 @@ var switch_onclick = function(box) {
     if (sock.readyState != 1) {
         Materialize.toast("Not connected to WebSocket server", 5000)
     }
-    if (box.checked === true) {
-        sock.send('PIN=' + box.name + ',OUT,0')
-    } else if (box.checked === false) {
-        sock.send('PIN=' + box.name + ',OUT,1')
+    
+    ////////// new stuff
+    
+    var pnumber = box.name
+    var pvalue = ( + !(box.checked) )
+    
+    command_object = {
+        "MessageType": "Command",
+        "Command": "pin_out",
+        "pin_number": pnumber,
+        "value": pvalue
     }
+    
+    command_string = JSON.stringify(command_object)
+    
+    sock.send(command_string)
+    
 }
 
 
@@ -227,9 +298,16 @@ var send_json_data = function() {
 
     console.log(json)
 
-    jsonstring = JSON.stringify(json)
+    config_object = {
+        "MessageType": "Command",
+        "Command": "SaveConfig",
+        "ConfigData": json
+    }
+    
+    
+    jsonstring = JSON.stringify(config_object)
     console.log(jsonstring)
-    sockets['self'].send("SAVEJSON=" + jsonstring)
+    sockets['self'].send(jsonstring)
     Materialize.toast("Sent JSON data", 3000)
 
 }

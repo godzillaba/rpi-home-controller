@@ -16,40 +16,102 @@ class ws_server(WebSocketServerProtocol):
         print("WebSocket connection open.")
 
     def onMessage(self, payload, isBinary):
-        print("Text message received: {0}".format(payload.decode('utf8')))
-        cmd = payload.split('=')[0]
-
-
-        if cmd == "PIN":
-            p = gpio.parse(payload)
-            toggle_output = str(p.toggle())
-            if p.iotype == "IN":
-                self.sendMessage("PIN %s %s" % (p.num, toggle_output))
-        elif cmd == "ALLRELAYS":
-            gpio.toggle_all_relays(int(payload.split('=')[1]))
-        elif cmd == "GETJSON":
-            with open(config_file) as data_file:
-                json_out = json.dumps(json.load(data_file))
-            self.sendMessage("JSON----------" + json_out)
-        elif cmd == "SAVEJSON":
-            jsontext = payload.split('=')[1]
-            json_in = json.loads(jsontext)
-            json_to_file = json.dumps(json_in, indent=4)
-            with open(config_file, 'w') as data_file:
-                data_file.truncate()
-                data_file.write(json_to_file)
-        elif cmd == "GETPEOPLE":
+        
+        try:
+            obj = json.loads(payload.decode('utf8'))
+            print obj
             
-            with open(config_file) as data_file:
-                json_data = json.load(data_file)
-            
-            people = json_data['Web']['People']
-            
-            for person in people:
-                print "starting thread to ping " + person['hostname']
-                thread.start_new_thread( pinghost, (self, person, ) )
-#                pinghost(self, person)
+            # tested working
+            if obj['MessageType'] == 'Command':
+                cmd = obj['Command']
+                
+                if cmd == "pin_out":
+                    print "Received pin_out Command - pin %s %s" % (obj['pin_number'], obj['value'])
+                    gpio.cmd_pin_out(obj)
                     
+                elif cmd == "SaveConfig":    
+                    config_object = obj['ConfigData']
+                    
+                    json_to_file = json.dumps(config_object, indent=4)
+                    print "Received SaveConfig Command \n %s" % json_to_file
+                    
+                    with open(config_file, 'w') as data_file:
+                        data_file.truncate()
+                        data_file.write(json_to_file)
+                    
+                    
+                    
+            
+            # tested working
+            elif obj['MessageType'] == 'Query':
+                q = obj['Query']
+                
+                if q == "pin_out":
+                    print "Received pin_out Query - pin %s" % obj['pin_number']
+                    self.sendMessage(gpio.q_pin_out(obj))
+                    
+                
+                elif q == "Config":
+                    print "Received Config Query"
+                    
+                    with open(config_file) as data_file:
+                        config_object = json.load(data_file)
+                    
+                    reply_object = {
+                        
+                        "MessageType": "QueryReply",
+                        "Query": "Config",
+                        "ConfigData": config_object
+                        
+                    }
+                    
+                    self.sendMessage(json.dumps(reply_object))
+                    
+                elif q == "People":
+                    print "Received People Query - doing nothing"
+                    
+                else:
+                    print "Query not recognized (%s)" % q
+            
+            
+        except:
+            print "EXCEPTION OCCURRED DURING PARSING"
+        
+        #######################
+
+#        if cmd == "PIN":
+#            
+#            p = gpio.parse(payload)
+#            toggle_output = str(p.toggle())
+#            if p.iotype == "IN":
+#                self.sendMessage("PIN %s %s" % (p.num, toggle_output))
+#        
+#        
+#        elif cmd == "ALLRELAYS":
+#            gpio.toggle_all_relays(int(payload.split('=')[1]))
+#        elif cmd == "GETJSON":
+#            with open(config_file) as data_file:
+#                json_out = json.dumps(json.load(data_file))
+#            self.sendMessage("JSON----------" + json_out)
+#        elif cmd == "SAVEJSON":
+#            jsontext = payload.split('=')[1]
+#            json_in = json.loads(jsontext)
+#            json_to_file = json.dumps(json_in, indent=4)
+#            with open(config_file, 'w') as data_file:
+#                data_file.truncate()
+#                data_file.write(json_to_file)
+#        elif cmd == "GETPEOPLE":
+#            
+#            with open(config_file) as data_file:
+#                json_data = json.load(data_file)
+#            
+#            people = json_data['Web']['People']
+#            
+#            for person in people:
+#                print "starting thread to ping " + person['hostname']
+#                thread.start_new_thread( pinghost, (self, person, ) )
+##                pinghost(self, person)
+#                    
                     
 
 
@@ -87,6 +149,10 @@ def pinghost(self, person):
         print "exeption occurred"
 
 
+        
+
+        
+        
 pathname = os.path.dirname(sys.argv[0])        
 fullpath = os.path.abspath(pathname)
 
