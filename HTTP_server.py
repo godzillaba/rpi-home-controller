@@ -103,7 +103,7 @@ class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
 pathname = os.path.dirname(sys.argv[0])        
 fullpath = os.path.abspath(pathname)
 
-config_file = fullpath + "/data.json"
+config_file = fullpath + "/config.json"
 users_file = fullpath + "/users.json"
 
 with open(config_file) as data_file:

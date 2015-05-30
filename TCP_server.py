@@ -10,7 +10,7 @@ logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 pathname = os.path.dirname(sys.argv[0])        
 fullpath = os.path.abspath(pathname)
 
-config_file = fullpath + "/data.json"
+config_file = fullpath + "/config.json"
 
 with open(config_file) as data_file:
     data = json.load(data_file)
