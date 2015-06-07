@@ -68,7 +68,21 @@ class ws_server(WebSocketServerProtocol):
                     self.sendMessage(json.dumps(reply_object))
                     
                 elif q == "People":
-                    print "Received People Query - doing nothing"
+                    
+                    print "Received People Query"
+
+                    with open('data.json') as d_file:
+                        data_object = json.load(d_file)
+                    
+                    people_array = data_object['People']
+
+                    reply_object = {
+                        "MessageType": "QueryReply",
+                        "Query": "People",
+                        "People": people_array
+                    }
+
+                    self.sendMessage(json.dumps(reply_object))
                     
                 else:
                     print "Query not recognized (%s)" % q

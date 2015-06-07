@@ -1,14 +1,14 @@
 function create(s, addr_self) {
 
     s.binaryType = "arraybuffer";
-
+    
     s.onopen = function() {
         console.log("Connected!");
         Materialize.toast("Connected to " + s.url, 3000)
-        get_switch_stats()
+        
 		
-        if (addr_self) {
-            
+        
+        if (s.url === sockets['self'].url) {
             query_object = {
                 "MessageType": "Query",
                 "Query": "People"
@@ -19,9 +19,11 @@ function create(s, addr_self) {
             query_object.Query = "Config"
             
             sockets['self'].send(JSON.stringify(query_object))    
-        
         }
+
+        get_switch_stats()
     }
+    
 
     s.onmessage = function(e) {
         console.log("[" + s.url + "] Received: " + e.data);
@@ -62,6 +64,25 @@ function create(s, addr_self) {
                 Materialize.toast("Received JSON data", 3000)
                 
                 
+            }
+            else if (recvd_data.Query === "People") {
+                people_array = recvd_data.People
+
+                for (var x = 0; x < people_array.length; x++) {
+                    var person_name = people_array[x].name
+                    
+                    var person_status = people_array[x].online
+         
+                    var indicator = document.getElementById(person_name + "_io")
+         
+                    if (person_status) {
+                        indicator.innerHTML = "online"
+                    }
+                    else {
+                        indicator.innerHTML = "offline"
+                    }
+                }
+
             }
             
             
@@ -152,17 +173,23 @@ var get_switch_stats_ofaddr = function(boxes, sock) {
     }
 }
 
-
-// get status at an interval
-window.setInterval(function() {
-    get_switch_stats()
-	    
+var get_people_stats = function() {
     query_object = {
         "MessageType": "Query",
         "Query": "People"
     }
             
     sockets['self'].send(JSON.stringify(query_object))
+}
+
+var get_stats = function() {
+    get_people_stats()
+    get_switch_stats()
+}
+
+// get status at an interval
+window.setInterval(function() {
+    get_stats()
     
 }, 10000);
 
