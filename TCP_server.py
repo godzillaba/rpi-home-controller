@@ -4,6 +4,8 @@ import socket
 import logging
 import os, sys
 
+import parse_message
+
 # LOGGING / CONFIG VARIABLES
 logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
@@ -20,18 +22,21 @@ def serve_forever():
     while 1:
         conn, addr = s.accept()
         logging.info('Connection address %s', addr)
-        data = (conn.recv(BUFFER_SIZE)).strip()
+        data = conn.recv(BUFFER_SIZE)
         logging.debug('Received "%s" from %s', data, addr)
 
         if data:
-            cmd = data.split('=')[0]
+            parse_message.onMessage(data, config_file, conn.send)
 
-            if cmd == "PIN":
-                p = gpio.parse(data)
-                toggle_output = str(p.toggle())
-                conn.send(toggle_output)
-            elif cmd == "ALLRELAYS":
-                gpio.toggle_all_relays(int(data.split('=')[1]))
+
+            # cmd = data.split('=')[0]
+
+            # if cmd == "PIN":
+            #     p = gpio.parse(data)
+            #     toggle_output = str(p.toggle())
+            #     conn.send(toggle_output)
+            # elif cmd == "ALLRELAYS":
+            #     gpio.toggle_all_relays(int(data.split('=')[1]))
         else:
             break
 
