@@ -7,7 +7,7 @@ import json
 import os
 import thread
 
-import parse_message
+import parse_message, TCP_client
 
 class ws_server(WebSocketServerProtocol):
 
@@ -18,7 +18,30 @@ class ws_server(WebSocketServerProtocol):
         print("WebSocket connection open.")
 
     def onMessage(self, payload, isBinary):
-        parse_message.onMessage(payload, config_file, self.sendMessage)
+        try:
+            
+            obj = json.loads(payload.decode('utf8'))
+            print obj
+
+            if obj['DestinationAddress'] == 'self':
+                parse_message.onMessage(obj, config_file, self.sendMessage)
+            else:
+                print "\n\nDestination is not self - passing on to destination (hypothetically) - %s\n\n" % obj['DestinationAddress']
+
+                dest_addr = obj['DestinationAddress'].split(':')[0]
+                dest_port = obj['DestinationAddress'].split(':')[1]
+
+
+                q_reply = TCP_client.relaymessage(dest_addr, dest_port, json.dumps(obj))
+
+                if q_reply != "":
+                    q_reply_obj = json.loads(q_reply)
+
+                    q_reply_obj['Sender'] = "%s:%s" % (dest_addr, dest_port)
+                    self.sendMessage(json.dumps(q_reply_obj))
+
+        except Exception as e:
+            print "\n\nEXCEPTION OCCURRED DURING PARSING (%s)\n\n" % e
 
     def onClose(self, wasClean, code, reason):
         print("WebSocket connection closed: {0}".format(reason))

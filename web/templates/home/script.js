@@ -1,4 +1,4 @@
-function create(s, addr_self) {
+function create(s) {
 
     s.binaryType = "arraybuffer";
     
@@ -8,18 +8,20 @@ function create(s, addr_self) {
         
 		
         
-        if (s.url === sockets['self'].url) {
+        // if (s.url === sockets['self'].url) {
             query_object = {
+                "Sender": "WebClient",
+                "DestinationAddress": "self",
                 "MessageType": "Query",
                 "Query": "People"
             }
             
-            sockets['self'].send(JSON.stringify(query_object))
+            sock.send(JSON.stringify(query_object))
             
             query_object.Query = "Config"
             
-            sockets['self'].send(JSON.stringify(query_object))    
-        }
+            sock.send(JSON.stringify(query_object))    
+        // }
 
         get_switch_stats()
     }
@@ -28,11 +30,11 @@ function create(s, addr_self) {
     s.onmessage = function(e) {
         console.log("[" + s.url + "] Received: " + e.data);
 
-        if (addr_self) {
-            var addressdiv = document.getElementById('self')
-        } else {
-            var addressdiv = document.getElementById(s.url)
-        }
+        // if (addr_self) {
+        //     var addressdiv = document.getElementById('self')
+        // } else {
+        //     var addressdiv = document.getElementById(s.url)
+        // }
 
 
         // parse received data
@@ -45,6 +47,7 @@ function create(s, addr_self) {
                 var pin_number = recvd_data.pin_number
                 var value = recvd_data.value
                 
+                var addressdiv = document.getElementById(recvd_data.Sender)
                 // elms = all inputs of a certain address
                 var elms = addressdiv.getElementsByTagName('input')
 
@@ -87,44 +90,6 @@ function create(s, addr_self) {
             
             
         }
-        
-//        if (e.data.split(" ")[0] === "PIN") {
-//            var pin_number = e.data.split(" ")[1]
-//            var pin_status = e.data.split(" ")[2]
-//
-//            // select checkbox pertaining to gpiopin and toggle
-//            var elms = addressdiv.getElementsByTagName('input')
-//
-//
-//            for (var i = 0; i < elms.length; i++) {
-//                if (elms[i].name === pin_number) {
-//                    var pin_switch = elms[i]
-//                }
-//            }
-//
-//            if (pin_status === "0") {
-//                pin_switch.checked = true
-//            } else if (pin_status === "1") {
-//                pin_switch.checked = false
-//            }
-//        }
-//		else if (e.data.split(" ")[0] === "PERSON") {
-//			var person_name = e.data.split(",")[1]
-//			var person_status = e.data.split(",")[2]
-//			
-//			var indicator = document.getElementById(person_name + "_io")
-//			
-//			indicator.innerHTML = person_status
-//		}
-//
-//        if (e.data.split("----------")[0] === "JSON") {
-//            data = e.data.split("----------")[1];
-//            json = JSON.parse(data)
-//            console.log(json)
-//            Materialize.toast("Received JSON data", 3000)
-//        }
-        
-
     }
 
     s.onclose = function(e) {
@@ -133,13 +98,6 @@ function create(s, addr_self) {
     }
 }
 
-// get status of each switch's gpiopin
-// var get_switch_stats = function () {
-//     var boxes = document.getElementsByTagName('input');
-//     for (var x = 0; x < boxes.length; x++) {
-//         socket.send("PIN=" + boxes[x].name + ",IN,0")
-//     }
-// }
 
 var get_switch_stats = function() {
     addresses = document.getElementsByClassName('address')
@@ -147,20 +105,24 @@ var get_switch_stats = function() {
     for (var x = 0; x < addresses.length; x++) {
 
         var boxes = addresses[x].getElementsByTagName('input')
-        var sock = sockets[addresses[x].id]
+        // var sock = sockets[addresses[x].id]
+        var addr = addresses[x].id
 
-        get_switch_stats_ofaddr(boxes, sock)
+        get_switch_stats_ofaddr(boxes, addr)
     }
 }
 
 
-var get_switch_stats_ofaddr = function(boxes, sock) {
+var get_switch_stats_ofaddr = function(boxes, addr) {
+    // var sock = sockets['self']
     for (var x = 0; x < boxes.length; x++) {
 
 //        sock.send("PIN=" + boxes[x].name + ",IN,0")
         var pnumber = boxes[x].name
         
         var query_object = {
+            "Sender": "WebClient",
+            "DestinationAddress": addr,
             "MessageType": "Query",
             "Query": "pin_out",
             "pin_number": pnumber
@@ -175,11 +137,13 @@ var get_switch_stats_ofaddr = function(boxes, sock) {
 
 var get_people_stats = function() {
     query_object = {
+        "Sender": "WebClient",
+        "DestinationAddress": "self",
         "MessageType": "Query",
         "Query": "People"
     }
             
-    sockets['self'].send(JSON.stringify(query_object))
+    sock.send(JSON.stringify(query_object))
 }
 
 var get_stats = function() {
@@ -197,7 +161,10 @@ window.setInterval(function() {
 // send command to ws server to toggle gpio pin when switch is clicked
 var switch_onclick = function(box) {
     var sock_addr = box.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.id
-    var sock = sockets[sock_addr]
+    
+    // var sock = sockets[sock_addr]
+    
+    // var sock = sockets['self']
 
     if (sock.readyState != 1) {
         Materialize.toast("Not connected to WebSocket server", 5000)
@@ -209,6 +176,8 @@ var switch_onclick = function(box) {
     var pvalue = ( + !(box.checked) )
     
     command_object = {
+        "Sender": "WebClient",
+        "DestinationAddress": sock_addr,
         "MessageType": "Command",
         "Command": "pin_out",
         "pin_number": pnumber,
@@ -226,31 +195,12 @@ var switch_onclick = function(box) {
 
 
 window.onload = function() {
-    sockets = {}
+    
+    var hostname = window.location.hostname
+    var wsport = document.getElementById("wsport").content
+    sock = new WebSocket("ws://" + hostname + ":" + wsport);
+    create(sock)
 
-
-    addresses = document.getElementsByClassName('address')
-
-    for (var x = 0; x < addresses.length; x++) {
-        var sock_addr = addresses[x].id
-
-        if (sock_addr === "self") {
-
-            var hostname = window.location.hostname
-            var wsport = document.getElementById("wsport").content
-            var sock = new WebSocket("ws://" + hostname + ":" + wsport);
-            create(sock, true)
-
-            sockets['self'] = sock
-                        
-        } else {
-            var sock = new WebSocket(sock_addr)
-            create(sock, false)
-            sockets[sock.url] = sock
-        }
-    }
-//    settings_onload()
-	
 };
 
 
@@ -326,6 +276,8 @@ var send_json_data = function() {
     console.log(json)
 
     config_object = {
+        "Sender": "WebClient",
+        "DestinationAddress": "self",
         "MessageType": "Command",
         "Command": "SaveConfig",
         "ConfigData": json
@@ -334,7 +286,7 @@ var send_json_data = function() {
     
     jsonstring = JSON.stringify(config_object)
     console.log(jsonstring)
-    sockets['self'].send(jsonstring)
+    sock.send(jsonstring)
     Materialize.toast("Sent JSON data", 3000)
 
 }

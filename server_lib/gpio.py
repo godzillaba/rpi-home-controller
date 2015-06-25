@@ -52,6 +52,7 @@ def q_pin_out(obj):
     pvalue = int(GPIO.input(pnumber))
     
     reply_object = {
+        "Sender": data1['servername'],
         "MessageType": "QueryReply",
         "Query": "pin_out",
         "pin_number": pnumber,

@@ -1,13 +1,21 @@
 from server_lib import gpio
-import json
+import json, os, sys
 
+pathname = os.path.dirname(sys.argv[0])        
+fullpath = os.path.abspath(pathname)
 
+config_file = fullpath + "/config.json"
 
-def onMessage(payload, config_file, send_function):
+with open(config_file) as data_file:
+    conf_obj = json.load(data_file)
+
+sender = conf_obj['servername']
+
+def onMessage(obj, config_file, send_function):
 
     try:
-        obj = json.loads(payload.decode('utf8'))
-        print obj
+        # obj = json.loads(payload.decode('utf8'))
+        # print obj
         
         # tested working
         if obj['MessageType'] == 'Command':
@@ -50,7 +58,7 @@ def onMessage(payload, config_file, send_function):
                     config_object = json.load(data_file)
                 
                 reply_object = {
-                    
+                    "Sender": sender,
                     "MessageType": "QueryReply",
                     "Query": "Config",
                     "ConfigData": config_object
@@ -70,6 +78,7 @@ def onMessage(payload, config_file, send_function):
                 people_array = data_object['People']
 
                 reply_object = {
+                    "Sender": sender,
                     "MessageType": "QueryReply",
                     "Query": "People",
                     "People": people_array
