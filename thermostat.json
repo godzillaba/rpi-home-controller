@@ -1,0 +1,6 @@
+{
+    "target_temp": 20,
+    "actual_temp": 25,
+    "system": "cool",
+    "fan": "auto"
+}
