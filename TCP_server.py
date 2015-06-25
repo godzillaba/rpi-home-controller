@@ -26,7 +26,7 @@ def serve_forever():
         logging.debug('Received "%s" from %s', data, addr)
 
         if data:
-            parse_message.onMessage(data, config_file, conn.send)
+            parse_message.onMessage(json.loads(data), config_file, conn.send)
 
 
             # cmd = data.split('=')[0]
