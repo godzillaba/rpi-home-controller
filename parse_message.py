@@ -5,6 +5,8 @@ pathname = os.path.dirname(sys.argv[0])
 fullpath = os.path.abspath(pathname)
 
 config_file = fullpath + "/config.json"
+people_file = fullpath + "/data.json"
+thermostat_file = fullpath + "/thermostat.json"
 
 with open(config_file) as data_file:
     conf_obj = json.load(data_file)
@@ -34,6 +36,18 @@ def onMessage(obj, config_file, send_function):
                 with open(config_file, 'w') as data_file:
                     data_file.truncate()
                     data_file.write(json_to_file)
+
+            elif cmd == "TempConfig":
+                with open(thermostat_file) as d_file:
+                    d_file_obj = json.load(d_file)
+                
+                d_file_obj['target_temp'] = obj['target_temp']
+                d_file_obj['fan'] = obj['fan']
+                d_file_obj['system'] = obj['system']
+
+                with open(thermostat_file, 'w') as out_file:
+                    out_file.write(json.dumps(d_file_obj, indent=4))
+
 
             else:
                 print "Command not recognized (%s)" % cmd
@@ -72,7 +86,7 @@ def onMessage(obj, config_file, send_function):
                 
                 print "Received People Query"
 
-                with open('data.json') as d_file:
+                with open(people_file) as d_file:
                     data_object = json.load(d_file)
                 
                 people_array = data_object['People']
@@ -86,6 +100,22 @@ def onMessage(obj, config_file, send_function):
 
                 # self.sendMessage(json.dumps(reply_object))
                 send_function(json.dumps(reply_object))
+
+            elif q == "ThermostatData":
+                print "Received Thermostat Query"
+
+                with open(thermostat_file) as d_file:
+                    data_object = json.load(d_file)
+
+                reply_object = {
+                    "Sender": sender,
+                    "MessageType": "QueryReply",
+                    "Query": "ThermostatData",
+                    "Data": data_object
+                }
+
+                send_function(json.dumps(reply_object))
+
                         
             else:
                 print "Query not recognized (%s)" % q
