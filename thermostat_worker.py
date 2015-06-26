@@ -47,7 +47,7 @@ while 1:
     with open(thermostat_file) as data_file:
         thermostat_data = json.load(data_file)
 
-    target = thermostat_data['target_temp']
+    target = int(thermostat_data['target_temp'])
     system = thermostat_data['system']
     fan = thermostat_data['fan']
 
@@ -55,7 +55,7 @@ while 1:
 
     difference = actual - target
 
-    print "target:%s actual:%s difference:%s" % (target, actual, difference)
+    print "target:%s actual:%s difference:%s fan:%s compressor:%s" % (target, actual, difference, fan, system)
 
 
     thermostat_data['actual_temp'] = actual

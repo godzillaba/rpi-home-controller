@@ -1,3 +1,4 @@
+alert("Changes in progress:\nreceiving and acting on thermostat data in client js\nerror handling for tcp connections")
 function create(s) {
 
     s.binaryType = "arraybuffer";
@@ -24,6 +25,7 @@ function create(s) {
         // }
 
         get_switch_stats()
+        get_hvac_data()
     }
     
 
@@ -87,8 +89,25 @@ function create(s) {
                 }
 
             }
+            else if (recvd_data.Query === "ThermostatData") {
+                
+                actual_temp_p = document.getElementById("actual_temp_" + recvd_data.Sender)
+
+                target_temp_p = document.getElementById("target_temp_" + recvd_data.Sender)
+
+                actual_temp_p.innerHTML = recvd_data.Data.actual_temp
+                target_temp_p.innerHTML = recvd_data.Data.target_temp
+
+                document.getElementById("fan_"+recvd_data.Data.fan+"_"+recvd_data.Sender).checked = true
+
+                document.getElementById("compressor_"+recvd_data.Data.system+"_"+recvd_data.Sender).checked = true
+
+
+            }
             
             
+        } else if (recvd_data.MessageType === "ErrorMessage") {
+            Materialize.toast(recvd_data.Error, 5000)
         }
     }
 
@@ -149,13 +168,14 @@ var get_people_stats = function() {
 var get_stats = function() {
     get_people_stats()
     get_switch_stats()
+    get_hvac_data()
 }
 
 // get status at an interval
 window.setInterval(function() {
     get_stats()
     
-}, 10000);
+}, 30000);
 
 
 // send command to ws server to toggle gpio pin when switch is clicked
@@ -195,7 +215,7 @@ var switch_onclick = function(box) {
 
 
 window.onload = function() {
-    
+
     var hostname = window.location.hostname
     var wsport = document.getElementById("wsport").content
     sock = new WebSocket("ws://" + hostname + ":" + wsport);
@@ -292,6 +312,68 @@ var send_json_data = function() {
 }
 
 
+
+//////////// hvac ////////////
+
+// target_temp_span = document.getElementById("target_temp")
+// actual_temp_span = document.getElementById("actual_temp")
+// fan_span = document.getElementById("fan")
+// system_span = document.getElementById("system")
+
+var get_hvac_data = function () {
+    
+    thermostats = document.getElementsByClassName("thermostat")
+
+    for (var x = 0; x < thermostats.length; x++) {
+        console.log(thermostats[x].id)
+        query_object = {
+            "Sender": "WebClient",
+            "DestinationAddress": thermostats[x].id.split("_")[0],
+            "MessageType": "Query",
+            "Query": "ThermostatData"
+        }
+
+        sock.send(JSON.stringify(query_object))
+    }
+}
+
+var send_hvac_data = function (thermostat_addr) {
+    Materialize.toast("sending data (hypothetically)", 1000)
+
+    command_object = {
+        "Sender": "WebClient",
+        "DestinationAddress": thermostat_addr,
+        "MessageType": "Command",
+        "Command": "TempConfig",
+        "target_temp": (document.getElementById("target_temp_" + thermostat_addr)).innerHTML,
+        "fan": $("input[type='radio'][name='fan_"+ thermostat_addr +"']:checked")[0].getAttribute('data-jsonval'),
+        "system": $("input[type='radio'][name='compressor_"+ thermostat_addr +"']:checked")[0].getAttribute('data-jsonval')
+    }
+
+    console.log(command_object)
+
+    sock.send(JSON.stringify(command_object))
+}
+
+var lower_target = function (thermostat_addr) {
+
+    target_temp_elm = document.getElementById("target_temp_" + thermostat_addr)
+    current_target = parseInt(target_temp_elm.innerHTML)
+    new_target = current_target - 1
+    target_temp_elm.innerHTML = new_target
+
+    send_hvac_data(thermostat_addr)
+
+}
+
+var raise_target = function (thermostat_addr) {
+    target_temp_elm = document.getElementById("target_temp_" + thermostat_addr)
+    current_target = parseInt(target_temp_elm.innerHTML)
+    new_target = current_target + 1
+    target_temp_elm.innerHTML = new_target
+
+    send_hvac_data(thermostat_addr)
+}
 
 //////////// nav stuff ////////////
 

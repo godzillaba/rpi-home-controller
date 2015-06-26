@@ -7,7 +7,7 @@ import json
 import os
 import thread
 
-import parse_message, TCP_client
+import parse_message, TCP_client, socket, errno
 
 class ws_server(WebSocketServerProtocol):
 
@@ -31,15 +31,30 @@ class ws_server(WebSocketServerProtocol):
                 dest_addr = obj['DestinationAddress'].split(':')[0]
                 dest_port = obj['DestinationAddress'].split(':')[1]
 
+                try:
+                    
+                    q_reply = TCP_client.relaymessage(dest_addr, dest_port, json.dumps(obj))
 
-                q_reply = TCP_client.relaymessage(dest_addr, dest_port, json.dumps(obj))
+                    if q_reply != "":
+                        q_reply_obj = json.loads(q_reply)
 
-                if q_reply != "":
-                    q_reply_obj = json.loads(q_reply)
+                        q_reply_obj['Sender'] = "%s:%s" % (dest_addr, dest_port)
+                        self.sendMessage(json.dumps(q_reply_obj))
+                
+                except socket.error, v:
+                    errorcode=v[0]
+                    
+                    errmsg = {
+                        "Sender": "self",
+                        "MessageType": "ErrorMessage",
+                        "Error": "TCP connection to %s failed (%s)" % (obj['DestinationAddress'], v)
+                    }
 
-                    q_reply_obj['Sender'] = "%s:%s" % (dest_addr, dest_port)
-                    self.sendMessage(json.dumps(q_reply_obj))
+                    print errmsg['Error']
 
+                    self.sendMessage(json.dumps(errmsg))
+                
+        
         except Exception as e:
             print "\n\nEXCEPTION OCCURRED DURING PARSING (%s)\n\n" % e
 
