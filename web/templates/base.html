@@ -36,7 +36,11 @@
     <nav class='{{ data.Web.UI.NavColor }}'>
         <ul id="slide-out" class="side-nav collapsible">
             <li class="no-padding">
-                <a id='sidenav_home' class="collapsible-header {{ data.Web.UI.DropDownText }}" href="#!" onclick="hide('settings_section'); show('main_section')"><i class="mdi-action-home"></i>Home</a>
+                <a id='sidenav_home' class="collapsible-header {{ data.Web.UI.DropDownText }}" href="#!" onclick="hide('settings_section'); show('main_section'); hide('hvac_section')"><i class="mdi-action-home"></i>Home</a>
+            </li>
+
+            <li class="no-padding">
+                <a id='sidenav_hvac' class="collapsible-header {{ data.Web.UI.DropDownText }}" href="#!" onclick="hide('settings_section'); hide('main_section'); show('hvac_section')"><i class="material-icons">toys</i>HVAC</a>
             </li>
 
             <li class="no-padding">
@@ -71,8 +75,13 @@
         <div class="nav-wrapper {{ data.Web.UI.NavColor }}">
             <ul id="nav-mobile" class="left">
                 <li id='topnav_home' class="active">
-                    <a href="#!" onclick="hide('settings_section'); show('main_section'); nav_activate('topnav_home')"><i class="mdi-action-home"></i></a>
+                    <a href="#!" onclick="hide('settings_section'); show('main_section'); nav_activate('topnav_home'); hide('hvac_section')"><i class="mdi-action-home"></i></a>
                 </li>
+
+                <li id='topnav_hvac' class="">
+                    <a href="#!" onclick="hide('settings_section'); hide('main_section'); nav_activate('topnav_hvac'); show('hvac_section')"><i class="material-icons">toys</i></a>
+                </li>
+
                 <li id='topnav_settings' class="">
                     <a href="#!" class="dropdown-button" data-activates='dropdown1'><i class="mdi-action-settings"></i></a>
                 </li>

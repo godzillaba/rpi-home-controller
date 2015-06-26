@@ -5,7 +5,7 @@
 {% block content %}
 
 <div id='content' class='row'>
-    <div id='main_section' style='display:none'>
+    <div id='main_section' style=''>
     {% for address in data.Web.Groups %}
     <div class="address" id="{{ address[0] }}">
         {% for group in address %}
@@ -82,7 +82,7 @@
 	{% endfor %}
     </div>
 
-    <div id='hvac_section'>
+    <div id='hvac_section' style='display:none'>
         
         {% for thermostat in data.Web.HVAC %}
             <div id="{{ thermostat.Address }}_thermostat" class='thermostat'>

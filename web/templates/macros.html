@@ -16,15 +16,15 @@
 {% macro dropdown(data) -%}
 
 <li>
-    <a class="{{ data.Web.UI.DropDownText }}" href="#!" onclick="hide('main_section'); hideforms(); show('settings_section'); show('UIForm'); nav_activate('topnav_settings')">UI</a>
+    <a class="{{ data.Web.UI.DropDownText }}" href="#!" onclick="hide('main_section'); hideforms(); show('settings_section'); show('UIForm'); nav_activate('topnav_settings'); hide('hvac_section')">UI</a>
 </li>
 
 <li>
-    <a class="{{ data.Web.UI.DropDownText }}" href="#!" onclick="hide('main_section'); hideforms(); show('settings_section'); show('NetworkForm'); nav_activate('topnav_settings')">Network</a>
+    <a class="{{ data.Web.UI.DropDownText }}" href="#!" onclick="hide('main_section'); hideforms(); show('settings_section'); show('NetworkForm'); nav_activate('topnav_settings'); hide('hvac_section')">Network</a>
 </li>
 
 <li>
-    <a class="{{ data.Web.UI.DropDownText }}" href="#!" onclick="hide('main_section'); hideforms(); show('settings_section'); show('GroupsForm'); nav_activate('topnav_settings')">Groups</a>
+    <a class="{{ data.Web.UI.DropDownText }}" href="#!" onclick="hide('main_section'); hideforms(); show('settings_section'); show('GroupsForm'); nav_activate('topnav_settings'); hide('hvac_section')">Groups</a>
 </li>
 
 {%- endmacro%}

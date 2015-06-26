@@ -1,4 +1,3 @@
-alert("Changes in progress:\nreceiving and acting on thermostat data in client js\nerror handling for tcp connections")
 function create(s) {
 
     s.binaryType = "arraybuffer";
