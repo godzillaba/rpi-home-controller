@@ -1,4 +1,5 @@
 import os, sys, json
+import RPi.GPIO as GPIO
 
 
 ####### adafruit code #######
@@ -31,15 +32,57 @@ def read_temp():
 
 ####### end adafruit code #######
 
+####### heat / cool switch functions #######
 
+def hvac_off():
+    GPIO.output(heat_pin, 1)
+    GPIO.output(cool_pin, 1)
+    GPIO.output(fan_pin, 1)
 
+def heat():
+    if hvac_type != 'conventional':
+        print "Only conventional hvac systems supported. For more info visit https://wiki.xtronics.com/index.php/Thermostat_signals_and_wiring"
+    else:
+        GPIO.output(cool_pin, 1)
+        GPIO.output(fan_pin, 1)
+        GPIO.output(heat_pin, 0)
+
+def cool():
+    GPIO.output(heat_pin, 1)
+    GPIO.output(fan_pin, 0)
+    GPIO.output(cool_pin, 0)
+
+def fan_only():
+    GPIO.output(heat_pin, 1)
+    GPIO.output(cool_pin, 1)
+    GPIO.output(fan_pin, 0)
+
+####### end heat / cool switch functions #######
 
 
 pathname = os.path.dirname(sys.argv[0])        
 fullpath = os.path.abspath(pathname)
 
 thermostat_file = fullpath + "/thermostat.json"
+thermostat_config = fullpath + "/thermostat_config.json"
 
+with open(thermostat_config) as config_file:
+    config = json.load(config_file)
+
+
+GPIO.setmode(GPIO.BOARD)
+
+
+
+heat_pin = int(config['heat'])
+cool_pin = int(config['compressor'])
+fan_pin = int(config['fan'])
+
+hvac_type = config['hvactype']
+
+GPIO.setup(heat_pin, GPIO.OUT)
+GPIO.setup(cool_pin, GPIO.OUT)
+GPIO.setup(fan_pin, GPIO.OUT)
 
 
 while 1:
@@ -71,24 +114,62 @@ while 1:
         if 1 > difference > -1:
             print "Turning off fan and compressor"
             # turn off fan and compressor
+            hvac_off()
 
         #below target
         elif difference < -1:
             
-            if system == 'heat':
+            if system == 'heat' or system == 'auto':
                 # turn on heater
                 print "turning on heat"
+                heat()
+
             elif system == 'cool':
                 print "turning off fan and compressor"
+                hvac_off()
 
 
         #above target
         elif difference > 1:
             if system == 'heat':
                 print "turning off fan and compressor"
+                hvac_off()
 
-            if system == 'cool':
+            if system == 'cool' or system == 'auto':
                 # turn on ac
                 print "turning on ac"
+                cool()
+
+    elif fan == 'on':
+        
+        if system == 'auto':
+
+            if 1 > difference > -1:
+                print 'turning on fan only'
+                fan_only()
+
+            #below target
+            elif difference < -1:
+                print "turning on heat"
+                heat()
+
+            #above target
+            elif difference > 1:    
+                print "turning on ac"
+                cool()
+
+        elif system == 'heat':
+            print "turning on heat"
+            heat()
+
+        elif system == 'cool':
+            print 'turning on ac'
+            cool()
+
+    elif fan == 'off':
+        print 'turning hvac system off'
+        hvac_off()
+
+
 
     time.sleep(120)
