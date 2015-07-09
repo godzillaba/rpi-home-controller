@@ -5,7 +5,7 @@ from twisted.internet import reactor
 from server_lib import gpio
 import json
 import os
-import thread
+# import thread
 
 import parse_message, TCP_client, socket, errno
 
@@ -62,38 +62,6 @@ class ws_server(WebSocketServerProtocol):
         print("WebSocket connection closed: {0}".format(reason))
 
 
-                                              
-def pinghost(self, person):
-    
-    global pingthreads
-
-    try:
-        
-    
-        if pingthreads[str(person['hostname'])]:
-            print "Already trying to ping %s" % person['hostname']
-        
-        else:
-            pingthreads[str(person['hostname'])] = True
-            
-            ip = os.system("ping -c 1 " + person['hostname'] + " >> /dev/null")      
-               
-            print "pinging %s returned %s" % (person['hostname'], ip)
-                       
-            if ip == 0:
-                msg = str("PERSON ," + person['name'] + ",IN")
-                self.sendMessage(msg)
-            else:
-                msg = str("PERSON ," + person['name'] + ",OUT")
-                self.sendMessage(msg)
-                
-            pingthreads[str(person['hostname'])] = False
-    except:
-        print "exeption occurred"
-
-
-        
-
         
         
 pathname = os.path.dirname(sys.argv[0])        
@@ -107,12 +75,6 @@ with open(config_file) as data_file:
 port = int(data['WebSocket']['port'])
 address = "ws://localhost:%s" % port
 
-pingthreads = {}
-
-people = data['Web']['People']
-
-for person in people: 
-    pingthreads[str(person['hostname'])] = False
 
 def main():
     log.startLogging(sys.stdout)
