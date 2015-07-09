@@ -111,13 +111,13 @@ while 1:
 
     if fan == 'auto':
 
-        if 1 > difference > -1:
+        if 1 >= difference >= -1:
             print "Turning off fan and compressor"
             # turn off fan and compressor
             hvac_off()
 
         #below target
-        elif difference < -1:
+        elif difference <= -1:
             
             if system == 'heat' or system == 'auto':
                 # turn on heater
@@ -130,7 +130,7 @@ while 1:
 
 
         #above target
-        elif difference > 1:
+        elif difference >= 1:
             if system == 'heat':
                 print "turning off fan and compressor"
                 hvac_off()
@@ -144,17 +144,17 @@ while 1:
         
         if system == 'auto':
 
-            if 1 > difference > -1:
+            if 1 >= difference >= -1:
                 print 'turning on fan only'
                 fan_only()
 
             #below target
-            elif difference < -1:
+            elif difference <= -1:
                 print "turning on heat"
                 heat()
 
             #above target
-            elif difference > 1:    
+            elif difference >= 1:    
                 print "turning on ac"
                 cool()
 
