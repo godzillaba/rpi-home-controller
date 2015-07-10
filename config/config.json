@@ -1,4 +1,5 @@
 {
+    "servername": "pi2",
     "HTTP": {
         "port": "8080"
     }, 

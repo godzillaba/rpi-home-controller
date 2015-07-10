@@ -5,7 +5,7 @@ import os, sys
 pathname = os.path.dirname(sys.argv[0])        
 fullpath = os.path.abspath(pathname)
 
-config_file = fullpath + "/config.json"
+config_file = fullpath + "/config/config.json"
 
 def main(path):
     env = Environment(loader=PackageLoader('web', 'templates'))

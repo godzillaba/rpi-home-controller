@@ -4,7 +4,7 @@ import json, os, sys, time, datetime
 pathname = os.path.dirname(sys.argv[0])        
 fullpath = os.path.abspath(pathname)
 
-config_file = fullpath + "/config.json"
+config_file = fullpath + "/config/config.json"
 data_file = fullpath + "/data.json"
 
 delay = 20

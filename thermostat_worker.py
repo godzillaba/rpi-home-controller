@@ -64,7 +64,7 @@ pathname = os.path.dirname(sys.argv[0])
 fullpath = os.path.abspath(pathname)
 
 thermostat_file = fullpath + "/thermostat.json"
-thermostat_config = fullpath + "/thermostat_config.json"
+thermostat_config = fullpath + "/config/thermostat_config.json"
 
 with open(thermostat_config) as config_file:
     config = json.load(config_file)

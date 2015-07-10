@@ -74,7 +74,7 @@ class ws_server(WebSocketServerProtocol):
 pathname = os.path.dirname(sys.argv[0])        
 fullpath = os.path.abspath(pathname)
 
-config_file = fullpath + "/config.json"
+config_file = fullpath + "/config/config.json"
 
 with open(config_file) as data_file:
     data = json.load(data_file)
