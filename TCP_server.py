@@ -7,7 +7,7 @@ import os, sys
 import parse_message
 
 # LOGGING / CONFIG VARIABLES
-logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
+# logging.basicConfig(format='%(levelname)s:%(message)s', level=logging.DEBUG)
 
 pathname = os.path.dirname(sys.argv[0])        
 fullpath = os.path.abspath(pathname)
@@ -20,27 +20,23 @@ with open(config_file) as data_file:
 
 def serve_forever():
     while 1:
-        conn, addr = s.accept()
-        logging.info('Connection address %s', addr)
-        data = conn.recv(BUFFER_SIZE)
-        logging.debug('Received "%s" from %s', data, addr)
-
-        if data:
-            parse_message.onMessage(json.loads(data), config_file, conn.send)
+        try:
+            conn, addr = s.accept()
+            print 'TCP - Connection address %s' % addr[0]
 
 
-            # cmd = data.split('=')[0]
+            data = conn.recv(BUFFER_SIZE)
+            print 'TCP - Received "%s" from %s' % (data, addr[0])
 
-            # if cmd == "PIN":
-            #     p = gpio.parse(data)
-            #     toggle_output = str(p.toggle())
-            #     conn.send(toggle_output)
-            # elif cmd == "ALLRELAYS":
-            #     gpio.toggle_all_relays(int(data.split('=')[1]))
-        else:
-            break
+            if data:
+                parse_message.onMessage(json.loads(data), config_file, conn.send)
 
-        conn.close()
+            else:
+                break
+
+            conn.close()
+        except Exception as e:
+            print "Exception occurred during serve_forever() loop -- %s" % e
 
 
 ### START ###
@@ -55,7 +51,7 @@ s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 def main():
     s.bind((TCP_IP, TCP_PORT))
     s.listen(1)
-    logging.info('TCP server listening on %s:%s', TCP_IP, TCP_PORT)
+    print 'TCP server listening on %s:%s' % (TCP_IP, TCP_PORT)
 
     # SET UP RELAYS
     gpio.toggle_all_relays(1)
