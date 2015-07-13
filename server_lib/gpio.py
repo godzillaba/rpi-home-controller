@@ -73,9 +73,10 @@ def q_pin_out(obj):
 
 
 def toggle_all_relays(hilo):
-    relaypins = data1['Web']['Groups'][0]
-    for p in relaypins:
-        if p != 'self':
-            rp = pin(int(p['gpiopin']), "OUT", hilo)
-            rp.toggle()
-            logging.info('Initializing relay pin %s (%s)', p['gpiopin'], p['description'])
+    # relaypins = data1['Web']['Groups'][0]
+    # for p in relaypins:
+    #     if p != 'self':
+    #         rp = pin(int(p['gpiopin']), "OUT", hilo)
+    #         rp.toggle()
+    #         logging.info('Initializing relay pin %s (%s)', p['gpiopin'], p['description'])
+    print "GPIO - toggle_all_relays() called -- doing nothing"
