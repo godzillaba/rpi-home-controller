@@ -2,5 +2,10 @@
     "fan": 40,
     "compressor": 22,
     "heat": 18,
-    "hvactype": "conventional"
+    "hvactype": "conventional",
+    "plotly": {
+    	"enabled": true,
+    	"username": "username",
+    	"apikey": "apikey"
+    }
 }

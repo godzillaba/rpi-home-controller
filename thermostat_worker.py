@@ -1,6 +1,72 @@
 import os, sys, json
 import RPi.GPIO as GPIO
 
+import plotly.plotly as py
+from plotly.graph_objs import *
+
+from datetime import datetime
+
+####### config code #######
+pathname = os.path.dirname(sys.argv[0])        
+fullpath = os.path.abspath(pathname)
+
+thermostat_file = fullpath + "/thermostat.json"
+thermostat_config = fullpath + "/config/thermostat_config.json"
+
+with open(thermostat_config) as config_file:
+    config = json.load(config_file)
+
+####### end config code #######
+
+####### plotly code #######
+
+pyuname = config['plotly']['username']
+pyapikey = config['plotly']['apikey']
+
+py.sign_in(pyuname, pyapikey)
+
+x = []
+y = []
+target_y = []
+
+def addpoint(y_value, target):
+    now = datetime.now()
+    x.append(now)
+    y.append(y_value)
+
+    target_y.append(target)
+
+    actualtrace = Scatter(
+        x=x,
+        y=y,
+        fill='tozeroy',
+        name = 'Actual Temperature'
+    )
+
+    targettrace = Scatter(
+        x=x,
+        y=target_y,
+        name = 'Target Temperature'
+    )
+    
+    data = Data([
+        actualtrace,
+        targettrace
+    ])
+
+    layout = Layout(
+        yaxis=YAxis(
+            range=[50, 100]
+        )
+    )
+
+    fig = Figure(data=data, layout=layout)
+    plot_url = py.plot(fig, filename='Temperature Graph')
+
+
+
+####### end plotly code #######
+
 
 ####### adafruit code #######
 
@@ -59,17 +125,6 @@ def fan_only():
 
 ####### end heat / cool switch functions #######
 
-
-pathname = os.path.dirname(sys.argv[0])        
-fullpath = os.path.abspath(pathname)
-
-thermostat_file = fullpath + "/thermostat.json"
-thermostat_config = fullpath + "/config/thermostat_config.json"
-
-with open(thermostat_config) as config_file:
-    config = json.load(config_file)
-
-
 GPIO.setmode(GPIO.BOARD)
 
 
@@ -95,6 +150,9 @@ while 1:
     fan = thermostat_data['fan']
 
     actual = round(read_temp()[1], 1)
+
+    # append temp to graph
+    addpoint(actual, target)
 
     difference = actual - target
 
@@ -172,4 +230,4 @@ while 1:
 
 
 
-    time.sleep(120)
+    time.sleep(60)
