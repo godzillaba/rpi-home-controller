@@ -126,7 +126,13 @@ exempt_subnets = data["Web"]["Exempt_Subnets"]
 Handler = render
 Handler.allow_reuse_address = True
 
-httpd = SocketServer.TCPServer(("", PORT), Handler)
+
+class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
+    pass
+
+
+# httpd = SocketServer.TCPServer(("", PORT), Handler)
+httpd = ThreadedTCPServer(("", PORT), Handler)
 
 def main():
     httpd.serve_forever()
