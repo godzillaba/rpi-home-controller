@@ -139,95 +139,95 @@ GPIO.setup(heat_pin, GPIO.OUT)
 GPIO.setup(cool_pin, GPIO.OUT)
 GPIO.setup(fan_pin, GPIO.OUT)
 
+def main():
+    while 1:
 
-while 1:
+        with open(thermostat_file) as data_file:
+            thermostat_data = json.load(data_file)
 
-    with open(thermostat_file) as data_file:
-        thermostat_data = json.load(data_file)
+        target = int(thermostat_data['target_temp'])
+        system = thermostat_data['system']
+        fan = thermostat_data['fan']
 
-    target = int(thermostat_data['target_temp'])
-    system = thermostat_data['system']
-    fan = thermostat_data['fan']
+        actual = round(read_temp()[1], 1)
 
-    actual = round(read_temp()[1], 1)
+        # append temp to graph
+        addpoint(actual, target)
 
-    # append temp to graph
-    addpoint(actual, target)
+        difference = actual - target
 
-    difference = actual - target
-
-    print "target:%s actual:%s difference:%s fan:%s compressor:%s" % (target, actual, difference, fan, system)
-
-
-    thermostat_data['actual_temp'] = actual
-
-    with open(thermostat_file, 'w') as data_file:
-        print 'writing to file'
-        data_file.write(json.dumps(thermostat_data, indent=4))
+        print "target:%s actual:%s difference:%s fan:%s compressor:%s" % (target, actual, difference, fan, system)
 
 
+        thermostat_data['actual_temp'] = actual
 
-    if fan == 'auto':
+        with open(thermostat_file, 'w') as data_file:
+            print 'writing to file'
+            data_file.write(json.dumps(thermostat_data, indent=4))
 
-        if 1 >= difference >= -1:
-            print "Turning off fan and compressor"
-            # turn off fan and compressor
-            hvac_off()
 
-        #below target
-        elif difference <= -1:
+
+        if fan == 'auto':
+
+            if 1 >= difference >= -1:
+                print "Turning off fan and compressor"
+                # turn off fan and compressor
+                hvac_off()
+
+            #below target
+            elif difference <= -1:
+                
+                if system == 'heat' or system == 'auto':
+                    # turn on heater
+                    print "turning on heat"
+                    heat()
+
+                elif system == 'cool':
+                    print "turning off fan and compressor"
+                    hvac_off()
+
+
+            #above target
+            elif difference >= 1:
+                if system == 'heat':
+                    print "turning off fan and compressor"
+                    hvac_off()
+
+                if system == 'cool' or system == 'auto':
+                    # turn on ac
+                    print "turning on ac"
+                    cool()
+
+        elif fan == 'on':
             
-            if system == 'heat' or system == 'auto':
-                # turn on heater
+            if system == 'auto':
+
+                if 1 >= difference >= -1:
+                    print 'turning on fan only'
+                    fan_only()
+
+                #below target
+                elif difference <= -1:
+                    print "turning on heat"
+                    heat()
+
+                #above target
+                elif difference >= 1:    
+                    print "turning on ac"
+                    cool()
+
+            elif system == 'heat':
                 print "turning on heat"
                 heat()
 
             elif system == 'cool':
-                print "turning off fan and compressor"
-                hvac_off()
-
-
-        #above target
-        elif difference >= 1:
-            if system == 'heat':
-                print "turning off fan and compressor"
-                hvac_off()
-
-            if system == 'cool' or system == 'auto':
-                # turn on ac
-                print "turning on ac"
+                print 'turning on ac'
                 cool()
 
-    elif fan == 'on':
-        
-        if system == 'auto':
-
-            if 1 >= difference >= -1:
-                print 'turning on fan only'
-                fan_only()
-
-            #below target
-            elif difference <= -1:
-                print "turning on heat"
-                heat()
-
-            #above target
-            elif difference >= 1:    
-                print "turning on ac"
-                cool()
-
-        elif system == 'heat':
-            print "turning on heat"
-            heat()
-
-        elif system == 'cool':
-            print 'turning on ac'
-            cool()
-
-    elif fan == 'off':
-        print 'turning hvac system off'
-        hvac_off()
+        elif fan == 'off':
+            print 'turning hvac system off'
+            hvac_off()
 
 
 
-    time.sleep(60)
+        time.sleep(60)
