@@ -19,23 +19,28 @@ with open(config_file) as data_file:
 SocketServer.TCPServer.allow_reuse_address = True
 
 
-class MyTCPHandler(SocketServer.BaseRequestHandler):
+class TCPHandler(SocketServer.BaseRequestHandler):
 
     def handle(self):
-        # self.request is the TCP socket connected to the client
-        print "TCP - %s connected to socket" % self.client_address[0]
+        try:
 
-        self.data = self.request.recv(BUFFER_SIZE).strip()
-        
-        print 'TCP - Received "%s" from %s' % (self.data, self.client_address[0])
+            # self.request is the TCP socket connected to the client
+            print "TCP - %s connected to socket" % self.client_address[0]
 
-        # just send back the same data, but upper-cased
-        # self.request.sendall(self.data.upper())
-        
-        obj = json.loads(self.data)
-        parse_message.onMessage(obj, config_file, self.request.sendall)
-        self.request.close()
-        print 'TCP - Closed connection to %s' % self.client_address[0]
+            self.data = self.request.recv(BUFFER_SIZE).strip()
+            
+            print 'TCP - Received "%s" from %s' % (self.data, self.client_address[0])
+
+            # just send back the same data, but upper-cased
+            # self.request.sendall(self.data.upper())
+            
+            obj = json.loads(self.data)
+            parse_message.onMessage(obj, config_file, self.request.sendall)
+            self.request.close()
+            print 'TCP - Closed connection to %s' % self.client_address[0]
+
+        except Exception as e:
+            print "ERROR - TCP - Exception occurred during TCPHandler.handle() (%s)" % e
 
 
 ################
@@ -48,11 +53,13 @@ TCP_IP = data['TCP']['listen_address']
 TCP_PORT = int(data['TCP']['port'])
 BUFFER_SIZE = int(data['TCP']['buffer_size'])
 
+class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
+    pass
 
 def main():
 
     # Create the server, binding to localhost on port 9999
-    server = SocketServer.TCPServer((TCP_IP, TCP_PORT), MyTCPHandler)
+    server = ThreadedTCPServer((TCP_IP, TCP_PORT), TCPHandler)
 
     # Activate the server; this will keep running until you
     # interrupt the program with Ctrl-C
