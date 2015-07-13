@@ -94,7 +94,7 @@ while 1:
     system = thermostat_data['system']
     fan = thermostat_data['fan']
 
-    actual = read_temp()[1]
+    actual = round(read_temp()[1], 1)
 
     difference = actual - target
 
