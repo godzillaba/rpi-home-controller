@@ -1,8 +1,8 @@
 {
-    "servername": "pi2",
     "HTTP": {
         "port": "8080"
     }, 
+    "servername": "self", 
     "WebSocket": {
         "port": "9000"
     }, 
@@ -13,28 +13,28 @@
     }, 
     "Web": {
         "UI": {
-            "NavColor": "", 
+            "NavColor": "light-blue", 
             "SwitchBGColorOff": "", 
-            "CardColor": "grey darken-3", 
-            "ChromeHeaderColor": "#ef9a9a", 
-            "BodyColor": "grey darken-4", 
-            "WaveType": "waves-red", 
+            "CardColor": "grey lighten-4", 
+            "ChromeHeaderColor": "#03a9f4", 
+            "BodyColor": "grey lighten-2", 
+            "WaveType": "waves-holo", 
+            "SwitchWaveEffect": false, 
             "DropDownColor": "white", 
-            "DropDownText": "red-text text-lighten-1", 
-            "SwitchKnobColorOn": "#e57373", 
-            "LabelColor": "red-text text-lighten-2", 
-            "SettingsFontColor": "white", 
+            "DropDownText": "grey-text text-darken-2", 
+            "SwitchKnobColorOn": "#03a9f4", 
+            "LabelColor": "grey-text text-darken-2", 
+            "SettingsFontColor": "black", 
             "SwitchKnobColorOff": "", 
             "FontWeight": "300", 
-            "SwitchBGColorOn": "#ef9a9a",
-            "SwitchWaveEffect": false
+            "SwitchBGColorOn": "#81d4fa"
         }, 
         "Exempt_Subnets": [
             "192.168.1"
         ], 
         "Groups": [
             [
-                "self", 
+                "pi:5432", 
                 {
                     "description": "AC", 
                     "gpiopin": "40"
@@ -50,14 +50,42 @@
                 {
                     "description": "Bedside Lamp", 
                     "gpiopin": "15"
+                }, 
+                {
+                    "description": "Speaker", 
+                    "gpiopin": "13"
+                }, 
+                {
+                    "description": "Bluetooth Receiver", 
+                    "gpiopin": "12"
+                }
+            ], 
+            [
+                "self", 
+                {
+                    "description": "Fan", 
+                    "gpiopin": "40"
+                }, 
+                {
+                    "description": "Cool", 
+                    "gpiopin": "22"
                 }
             ]
-        ],
-		"People": [
-			{
-				"name": "Person",
-				"hostname": "PersonsiPhone"
-			}
-		]
+        ], 
+        "HVAC": [
+            {
+                "Address": "self",
+                "plotly": {
+                    "uname": "plotly_username",
+                    "graph_number": "plotly_graph_number"
+                }
+            }
+        ], 
+        "People": [
+            {
+                "hostname": "PersonsiPhone", 
+                "name": "PersonsName"
+            }
+        ]
     }
 }

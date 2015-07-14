@@ -13,19 +13,17 @@
 {%- endmacro %}
 
 
+{% macro dropdownli(data, form) -%}
+<li>
+    <a class="{{ data.Web.UI.DropDownText }}" href="#!" onclick="hide('main_section'); hide('hvac_section'); hide('plotly_section'); show('settings_section'); hideforms(); show('{{ form }}Form'); nav_activate('topnav_settings')">{{ form }}</a>
+</li>
+{%- endmacro %}
+
 {% macro dropdown(data) -%}
 
-<li>
-    <a class="{{ data.Web.UI.DropDownText }}" href="#!" onclick="hide('main_section'); hideforms(); show('settings_section'); show('UIForm'); nav_activate('topnav_settings'); hide('hvac_section')">UI</a>
-</li>
-
-<li>
-    <a class="{{ data.Web.UI.DropDownText }}" href="#!" onclick="hide('main_section'); hideforms(); show('settings_section'); show('NetworkForm'); nav_activate('topnav_settings'); hide('hvac_section')">Network</a>
-</li>
-
-<li>
-    <a class="{{ data.Web.UI.DropDownText }}" href="#!" onclick="hide('main_section'); hideforms(); show('settings_section'); show('GroupsForm'); nav_activate('topnav_settings'); hide('hvac_section')">Groups</a>
-</li>
+{{ dropdownli(data, "UI") }}
+{{ dropdownli(data, "Network") }}
+{{ dropdownli(data, "Groups") }}
 
 {%- endmacro%}
 
@@ -46,4 +44,19 @@
     <label class="active" for="{{ id }}">{{ label }}</label>
 </div>
 
+{%- endmacro %}
+
+{% macro sidenavli(data, title, icon, id) -%}
+
+<li class="no-padding">
+    <a id='sidenav_{{ id }}' class="collapsible-header {{ data.Web.UI.DropDownText }}" href="#!" onclick="hide('settings_section'); hide('main_section'); hide('hvac_section'); hide('plotly_section'); show('{{ id }}_section')"><i class="material-icons">{{ icon }}</i>{{ title }}</a>
+</li>
+
+{%- endmacro %}
+
+
+{% macro topnavli(active, icon, id) -%}
+<li id='topnav_{{ id }}' class="{{ active }}">
+    <a href="#!" onclick="nav_activate('topnav_{{ id }}'); hide('settings_section'); hide('main_section'); hide('hvac_section'); hide('plotly_section'); show('{{ id }}_section')"><i class="material-icons">{{ icon }}</i></a>
+</li>
 {%- endmacro %}

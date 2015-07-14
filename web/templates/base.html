@@ -32,16 +32,15 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/js/materialize.min.js"></script>
 
 
-<div class='hide-on-large-only'>
+<div class='hide-on-large-only navbar-fixed'>
     <nav class='{{ data.Web.UI.NavColor }}'>
         <ul id="slide-out" class="side-nav collapsible">
-            <li class="no-padding">
-                <a id='sidenav_home' class="collapsible-header {{ data.Web.UI.DropDownText }}" href="#!" onclick="hide('settings_section'); show('main_section'); hide('hvac_section')"><i class="mdi-action-home"></i>Home</a>
-            </li>
 
-            <li class="no-padding">
-                <a id='sidenav_hvac' class="collapsible-header {{ data.Web.UI.DropDownText }}" href="#!" onclick="hide('settings_section'); hide('main_section'); show('hvac_section')"><i class="material-icons">toys</i>HVAC</a>
-            </li>
+            {{ m.sidenavli(data, 'Home', 'home', 'main') }}
+            
+            {{ m.sidenavli(data, 'HVAC', 'toys', 'hvac') }}
+
+            {{ m.sidenavli(data, 'Plot.ly', 'trending_up', 'plotly') }}
 
             <li class="no-padding">
                 <a id='sidenav_settings' class="collapsible-header {{ data.Web.UI.DropDownText }}"><i class="mdi-action-settings"></i>Settings</a>
@@ -74,17 +73,17 @@
     <nav>
         <div class="nav-wrapper {{ data.Web.UI.NavColor }}">
             <ul id="nav-mobile" class="left">
-                <li id='topnav_home' class="active">
-                    <a href="#!" onclick="hide('settings_section'); show('main_section'); nav_activate('topnav_home'); hide('hvac_section')"><i class="mdi-action-home"></i></a>
-                </li>
 
-                <li id='topnav_hvac' class="">
-                    <a href="#!" onclick="hide('settings_section'); hide('main_section'); nav_activate('topnav_hvac'); show('hvac_section')"><i class="material-icons">toys</i></a>
-                </li>
+                {{ m.topnavli('active', 'home', 'main') }}
+                {{ m.topnavli('', 'toys', 'hvac') }}
+                {{ m.topnavli('', 'trending_up', 'plotly') }}
+
 
                 <li id='topnav_settings' class="">
                     <a href="#!" class="dropdown-button" data-activates='dropdown1'><i class="mdi-action-settings"></i></a>
                 </li>
+
+
             </ul>
             <ul id="nav-mobile" class="right">
                 <li>

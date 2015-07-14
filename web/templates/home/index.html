@@ -177,6 +177,24 @@
 
                 </style>
             </div>
+            
+        {% endfor %}
+
+
+
+    </div>
+
+    <div id='plotly_section' style="display:none">
+        
+        {% for thermostat in data.Web.HVAC %}
+            <div class="card_container col s12">
+                <div class='card white'>
+                    <span class="card-title {{ data.Web.UI.LabelColor }}">{{ thermostat.Address }}</span>
+                    <a href="https://plot.ly/~{{ thermostat.plotly.uname }}/{{ thermostat.plotly.graph_number }}/" target="_blank" style="display: block; text-align: center;"><img src="https://plot.ly/~{{ thermostat.plotly.uname }}/{{ thermostat.plotly.graph_number }}.png" style="max-width: 100%;"  onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
+                    <script data-plotly="{{ thermostat.plotly.uname }}:{{ thermostat.plotly.graph_number }}" src="https://plot.ly/embed.js" async></script>
+                </div>
+            </div>
+
         {% endfor %}
 
     </div>
