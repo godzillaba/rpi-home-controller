@@ -112,7 +112,7 @@ function create(s) {
 
     s.onclose = function(e) {
         console.log("Connection closed.");
-        Materialize.toast("Connection to " + s.url + " closed.", 5000)
+        Materialize.toast("<span>Connection to " + s.url + " closed.<a href='#!' class='btn-flat red-text' onclick='window.onload()'><i class='material-icons'>refresh</i></a></span>")
     }
 }
 
@@ -186,7 +186,7 @@ var switch_onclick = function(box) {
     // var sock = sockets['self']
 
     if (sock.readyState != 1) {
-        Materialize.toast("Not connected to WebSocket server", 5000)
+        Materialize.toast("Not connected to WebSocket server. (readyState == " + sock.readyState + ")", 5000)
     }
     
     ////////// new stuff
@@ -337,8 +337,6 @@ var get_hvac_data = function () {
 }
 
 var send_hvac_data = function (thermostat_addr) {
-    Materialize.toast("sending data (hypothetically)", 1000)
-
     command_object = {
         "Sender": "WebClient",
         "DestinationAddress": thermostat_addr,
