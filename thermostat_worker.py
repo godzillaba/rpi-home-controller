@@ -107,7 +107,7 @@ def hvac_off():
 
 def heat():
     if hvac_type != 'conventional':
-        print "Only conventional hvac systems supported. For more info visit https://wiki.xtronics.com/index.php/Thermostat_signals_and_wiring"
+        print "ERROR - THERM - Only conventional hvac systems supported. For more info visit https://wiki.xtronics.com/index.php/Thermostat_signals_and_wiring"
     else:
         GPIO.output(cool_pin, 1)
         GPIO.output(fan_pin, 1)
@@ -156,13 +156,13 @@ def main():
 
         difference = actual - target
 
-        print "target:%s actual:%s difference:%s fan:%s compressor:%s" % (target, actual, difference, fan, system)
+        print "THERM - Target:%s Actual:%s Difference:%s Fan:%s System:%s" % (target, actual, difference, fan, system)
 
 
         thermostat_data['actual_temp'] = actual
 
         with open(thermostat_file, 'w') as data_file:
-            print 'writing to file'
+            print 'THERM - Writing to file'
             data_file.write(json.dumps(thermostat_data, indent=4))
 
 
@@ -170,7 +170,7 @@ def main():
         if fan == 'auto':
 
             if 1 >= difference >= -1:
-                print "Turning off fan and compressor"
+                print "THERM - Turning off fan and compressor"
                 # turn off fan and compressor
                 hvac_off()
 
@@ -179,23 +179,23 @@ def main():
                 
                 if system == 'heat' or system == 'auto':
                     # turn on heater
-                    print "turning on heat"
+                    print "THERM - turning on heat"
                     heat()
 
                 elif system == 'cool':
-                    print "turning off fan and compressor"
+                    print "THERM - turning off fan and compressor"
                     hvac_off()
 
 
             #above target
             elif difference >= 1:
                 if system == 'heat':
-                    print "turning off fan and compressor"
+                    print "THERM - turning off fan and compressor"
                     hvac_off()
 
                 if system == 'cool' or system == 'auto':
                     # turn on ac
-                    print "turning on ac"
+                    print "THERM - turning on ac"
                     cool()
 
         elif fan == 'on':
@@ -203,29 +203,29 @@ def main():
             if system == 'auto':
 
                 if 1 >= difference >= -1:
-                    print 'turning on fan only'
+                    print 'THERM - turning on fan only'
                     fan_only()
 
                 #below target
                 elif difference <= -1:
-                    print "turning on heat"
+                    print "THERM - turning on heat"
                     heat()
 
                 #above target
                 elif difference >= 1:    
-                    print "turning on ac"
+                    print "THERM - turning on ac"
                     cool()
 
             elif system == 'heat':
-                print "turning on heat"
+                print "THERM - turning on heat"
                 heat()
 
             elif system == 'cool':
-                print 'turning on ac'
+                print 'THERM - turning on ac'
                 cool()
 
         elif fan == 'off':
-            print 'turning hvac system off'
+            print 'THERM - turning hvac system off'
             hvac_off()
 
 

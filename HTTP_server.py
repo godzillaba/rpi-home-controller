@@ -8,7 +8,7 @@ import base64
 class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
     def render(self, template_path):
 #        self.do_HEAD()
-        print "Serving dynamic file %s" % template_path
+        print "HTTP - Serving dynamic file %s" % template_path
     
         self.wfile.write(render_html.main(template_path))
         return
@@ -16,7 +16,7 @@ class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
     def render_static(self, filepath):
 #        self.do_HEAD()
         
-        print "Serving static file %s" % filepath
+        print "HTTP - Serving static file %s" % filepath
         
         with open(filepath) as static_file:
             file_contents = static_file.read()
@@ -29,7 +29,6 @@ class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
         self.end_headers()
 
     def do_AUTHHEAD(self):
-        print "send header"
         self.send_response(401)
         self.send_header('WWW-Authenticate', 'Basic realm=\"Home Controller\"')
         self.send_header('Content-type', 'text/html')
@@ -56,9 +55,8 @@ class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
         addr = self.client_address[0]
         subnet = addr.rsplit('.',1)[0]
 
-        print addr, subnet, exempt_subnets
-
         if subnet in exempt_subnets:
+            print "HTTP - Client is exempt from authentication. Skipping basic auth"
             self.do_GET_authed()
 
         else:
@@ -76,20 +74,24 @@ class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
         is_file = os.path.isfile(absolute_path)
         is_dir = os.path.isdir(absolute_path)
         
-        print "is_file( %s ), is_dir( %s )" % (is_file, is_dir)
+        print "HTTP - URL requested: %s" % self.path
 
         if is_file:
+            print "HTTP - Requested URL is a file"
             extension = absolute_path.split('.')[1]
             if extension == "html":
-                print "Compiling %s (%s)" % (template_path, absolute_path)
+                print "HTTP - Compiling %s (%s)" % (template_path, absolute_path)
                 self.render(template_path)
             else:
                 self.render_static(absolute_path)
 
         elif is_dir:
+            
+            print "HTTP - Requested URL is a directory"
+
             ls = os.listdir(absolute_path)
             if "index.html" in ls:
-                print "Compiling %s (%s)" % (template_path, absolute_path)
+                print "HTTP - Compiling %s (%s)" % (template_path, absolute_path)
                 self.render(template_path + "index.html")
             else:
                 stringio_obj = self.list_directory(absolute_path)                

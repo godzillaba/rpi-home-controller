@@ -24,14 +24,14 @@ def onMessage(obj, config_file, send_function):
             cmd = obj['Command']
             
             if cmd == "pin_out":
-                print "Received pin_out Command - pin %s %s" % (obj['pin_number'], obj['value'])
+                print "PARSER - Received pin_out Command - pin %s %s" % (obj['pin_number'], obj['value'])
                 gpio.cmd_pin_out(obj)
                 
             elif cmd == "SaveConfig":    
                 config_object = obj['ConfigData']
                 
                 json_to_file = json.dumps(config_object, indent=4)
-                print "Received SaveConfig Command \n %s" % json_to_file
+                print "PARSER - Received SaveConfig Command \n %s" % json_to_file
                 
                 with open(config_file, 'w') as data_file:
                     data_file.truncate()
@@ -50,7 +50,7 @@ def onMessage(obj, config_file, send_function):
 
 
             else:
-                print "Command not recognized (%s)" % cmd
+                print "PARSER - Command not recognized (%s)" % cmd
                 
                 
                 
@@ -60,13 +60,13 @@ def onMessage(obj, config_file, send_function):
             q = obj['Query']
             
             if q == "pin_out":
-                print "Received pin_out Query - pin %s" % obj['pin_number']
+                print "PARSER - Received pin_out Query - pin %s" % obj['pin_number']
                 # self.sendMessage(gpio.q_pin_out(obj))
                 send_function(gpio.q_pin_out(obj))
                 
             
             elif q == "Config":
-                print "Received Config Query"
+                print "PARSER - Received Config Query"
                 
                 with open(config_file) as data_file:
                     config_object = json.load(data_file)
@@ -84,7 +84,7 @@ def onMessage(obj, config_file, send_function):
                 
             elif q == "People":
                 
-                print "Received People Query"
+                print "PARSER - Received People Query"
 
                 with open(people_file) as d_file:
                     data_object = json.load(d_file)
@@ -102,7 +102,7 @@ def onMessage(obj, config_file, send_function):
                 send_function(json.dumps(reply_object))
 
             elif q == "ThermostatData":
-                print "Received Thermostat Query"
+                print "PARSER - Received Thermostat Query"
 
                 with open(thermostat_file) as d_file:
                     data_object = json.load(d_file)
@@ -118,8 +118,8 @@ def onMessage(obj, config_file, send_function):
 
                         
             else:
-                print "Query not recognized (%s)" % q
+                print "PARSER Query not recognized (%s)" % q
                 
                 
     except Exception as e:
-        print "\n\nEXCEPTION OCCURRED DURING PARSING (%s)\n\n" % e
+        print "ERROR - PARSER - Exception occurred during parsing (%s)" % e

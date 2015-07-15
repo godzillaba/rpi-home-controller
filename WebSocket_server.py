@@ -11,36 +11,41 @@ import parse_message, TCP_client, socket, errno
 
 class ws_server(WebSocketServerProtocol):
 
+    def send(self, message):
+        print "WS - Sending %s" % message
+        self.sendMessage(message)
+
     def onConnect(self, request):
-        print("Client connecting: {0}".format(request.peer))
+        print("WS - Client connecting: {0}".format(request.peer))
 
     def onOpen(self):
-        print("WebSocket connection open.")
+        pass
 
     def onMessage(self, payload, isBinary):
         try:
             
+            print "WS - Received %s" % (payload.decode('utf8'))
+
             obj = json.loads(payload.decode('utf8'))
-            print obj
+            
 
             if obj['DestinationAddress'] == 'self':
-                parse_message.onMessage(obj, config_file, self.sendMessage)
+                parse_message.onMessage(obj, config_file, self.send)
             else:
                 # self.relayMessage(obj)
-                print '\n\nstarting thread\n\n'
                 (threading.Thread(target=self.relayMessage, args=(obj,))).start()
 
                 
         
         except Exception as e:
-            print "\n\nEXCEPTION OCCURRED DURING PARSING (%s)\n\n" % e
+            print "\n\nWS - EXCEPTION OCCURRED DURING PARSING (%s)\n\n" % e
 
     def onClose(self, wasClean, code, reason):
-        print("WebSocket connection closed: {0}".format(reason))
+        print("WS - connection closed: {0}".format(reason))
 
     def relayMessage(self, obj):
 
-        print "Destination is not self - passing on to destination - %s" % obj['DestinationAddress']
+        print "WS - Destination is not self - passing on to destination - %s" % obj['DestinationAddress']
 
         dest_addr = obj['DestinationAddress'].split(':')[0]
         dest_port = obj['DestinationAddress'].split(':')[1]
@@ -53,7 +58,7 @@ class ws_server(WebSocketServerProtocol):
                 q_reply_obj = json.loads(q_reply)
 
                 q_reply_obj['Sender'] = "%s:%s" % (dest_addr, dest_port)
-                self.sendMessage(json.dumps(q_reply_obj))
+                self.send(json.dumps(q_reply_obj))
         
         except socket.error, v:
             errorcode=v[0]
@@ -64,9 +69,9 @@ class ws_server(WebSocketServerProtocol):
                 "Error": "TCP connection to %s failed (%s)" % (obj['DestinationAddress'], v)
             }
 
-            print errmsg['Error']
+            print "ERROR - WS - " + errmsg['Error']
 
-            self.sendMessage(json.dumps(errmsg))
+            self.send(json.dumps(errmsg))
 
 
         

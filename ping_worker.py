@@ -39,7 +39,7 @@ def fail(x):
     try:
         last_seen = data_object['People'][x]['last_seen']
     except KeyError:
-        print "KeyError: last_seen attribute not found"
+        print "PING - KeyError: last_seen attribute not found"
 
     if last_seen == '':
         data_object['People'][x] = {
@@ -67,7 +67,7 @@ def pinghost(people, x):
     
         
     ip = os.system("ping -c 1 " + people[x]['hostname'] + " >> /dev/null")      
-    print "pinging %s returned %s" % (people[x]['hostname'], ip)
+    print "PING - pinging %s returned %s" % (people[x]['hostname'], ip)
                
     if ip == 0:
         # msg = str("PERSON ," + person['name'] + ",IN")
@@ -101,7 +101,6 @@ people = update_people_list()
 with open(data_file) as d_file:
     data_object = json.load(d_file)
     
-    print data_object
 
 ## overwrite people array and write updated contents to file
 with open(data_file, 'w') as d_file:
@@ -119,7 +118,7 @@ def main():
         ### start pinging
         
         for x in range(0, len(people)):
-            print "Trying to ping %s..." % people[x]['hostname']
+            print "PING - Trying to ping %s..." % people[x]['hostname']
             pinghost(people, x)
         
         
@@ -127,15 +126,14 @@ def main():
         
         data_to_file = json.dumps(data_object, indent=4)
         
-        print data_to_file
         
         with open(data_file, 'w') as d_file_out:
             d_file_out.write(data_to_file)
 
-        print "Sleeping for %s seconds..." % delay
+        print "PING - Sleeping for %s seconds..." % delay
         time.sleep(delay)
 
-        print "Updating people list..."
+        print "PING - Updating people list..."
         people = update_people_list()
 
 
