@@ -36,7 +36,9 @@
     <nav class='{{ data.Web.UI.NavColor }}'>
         <ul id="slide-out" class="side-nav collapsible">
 
-            {{ m.sidenavli(data, 'Home', 'home', 'main') }}
+            {{ m.sidenavli(data, 'Relays', 'power', 'main') }}
+
+            {{ m.sidenavli(data, 'People', 'people', 'people') }}
             
             {{ m.sidenavli(data, 'HVAC', 'toys', 'hvac') }}
 
@@ -74,7 +76,9 @@
         <div class="nav-wrapper {{ data.Web.UI.NavColor }}">
             <ul id="nav-mobile" class="left">
 
-                {{ m.topnavli('active', 'home', 'main') }}
+                
+                {{ m.topnavli('active', 'power', 'main') }}
+                {{ m.topnavli('', 'people', 'people') }}
                 {{ m.topnavli('', 'toys', 'hvac') }}
                 {{ m.topnavli('', 'trending_up', 'plotly') }}
 

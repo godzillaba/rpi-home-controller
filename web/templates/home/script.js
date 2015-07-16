@@ -401,6 +401,7 @@ nav_activate_link = function (id) {
 nav_activate = function (id) {
     nav_deactivate_link('topnav_main')
     nav_deactivate_link('topnav_hvac')
+    nav_deactivate_link('topnav_people')
     nav_deactivate_link('topnav_plotly')
     nav_deactivate_link('topnav_settings')
 
