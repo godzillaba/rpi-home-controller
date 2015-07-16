@@ -2,6 +2,24 @@ function create(s) {
 
     s.binaryType = "arraybuffer";
     
+    s.sendMessage = function(string) {
+        
+        if (sock.readyState != 1) {
+            
+            errmsg = "Not connected to WebSocket server. (readyState == " + sock.readyState + ")"
+            Materialize.toast(errmsg, 5000)
+            console.log(errmsg)
+
+        } else {
+            
+            s.send(string)
+            console.log("[" + s.url + "] Sent: " + string)
+
+        }
+
+        
+    }
+
     s.onopen = function() {
         console.log("Connected!");
         Materialize.toast("Connected to " + s.url, 3000)
@@ -16,15 +34,17 @@ function create(s) {
                 "Query": "People"
             }
             
-            sock.send(JSON.stringify(query_object))
+            sock.sendMessage(JSON.stringify(query_object))
             
             query_object.Query = "Config"
             
-            sock.send(JSON.stringify(query_object))    
+            sock.sendMessage(JSON.stringify(query_object))    
         // }
 
         get_switch_stats()
         get_hvac_data()
+
+        hide('plotly_section')
     }
     
 
@@ -135,7 +155,6 @@ var get_switch_stats_ofaddr = function(boxes, addr) {
     // var sock = sockets['self']
     for (var x = 0; x < boxes.length; x++) {
 
-//        sock.send("PIN=" + boxes[x].name + ",IN,0")
         var pnumber = boxes[x].name
         
         var query_object = {
@@ -148,7 +167,7 @@ var get_switch_stats_ofaddr = function(boxes, addr) {
         
         var query_string = JSON.stringify(query_object)
         
-        sock.send(query_string)
+        sock.sendMessage(query_string)
         
     }
 }
@@ -161,7 +180,7 @@ var get_people_stats = function() {
         "Query": "People"
     }
             
-    sock.send(JSON.stringify(query_object))
+    sock.sendMessage(JSON.stringify(query_object))
 }
 
 var get_stats = function() {
@@ -185,9 +204,6 @@ var switch_onclick = function(box) {
     
     // var sock = sockets['self']
 
-    if (sock.readyState != 1) {
-        Materialize.toast("Not connected to WebSocket server. (readyState == " + sock.readyState + ")", 5000)
-    }
     
     ////////// new stuff
     
@@ -205,7 +221,7 @@ var switch_onclick = function(box) {
     
     command_string = JSON.stringify(command_object)
     
-    sock.send(command_string)
+    sock.sendMessage(command_string)
     
 }
 
@@ -214,6 +230,7 @@ var switch_onclick = function(box) {
 
 
 window.onload = function() {
+
 
     var hostname = window.location.hostname
     var wsport = document.getElementById("wsport").content
@@ -305,7 +322,7 @@ var send_json_data = function() {
     
     jsonstring = JSON.stringify(config_object)
     console.log(jsonstring)
-    sock.send(jsonstring)
+    sock.sendMessage(jsonstring)
     Materialize.toast("Sent JSON data", 3000)
 
 }
@@ -332,7 +349,7 @@ var get_hvac_data = function () {
             "Query": "ThermostatData"
         }
 
-        sock.send(JSON.stringify(query_object))
+        sock.sendMessage(JSON.stringify(query_object))
     }
 }
 
@@ -349,7 +366,7 @@ var send_hvac_data = function (thermostat_addr) {
 
     console.log(command_object)
 
-    sock.send(JSON.stringify(command_object))
+    sock.sendMessage(JSON.stringify(command_object))
 }
 
 var lower_target = function (thermostat_addr) {
