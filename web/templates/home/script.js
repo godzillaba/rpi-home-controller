@@ -98,12 +98,19 @@ function create(s) {
                     var person_status = people_array[x].online
          
                     var indicator = document.getElementById(person_name + "_io")
-         
+                    var indicator2= document.getElementById(person_name + "_io2")
+
+                    var last_seen_span = document.getElementById(people_array[x].hostname + '_lastseen')
+
+                    last_seen_span.innerHTML = people_array[x].last_seen
+
                     if (person_status) {
                         indicator.innerHTML = "online"
+                        indicator2.innerHTML = "true"
                     }
                     else {
                         indicator.innerHTML = "offline"
+                        indicator2.innerHTML= "false"
                     }
                 }
 

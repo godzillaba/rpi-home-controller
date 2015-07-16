@@ -53,7 +53,7 @@
         {% for person in data.Web.People %}
             <div class='person'>
             {% call m.card(data) %}
-                <label class="waves-effect {{ data.Web.UI.WaveType }}" style="width:100%">
+                <label class="waves-effect {{ data.Web.UI.WaveType }}" onclick='$("#{{ person.hostname }}_modal").openModal();' style="width:100%">
                     
                     <div class='divider-spacer'></div>
 
@@ -67,9 +67,9 @@
                         </div>
                         <div style="float:right; display:inline; margin-right:20px">
                             {% if data.Web.UI.LabelColor[0] == "#" %}
-                                <span id='{{ person.name }}_io' style="color:{{ data.Web.UI.LabelColor }}">OUT</span>
+                                <span id='{{ person.name }}_io' style="color:{{ data.Web.UI.LabelColor }}">--</span>
                             {% else %}
-                                <span id='{{ person.name }}_io' class="{{ data.Web.UI.LabelColor }}">OUT</span>
+                                <span id='{{ person.name }}_io' class="{{ data.Web.UI.LabelColor }}">--</span>
                             {% endif %}
                         </div>
                     </div>
@@ -79,6 +79,17 @@
                 </label>
         
             {% endcall %}
+            </div>
+            <div id="{{ person.hostname }}_modal" class="modal">
+                <div class="modal-content">
+                    <h4>{{ person.name }}</h4>
+                    <p>Online: <span id='{{ person.name }}_io2'>--</span>
+                    <p>Hostname: {{person.hostname}}</p>
+                    <p>Last Seen on LAN: <span id='{{person.hostname}}_lastseen'>--</span></p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect {{ data.Web.UI.WaveType }} btn-flat">Close</a>
+                </div>
             </div>
         {% endfor %}
     </div>
@@ -129,15 +140,15 @@
                                 
                                 <span class="card-title {{ data.Web.UI.LabelColor }}">Fan</span>
                                 <p>
-                                    <input name="fan_{{ thermostat.Address }}" type="radio" id="fan_auto_{{ thermostat.Address }}" onclick="send_hvac_data('{{ thermostat.Address }}')" data-jsonval='auto'/>
+                                    <input class="with-gap" name="fan_{{ thermostat.Address }}" type="radio" id="fan_auto_{{ thermostat.Address }}" onclick="send_hvac_data('{{ thermostat.Address }}')" data-jsonval='auto'/>
                                     <label for="fan_auto_{{ thermostat.Address }}">Auto</label>
                                 </p>
                                 <p>
-                                    <input name="fan_{{ thermostat.Address }}" type="radio" id="fan_on_{{ thermostat.Address }}" onclick="send_hvac_data('{{ thermostat.Address }}')" data-jsonval='on'/>
+                                    <input class="with-gap" name="fan_{{ thermostat.Address }}" type="radio" id="fan_on_{{ thermostat.Address }}" onclick="send_hvac_data('{{ thermostat.Address }}')" data-jsonval='on'/>
                                     <label for="fan_on_{{ thermostat.Address }}">On</label>
                                 </p>
                                 <p>
-                                    <input name="fan_{{ thermostat.Address }}" type="radio" id="fan_off_{{ thermostat.Address }}" onclick="send_hvac_data('{{ thermostat.Address }}')" data-jsonval='off'/>
+                                    <input class="with-gap" name="fan_{{ thermostat.Address }}" type="radio" id="fan_off_{{ thermostat.Address }}" onclick="send_hvac_data('{{ thermostat.Address }}')" data-jsonval='off'/>
                                     <label for="fan_off_{{ thermostat.Address }}">Off</label>
                                 </p>
                                 
@@ -151,15 +162,15 @@
                                 
                                 <span class="card-title {{ data.Web.UI.LabelColor }}">Compressor</span>
                                 <p>
-                                    <input name="compressor_{{ thermostat.Address }}" type="radio" id="compressor_auto_{{ thermostat.Address }}" onclick="send_hvac_data('{{ thermostat.Address }}')" data-jsonval='auto'/>
+                                    <input class="with-gap" name="compressor_{{ thermostat.Address }}" type="radio" id="compressor_auto_{{ thermostat.Address }}" onclick="send_hvac_data('{{ thermostat.Address }}')" data-jsonval='auto'/>
                                     <label for="compressor_auto_{{ thermostat.Address }}">Auto</label>
                                 </p>
                                 <p>
-                                    <input name="compressor_{{ thermostat.Address }}" type="radio" id="compressor_heat_{{ thermostat.Address }}" onclick="send_hvac_data('{{ thermostat.Address }}')" data-jsonval='heat'/>
+                                    <input class="with-gap" name="compressor_{{ thermostat.Address }}" type="radio" id="compressor_heat_{{ thermostat.Address }}" onclick="send_hvac_data('{{ thermostat.Address }}')" data-jsonval='heat'/>
                                     <label for="compressor_heat_{{ thermostat.Address }}">Heat</label>
                                 </p>
                                 <p>
-                                    <input name="compressor_{{ thermostat.Address }}" type="radio" id="compressor_cool_{{ thermostat.Address }}" onclick="send_hvac_data('{{ thermostat.Address }}')" data-jsonval='cool'/>
+                                    <input class="with-gap" name="compressor_{{ thermostat.Address }}" type="radio" id="compressor_cool_{{ thermostat.Address }}" onclick="send_hvac_data('{{ thermostat.Address }}')" data-jsonval='cool'/>
                                     <label for="compressor_cool_{{ thermostat.Address }}">Cool</label>
                                 </p>
                                 
