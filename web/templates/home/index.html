@@ -53,7 +53,7 @@
         {% for person in data.Web.People %}
             <div class='person'>
             {% call m.card(data) %}
-                <label class="waves-effect {{ data.Web.UI.WaveType }}" onclick='$("#{{ person.hostname }}_modal").openModal();' style="width:100%">
+                <label class="waves-effect {{ data.Web.UI.WaveType }}" onclick='$("#{{ person.name }}_modal").openModal();' style="width:100%">
                     
                     <div class='divider-spacer'></div>
 
@@ -67,9 +67,9 @@
                         </div>
                         <div style="float:right; display:inline; margin-right:20px">
                             {% if data.Web.UI.LabelColor[0] == "#" %}
-                                <span id='{{ person.name }}_io' style="color:{{ data.Web.UI.LabelColor }}">--</span>
+                                <span id="{{ person.name }}_io" style="color:{{ data.Web.UI.LabelColor }}">--</span>
                             {% else %}
-                                <span id='{{ person.name }}_io' class="{{ data.Web.UI.LabelColor }}">--</span>
+                                <span id="{{ person.name }}_io" class="{{ data.Web.UI.LabelColor }}">--</span>
                             {% endif %}
                         </div>
                     </div>
@@ -80,10 +80,10 @@
         
             {% endcall %}
             </div>
-            <div id="{{ person.hostname }}_modal" class="modal">
+            <div id="{{ person.name }}_modal" class="modal">
                 <div class="modal-content">
                     <h4>{{ person.name }}</h4>
-                    <p>Online: <span id='{{ person.name }}_io2'>--</span>
+                    <p>Online: <span id="{{ person.name }}_io2">--</span>
                     <p>Hostname: {{person.hostname}}</p>
                     <p>Last Seen on LAN: <span id='{{person.hostname}}_lastseen'>--</span></p>
                 </div>
