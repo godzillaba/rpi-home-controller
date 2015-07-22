@@ -256,28 +256,13 @@ var send_json_data = function() {
     json.WebSocket.port = document.getElementById("WebSocket_Port").value
     json.TCP.port = document.getElementById("TCP_Port").value
 
-    json.Web.UI.NavColor = document.getElementById("NavColor").value
-    json.Web.UI.BodyColor = document.getElementById("BodyColor").value
-    json.Web.UI.ChromeHeaderColor = document.getElementById("ChromeHeaderColor").value
-
-    json.Web.UI.LabelColor = document.getElementById("LabelColor").value
-    json.Web.UI.WaveType = document.getElementById("WaveType").value
-    json.Web.UI.CardColor = document.getElementById("CardColor").value
-
-    json.Web.UI.SwitchKnobColorOff = document.getElementById("SwitchKnobColorOff").value
-    json.Web.UI.SwitchKnobColorOn = document.getElementById("SwitchKnobColorOn").value
-    json.Web.UI.SwitchBGColorOff = document.getElementById("SwitchBGColorOff").value
-    json.Web.UI.SwitchBGColorOn = document.getElementById("SwitchBGColorOn").value
-
-    json.Web.UI.SettingsFontColor = document.getElementById("SettingsFontColor").value
-    json.Web.UI.FontWeight = document.getElementById("FontWeight").value
-
-    json.Web.UI.DropDownColor = document.getElementById("DropDownColor").value
-    json.Web.UI.DropDownText = document.getElementById("DropDownText").value
+    $("#UIForm input[type='text']").each( function () {
+        json.Web.UI[this.id] = this.value
+    })
 
 
     var addressdivs = document.getElementsByClassName('address_group')
-    var GroupInputs = document.getElementById('GroupsForm').getElementsByClassName('switchgroupdata')
+
     json.Web.Groups = []
 
     for (var x = 0; x < addressdivs.length; x++) {
@@ -405,3 +390,5 @@ $( document ).ready(function() {
     console.log( "ready!" );
     $('#main_section').hide();
 });
+
+
