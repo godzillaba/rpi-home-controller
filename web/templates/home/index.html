@@ -5,7 +5,7 @@
 {% block content %}
 
 <div id='content' class='row'>
-    <div id='main_section' style=''>
+    <div class='section' id='main_section' style=''>
     {% for address in data.Web.Groups %}
     <div class="address" id="{{ address[0] }}">
         {% for group in address %}
@@ -49,7 +49,7 @@
     </div>
 
 
-    <div id='people_section' style='display:none'>
+    <div class='section' id='people_section' style='display:none'>
         {% for person in data.Web.People %}
             <div class='person'>
             {% call m.card(data) %}
@@ -94,7 +94,7 @@
         {% endfor %}
     </div>
 
-    <div id='hvac_section' style='display:none'>
+    <div class='section' id='hvac_section' style='display:none'>
         
         {% for thermostat in data.Web.HVAC %}
             <div id="{{ thermostat.Address }}_thermostat" class='thermostat'>
@@ -196,7 +196,7 @@
 
     </div>
 
-    <div id='plotly_section' style="">
+    <div class='section' id='plotly_section' style="">
         
         {% for thermostat in data.Web.HVAC %}
             <div class="card_container col s12">
@@ -214,7 +214,7 @@
     
 <!--    begin settings section-->
     
-    <div id='settings_section' style='display:none'>
+    <div class='section' id='settings_section' style='display:none'>
     <div style="margin-top:30px"></div>
     <form id='form1'>
 

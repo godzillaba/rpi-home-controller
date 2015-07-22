@@ -15,7 +15,12 @@
 
 {% macro dropdownli(data, form) -%}
 <li>
-    <a class="{{ data.Web.UI.DropDownText }}" href="#!" onclick="hide('main_section'); hide('hvac_section'); hide('plotly_section'); hide('people_section'); show('settings_section'); hideforms(); show('{{ form }}Form'); nav_activate('topnav_settings')">{{ form }}</a>
+    <a class="{{ data.Web.UI.DropDownText }}" href="#!" onclick="
+    $('.section').hide(); 
+    $('#settings_section').show();
+    $('.subform').hide();
+    $('#{{ form }}Form').show();
+    nav_activate('topnav_settings')">{{ form }}</a>
 </li>
 {%- endmacro %}
 
@@ -49,14 +54,24 @@
 {% macro sidenavli(data, title, icon, id) -%}
 
 <li class="no-padding">
-    <a id='sidenav_{{ id }}' class="collapsible-header {{ data.Web.UI.DropDownText }}" href="#!" onclick="hide('settings_section'); hide('main_section'); hide('hvac_section'); hide('plotly_section'); hide('people_section'); show('{{ id }}_section'); $('.button-collapse').sideNav('hide')"><i class="material-icons">{{ icon }}</i>{{ title }}</a>
+    <a id='sidenav_{{ id }}' class="collapsible-header {{ data.Web.UI.DropDownText }}" href="#!" onclick="
+    $('.section').hide();
+
+    $('#{{ id }}_section').show(); 
+    $('.button-collapse').sideNav('hide')
+    "><i class="material-icons">{{ icon }}</i>{{ title }}</a>
 </li>
 
 {%- endmacro %}
 
 
 {% macro topnavli(active, icon, id) -%}
-<li id='topnav_{{ id }}' class="{{ active }}">
-    <a href="#!" onclick="nav_activate('topnav_{{ id }}'); hide('settings_section'); hide('main_section'); hide('hvac_section'); hide('plotly_section'); hide('people_section'); show('{{ id }}_section')"><i class="material-icons">{{ icon }}</i></a>
+<li id='topnav_{{ id }}' class="{{ active }} topnavli">
+    <a href="#!" onclick="
+    nav_activate('topnav_{{ id }}'); 
+
+    $('.section').hide();
+
+    $('#{{ id }}_section').show();"><i class="material-icons">{{ icon }}</i></a>
 </li>
 {%- endmacro %}

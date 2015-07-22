@@ -6,7 +6,7 @@ function create(s) {
         
         if (sock.readyState != 1) {
             
-            errmsg = "Not connected to WebSocket server. (readyState == " + sock.readyState + ")"
+            errmsg = "Not connected to WebSocket server. readyState: " + sock.readyState
             Materialize.toast(errmsg, 5000)
             console.log(errmsg)
 
@@ -23,28 +23,13 @@ function create(s) {
     s.onopen = function() {
         console.log("Connected!");
         Materialize.toast("Connected to " + s.url, 3000)
-        
-		
-        
-        // if (s.url === sockets['self'].url) {
-            query_object = {
-                "Sender": "WebClient",
-                "DestinationAddress": "self",
-                "MessageType": "Query",
-                "Query": "People"
-            }
-            
-            sock.sendMessage(JSON.stringify(query_object))
-            
-            query_object.Query = "Config"
-            
-            sock.sendMessage(JSON.stringify(query_object))    
-        // }
 
-        get_switch_stats()
-        get_hvac_data()
+        get_stats()
+        get_config()
 
-        hide('plotly_section')
+        $('#main_section').show()
+
+        $('#plotly_section').hide();
     }
     
 
@@ -143,6 +128,17 @@ function create(s) {
     }
 }
 
+var get_config = function () {
+    obj = {
+        "Sender": "WebClient",
+        "DestinationAddress": "self",
+        "MessageType": "Query",
+        "Query": "Config"
+    }
+
+    sock.sendMessage(JSON.stringify(obj))
+
+}
 
 var get_switch_stats = function() {
     addresses = document.getElementsByClassName('address')
@@ -398,36 +394,14 @@ var raise_target = function (thermostat_addr) {
 
 //////////// nav stuff ////////////
 
-hide = function (id) {
-    document.getElementById(id).style.display = 'none';
-}
-show = function (id) {
-    document.getElementById(id).style.display = 'block';
-}
-
-hideforms = function() {
-    subforms = document.getElementsByClassName('subform')
-    
-    for (var x = 0; x < subforms.length; x++) {
-        subforms[x].style.display = 'none'
-    }
-}
-
-nav_deactivate_link = function (id) {
-    document.getElementById(id).className =
-    document.getElementById(id).className.replace(/\bactive\b/,'');
-}
-
-nav_activate_link = function (id) {
-    document.getElementById(id).className += " active"
-}
-
 nav_activate = function (id) {
-    nav_deactivate_link('topnav_main')
-    nav_deactivate_link('topnav_hvac')
-    nav_deactivate_link('topnav_people')
-    nav_deactivate_link('topnav_plotly')
-    nav_deactivate_link('topnav_settings')
+    $('.topnavli').removeClass('active')
+    $('#'+id).addClass('active')
 
-    nav_activate_link(id)
+    // nav_activate_link(id)
 }
+
+$( document ).ready(function() {
+    console.log( "ready!" );
+    $('#main_section').hide();
+});
