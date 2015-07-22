@@ -28,8 +28,6 @@ function create(s) {
         get_config()
 
         $('#main_section').show()
-
-        $('#plotly_section').hide();
     }
     
 

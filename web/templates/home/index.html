@@ -196,18 +196,17 @@
 
     </div>
 
-    <div class='section' id='plotly_section' style="">
+    <div class='section' id='plotly_section' style="display:none">
         
-        {% for thermostat in data.Web.HVAC %}
+        {% for thermostat in data.Web.HVAC %} {% if embeds[thermostat.Address] %}
             <div class="card_container col s12">
                 <div class='card white'>
                     <span class="card-title {{ data.Web.UI.LabelColor }}">{{ thermostat.Address }}</span>
-                    <a href="https://plot.ly/~{{ thermostat.plotly.uname }}/{{ thermostat.plotly.graph_number }}/" target="_blank" style="display: block; text-align: center;"><img src="https://plot.ly/~{{ thermostat.plotly.uname }}/{{ thermostat.plotly.graph_number }}.png" style="max-width: 100%;"  onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
-                    <script data-plotly="{{ thermostat.plotly.uname }}:{{ thermostat.plotly.graph_number }}" src="https://plot.ly/embed.js" async></script>
+                    {{ embeds[thermostat.Address] }}
                 </div>
             </div>
 
-        {% endfor %}
+        {% endif %} {% endfor %}
 
     </div>
     
@@ -221,9 +220,9 @@
         <div id="NetworkForm" class='subform' style='display:none'>
 
             <div class="row">
-                {{ m.input_text(data.HTTP.port, "HTTP Port", "s4", "HTTP_Port") }}
-                {{ m.input_text(data.WebSocket.port, "WebSocket Port", "s4", "WebSocket_Port") }}
-                {{ m.input_text(data.TCP.port, "TCP Port", "s4", "TCP_Port") }}
+                {{ m.input_text(data.HTTP.port, "HTTP Port", "s6 l4", "HTTP_Port") }}
+                {{ m.input_text(data.WebSocket.port, "WebSocket Port", "s6 l4", "WebSocket_Port") }}
+                {{ m.input_text(data.TCP.port, "TCP Port", "s6 l4", "TCP_Port") }}
             </div>
 
         </div>
