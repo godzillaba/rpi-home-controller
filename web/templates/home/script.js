@@ -250,15 +250,39 @@ var socket = null;
 var isopen = false;
 
 var send_json_data = function() {
+    
+    // Network
     json.HTTP.port = document.getElementById("HTTP_Port").value
     json.WebSocket.port = document.getElementById("WebSocket_Port").value
     json.TCP.port = document.getElementById("TCP_Port").value
 
+    // UI
     $("#UIForm input[type='text']").each( function () {
         json.Web.UI[this.id] = this.value
     })
 
+    // People
+    json.Web.People = []
+    peeps = json.Web.People
+    
+    $("#PeopleForm div.row.person").each( function () {
+        
+        name = $(this).find('#name').val()
+        hostname = $(this).find('#hostname').val()
 
+        if (name && hostname) {
+            
+            person_object = {
+                "name": name,
+                "hostname": hostname
+            }
+            peeps.push(person_object)
+
+        }
+
+    })
+
+    // Groups
     var addressdivs = document.getElementsByClassName('address_group')
 
     json.Web.Groups = []
@@ -294,9 +318,7 @@ var send_json_data = function() {
     }
 
 
-
-    console.log(json)
-
+    // Get ready to send
     config_object = {
         "Sender": "WebClient",
         "DestinationAddress": "self",
@@ -307,7 +329,7 @@ var send_json_data = function() {
     
     
     jsonstring = JSON.stringify(config_object)
-    console.log(jsonstring)
+    console.log(json)
     sock.sendMessage(jsonstring)
     Materialize.toast("Sent JSON data", 3000)
 

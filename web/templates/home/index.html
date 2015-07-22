@@ -214,7 +214,7 @@
 <!--    begin settings section-->
     
     <div class='section' id='settings_section' style='display:none'>
-    <div style="margin-top:30px"></div>
+    <!-- <div style="margin-top:30px"></div> -->
     <form id='form1'>
 
         <div id="NetworkForm" class='subform' style='display:none'>
@@ -264,6 +264,28 @@
                 {{ m.input_text(data.Web.UI.DropDownText, "Drop Down Text Color", "s6", "DropDownText") }}
             </div>
 
+        </div>
+
+        <div id="PeopleForm" class='subform' style='display:none'>
+            <div>
+            
+                {% for person in data.Web.People %}
+                    <div class='row person'>
+                        {{ m.input_text(person.name, "Person's Name", "s6", "name") }}
+                        {{ m.input_text(person.hostname, "Device HostName", "s6", "hostname") }}
+                    </div>
+                {% endfor %}
+
+                <div class='row person' id='new_person' style='display:none'>
+                    {{ m.input_text("", "Person's Name", "s6", "name") }}
+                    {{ m.input_text("", "Device HostName", "s6", "hostname") }}
+                </div>
+
+            </div>
+
+            <a class="btn-floating btn-small waves-effect waves-light light-blue" style='margin-left:11.25px' onclick='$("#new_person").clone().appendTo($(this).parent().children("div")).fadeIn()'>
+                <i class="material-icons">add</i>
+            </a>
         </div>
 
         <div id="GroupsForm" class='subform' style='display:none'>
