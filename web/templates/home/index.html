@@ -201,7 +201,6 @@
         {% for thermostat in data.Web.HVAC %} {% if embeds[thermostat.Address] %}
             <div class="card_container col s12">
                 <div class='card white'>
-                    <span class="card-title {{ data.Web.UI.LabelColor }}">{{ thermostat.Address }}</span>
                     {{ embeds[thermostat.Address] }}
                 </div>
             </div>
@@ -267,23 +266,29 @@
         </div>
 
         <div id="PeopleForm" class='subform' style='display:none'>
-            <div>
+            <div class='card white'>
             
                 {% for person in data.Web.People %}
                     <div class='row person'>
-                        {{ m.input_text(person.name, "Person's Name", "s6", "name") }}
-                        {{ m.input_text(person.hostname, "Device HostName", "s6", "hostname") }}
+                        {{ m.input_text(person.name, "Person's Name", "s5", "name") }}
+                        {{ m.input_text(person.hostname, "Device HostName", "s5 l6", "hostname") }}
+                        <div class='col s1' style='margin-top:31px'>
+                            <i class="material-icons waves-effect {{ data.Web.UI.WaveType }}" onclick='$(this).parent().parent().slideUp().find("input").val("")'>clear</i>
+                        </div>
                     </div>
                 {% endfor %}
 
                 <div class='row person' id='new_person' style='display:none'>
-                    {{ m.input_text("", "Person's Name", "s6", "name") }}
-                    {{ m.input_text("", "Device HostName", "s6", "hostname") }}
+                    {{ m.input_text("", "Person's Name", "s5", "name") }}
+                    {{ m.input_text("", "Device HostName", "s5 l6", "hostname") }}
+                    <div class='col s1' style='margin-top:31px'>
+                        <i class="material-icons waves-effect {{ data.Web.UI.WaveType }}" onclick='$(this).parent().parent().slideUp().find("input").val("")'>clear</i>
+                    </div>
                 </div>
 
             </div>
 
-            <a class="btn-floating btn-small waves-effect waves-light light-blue" style='margin-left:11.25px' onclick='$("#new_person").clone().appendTo($(this).parent().children("div")).fadeIn()'>
+            <a class="btn-floating btn-small waves-effect waves-light light-blue" style='margin-left:11.25px' onclick='$("#new_person").clone().appendTo($(this).parent().children("div")).slideDown()'>
                 <i class="material-icons">add</i>
             </a>
         </div>
@@ -295,29 +300,44 @@
                 <div class="card address_group {{ data.Web.UI.CardColor }}">
                     <div>
                         <div class="row">
-                            {{ m.input_text(address[0], "Address", "s12", "address[0]", class='addr') }}
+                            {{ m.input_text(address[0], "Address", "s10 l11", "address[0]", class='addr') }}
+                            <div class='col s1'>
+                                <a class="btn-floating btn-large waves-effect waves-light red" style='margin-top:25px'
+                                onclick='$(this).parent().parent().parent().parent().slideUp().find("input").val("")'>
+                                    <i class="material-icons">clear</i>
+                                </a>
+                            </div>
                         </div>
 
                         {% for group in address %} {% if group.description and group.gpiopin %}
                         
                         <div class="row switchgroupdata">
-                            {{ m.input_text(group.description, "Label", "s6", group.description + "_description") }}
+                            {{ m.input_text(group.description, "Label", "s5 l6", group.description + "_description") }}
                             
-                            {{ m.input_text(group.gpiopin, "GPIO Pin", "s6", group.description + "_gpiopin") }}
+                            {{ m.input_text(group.gpiopin, "GPIO Pin", "s5", group.description + "_gpiopin") }}
+
+                            <div class='col s1' style='margin-top:31px'>
+                                <i class="material-icons waves-effect {{ data.Web.UI.WaveType }}" onclick='$(this).parent().parent().slideUp().find("input").val("")'>clear</i>
+                            </div>
                         </div>
                         
                         {% endif %} {% endfor %}
 
                         <div id='new_gpio_row' class="row switchgroupdata" style='display:none'>
-                            {{ m.input_text("", "Label", "s6", "") }}
-                            {{ m.input_text("", "GPIO Pin", "s6", "") }}
+                            {{ m.input_text("", "Label", "s5 l6", "") }}
+                            {{ m.input_text("", "GPIO Pin", "s5", "") }}
+
+                            <div class='col s1' style='margin-top:31px'>
+                                <i class="material-icons waves-effect {{ data.Web.UI.WaveType }}" onclick='$(this).parent().parent().slideUp().find("input").val("")'>clear</i>
+                            </div>
+
                         </div>
 
                     </div>
                     
                     <a class="btn-floating btn-small waves-effect waves-light light-blue" style='margin-left:11.25px; margin-bottom: 20px' onclick='
                     
-                    $("#new_gpio_row").clone().appendTo($(this).parent().children("div")).fadeIn()
+                    $("#new_gpio_row").clone().appendTo($(this).parent().children("div")).slideDown()
 
                     '>
 
@@ -335,23 +355,36 @@
                 <div id='new_gpio_group' class="card address_group {{ data.Web.UI.CardColor }}" style="display:none">
 
                     <div class="row">
-                        {{ m.input_text("", "Address", "s12", "NEW_addr", class='addr') }}
+                        {{ m.input_text("", "Address", "s10 l11", "NEW_addr", class='addr') }}
+                        <a class="btn-floating btn-large waves-effect waves-light red" style='margin-top:25px'
+                        onclick='$(this).parent().parent().slideUp().find("input").val("")'>
+                            <i class="material-icons">clear</i>
+                        </a>
                     </div>
 
                     <div class="row switchgroupdata">
-                        {{ m.input_text("", "Label", "s6", "NEW_description") }}
-                        {{ m.input_text("", "GPIO Pin", "s6", "NEW_gpiopin") }}
+                        {{ m.input_text("", "Label", "s5 l6", "NEW_description") }}
+                        {{ m.input_text("", "GPIO Pin", "s5", "NEW_gpiopin") }}
+                        <div class='col s1' style='margin-top:31px'>
+                            <i class="material-icons waves-effect {{ data.Web.UI.WaveType }}" onclick='$(this).parent().parent().slideUp().find("input").val("")'>clear</i>
+                        </div>
                     </div>
                 </div>
             </div>
-            <a class="btn-floating btn-small waves-effect waves-light light-blue" style='margin-left:11.25px' onclick='$("#new_gpio_group").clone().appendTo($("#GroupsForm").children("div")).fadeIn()'><i class="material-icons">add</i></a>
+            <a class="btn-floating btn-small waves-effect waves-light light-blue" style='margin-left:11.25px' onclick='$("#new_gpio_group").clone().appendTo($("#GroupsForm").children("div")).slideDown()'><i class="material-icons">add</i></a>
 
         </div>
 
 
-        <div class="submitcontainer">
+        <!-- <div class="submitcontainer">
             <a class="btn waves-effect waves-light" name="submitbutton" onclick="send_json_data()">Submit
                 <i class="mdi-content-send right"></i>
+            </a>
+        </div> -->
+
+        <div class="fixed-action-btn" style="bottom: 15px; right: 15px;">
+            <a class="btn-floating btn-large red waves-effect waves-light" onclick="send_json_data()">
+                <i class="large material-icons">send</i>
             </a>
         </div>
     </form>

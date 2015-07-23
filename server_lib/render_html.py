@@ -22,8 +22,11 @@ def main(path):
     embeds = {}
     
     for unit in hvac_units:
-    	if unit['plotly']['enabled']:
-    		embeds[unit['Address']] = tls.get_embed(unit['plotly']['url'])
+        if unit['plotly']['enabled']:
+            try:
+                embeds[unit['Address']] = tls.get_embed(unit['plotly']['url'])
+            except Exception:
+                print "ERROR - HTTP - Plotly url provided was invalid"
 
     html = template.render(data=data, embeds=embeds)
 

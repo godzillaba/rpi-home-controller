@@ -13,6 +13,10 @@ fullpath = os.path.abspath(pathname)
 thermostat_file = fullpath + "/thermostat.json"
 thermostat_config = fullpath + "/config/thermostat_config.json"
 
+main_config_file = fullpath + "/config/config.json"
+with open(main_config_file) as mainconfig:
+    main_config = json.load(mainconfig)
+
 with open(thermostat_config) as config_file:
     config = json.load(config_file)
 
@@ -55,13 +59,15 @@ def addpoint(y_value, target):
     ])
 
     layout = Layout(
+        title = 'Actual vs Target Temperature (%s)' % main_config['servername'],
         yaxis=YAxis(
-            range=[50, 100]
-        )
+            range=[55, 85]
+        ),
+        showlegend = False
     )
 
     fig = Figure(data=data, layout=layout)
-    plot_url = py.plot(fig, filename='Temperature Graph')
+    plot_url = py.plot(fig, filename='Actual vs Target Temperature (%s)' % main_config['servername'])
 
 
 
