@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import threading, argparse
+import threading, argparse, time
 
 
 ##### argparse stuff #####
@@ -17,6 +17,23 @@ args = parser.parse_args()
 
 ##########
 
+threads = []
+
+def setupthread(thread_obj, name):
+    thread_obj.setDaemon(True)
+    thread_obj.name = name
+
+    print "starting %s thread..." % name
+    thread_obj.start()
+
+    threads.append(thread_obj)
+
+def threadmonitor():
+    while 1:
+        time.sleep(600)
+        for thread in threads:
+            print "THREADMONITOR - %s Alive: %s" % (thread.name, thread.isAlive())
+
 if args.tcp:
 
     print "importing TCP_server..."
@@ -24,10 +41,7 @@ if args.tcp:
     print "done"
 
     tcp_thread = threading.Thread(target=TCP_server.main)
-    tcp_thread.setDaemon(True)
-
-    print "starting tcp thread..."
-    tcp_thread.start()
+    setupthread(tcp_thread, 'tcp')
 
 if args.http:
 
@@ -36,10 +50,7 @@ if args.http:
     print "done"
 
     http_thread = threading.Thread(target=HTTP_server.main)
-    http_thread.setDaemon(True)
-
-    print "starting http thread..."
-    http_thread.start()
+    setupthread(http_thread, 'http')
 
 if args.ping:
 
@@ -48,10 +59,7 @@ if args.ping:
     print "done"
 
     ping_thread = threading.Thread(target=ping_worker.main)
-    ping_thread.setDaemon(True)
-
-    print "starting ping thread"
-    ping_thread.start()
+    setupthread(ping_thread, 'ping')
 
 if args.thermostat:
     print "importing thermostat_worker..."
@@ -59,10 +67,19 @@ if args.thermostat:
     print "done"
 
     thermostat_thread = threading.Thread(target=thermostat_worker.main)
-    thermostat_thread.setDaemon(True)
+    setupthread(thermostat_thread, 'thermostat')
 
-    print "starting thermostat thread"
-    thermostat_thread.start()
+
+########## threadmonitor
+
+threadmonitor_thread = threading.Thread(target=threadmonitor)
+
+print "starting threadmonitor thread..."
+
+threadmonitor_thread.setDaemon(True)
+
+threadmonitor_thread.start()
+
 
 
 if args.ws:
@@ -75,4 +92,13 @@ if args.ws:
     WebSocket_server.main()
 
 
+else:
+    from twisted.python import log
+    import sys
+    log.startLogging(sys.stdout)
+
+    while 1:
+        pass
+        time.sleep(3600)
+        
 
