@@ -5,7 +5,7 @@
     <title>RPi Home Controller by C0dePizza</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
@@ -22,7 +22,9 @@
       <h3>
 <a id="overview" class="anchor" href="#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h3>
 
-<p>The RPi Home Controller is a simple, yet useful set of scripts allowing the control and interaction with the GPIO of your Pi. The web interface is built using the Materialize css framework. <a href="http://materializecss.com/">http://materializecss.com/</a></p>
+<p>The RPi Home Controller is a material design interface for the GPIO of your Raspberry Pi, allowing easy manipulation of relays. </p>
+
+<p>With this you can control lighting, your HVAC system, and anything else you can plug into a power outlet (eg. toaster, TV, window unit air conditioners). </p>
 
 <h3>
 <a id="useful-links" class="anchor" href="#useful-links" aria-hidden="true"><span class="octicon octicon-link"></span></a>Useful links</h3>
@@ -35,64 +37,42 @@
 <a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h3>
 
 <ul>
+<li>Supports the <a href="https://www.adafruit.com/products/374">DS18B20 temperature sensor</a> and can control conventional HVAC systems as well as graph your temperature history using <a href="https://plot.ly/">Plotly</a>
+</li>
+<li>Can scan your local network for your mobile phone(s) and can shut off lights and air conditioning when nobody is home</li>
 <li>Aesthetically appealing web interface</li>
 <li>Synchronization across web clients</li>
 <li>An additional TCP socket server (for easy integration with third party applications)</li>
 <li>Fully customizable display</li>
-<li>And much, much more...</li>
 </ul>
 
 <p>Working demo of web interface <a href="home/">here</a>.</p>
 
 <h3>
-<a id="install-dependencies" class="anchor" href="#install-dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install Dependencies</h3>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h3>
 
-<pre><code># pip install autobahn twisted jinja2 
+<pre><code># pip install autobahn twisted jinja2 plotly
+
+$ git clone https://github.com/c0depizza/rpi-home-controller.git
 </code></pre>
 
 <h3>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h3>
 
-<pre><code>$ git clone https://github.com/therealtylerdurden/rpi-home-controller.git
+<pre><code># ./main.py -h
 
-$ cd rpi-home-controller
+usage: main.py [-h] [--tcp] [--http] [--ws] [--ping] [--thermostat]
 
-$ mv sample-data.json data.json   # Move config file if you just cloned
+Launcher for RPi Home Controller.
 
-# ./main.py
+optional arguments:
+  -h, --help    show this help message and exit
+  --tcp         Enable TCP server
+  --http        Enable HTTP server
+  --ws          Enable WebSocket server
+  --ping        Enable Ping worker
+  --thermostat  Enable Thermostat worker
 </code></pre>
-
-<p>Or if you want to detach process, run in background, and log output:</p>
-
-<pre><code># nohup ./main.py &amp;
-</code></pre>
-
-<h3>
-<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h3>
-
-<p>The configuration is located in <code>data.json</code></p>
-
-<p>Most of it is relatively self-explanatory, however, configuring groups needs to be explained:</p>
-
-<div class="highlight highlight-javascript"><pre><span class="pl-s"><span class="pl-pds">"</span>Web<span class="pl-pds">"</span></span><span class="pl-k">:</span> {
-    <span class="pl-s"><span class="pl-pds">"</span>Groups<span class="pl-pds">"</span></span><span class="pl-k">:</span> [
-        {
-            <span class="pl-s"><span class="pl-pds">"</span>description<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>AC<span class="pl-pds">"</span></span>,    <span class="pl-c">// "description" is the label displayed above the switch</span>
-            <span class="pl-s"><span class="pl-pds">"</span>gpiopin<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>40<span class="pl-pds">"</span></span>    <span class="pl-c">// "gpiopin" is the pin on the Pi that will be toggled</span>
-        },
-    ]
-}</pre></div>
-
-<h3>
-<a id="api" class="anchor" href="#api" aria-hidden="true"><span class="octicon octicon-link"></span></a>API</h3>
-
-<p>The API is very easy to use, and the syntax is the same for both the WebSocket server and the TCP server.</p>
-
-<p><code>PIN=&lt;pin number&gt;,OUT,&lt;1,0&gt;</code> - This sets the pin high or low (1 or 0)</p>
-
-<p><code>PIN=&lt;pin number&gt;,IN,0</code> - This returns the current state of the pin. The TCP server will return <code>1</code> or <code>0</code>, but the WebSocket server will return <code>PIN &lt;pin number&gt; &lt;1,0&gt;</code></p>
-
-<p><code>ALLRELAYS=&lt;1,0&gt;</code> - This command will read data.json and toggle all the pins defined either high or low</p>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/C0dePizza/rpi-home-controller">RPi Home Controller</a> is maintained by <a href="https://github.com/C0dePizza">C0dePizza</a>.</span>
@@ -105,4 +85,3 @@ $ mv sample-data.json data.json   # Move config file if you just cloned
   
   </body>
 </html>
-
