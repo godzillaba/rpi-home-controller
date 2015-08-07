@@ -27,7 +27,7 @@ function create(s) {
         get_stats()
         get_config()
 
-        $('#main_section').show()
+        // $('#main_section').show()
     }
     
 
@@ -192,8 +192,13 @@ var get_stats = function() {
 
 // get status at an interval
 window.setInterval(function() {
-    get_stats()
-    
+    if (sock.readyState == 1) {
+        get_stats()
+    }
+    else {
+        console.log("readyState != 1 setInterval doing nothing.")
+    }
+
 }, 30000);
 
 
@@ -408,7 +413,7 @@ nav_activate = function (id) {
 
 $( document ).ready(function() {
     console.log( "ready!" );
-    $('#main_section').hide();
+    $('#main_section').hide().delay(1000).show();
 });
 
 
