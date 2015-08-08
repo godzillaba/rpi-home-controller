@@ -4,6 +4,8 @@ import os, sys
 
 import plotly.tools as tls
 
+import traceback
+
 
 pathname = os.path.dirname(sys.argv[0])        
 fullpath = os.path.abspath(pathname)
@@ -26,8 +28,10 @@ def main(path):
             try:
                 embeds[unit['Address']] = tls.get_embed(unit['plotly']['url'])
             except Exception:
-                print "ERROR - HTTP - Plotly url provided was invalid"
-
+                print '\n'
+                traceback.print_exc()
+                print '\n'
+                
     html = template.render(data=data, embeds=embeds)
 
     return html

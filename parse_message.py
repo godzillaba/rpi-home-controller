@@ -1,5 +1,6 @@
 from server_lib import gpio
 import json, os, sys
+import traceback
 
 pathname = os.path.dirname(sys.argv[0])        
 fullpath = os.path.abspath(pathname)
@@ -122,4 +123,6 @@ def onMessage(obj, config_file, send_function):
                 
                 
     except Exception as e:
-        print "ERROR - PARSER - Exception occurred during parsing (%s)" % e
+        print '\n'
+        traceback.print_exc()
+        print '\n'

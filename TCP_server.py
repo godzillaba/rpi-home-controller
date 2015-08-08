@@ -5,6 +5,7 @@ import os, sys
 import parse_message
 
 import SocketServer
+import traceback
 
 pathname = os.path.dirname(sys.argv[0])        
 fullpath = os.path.abspath(pathname)
@@ -40,7 +41,9 @@ class TCPHandler(SocketServer.BaseRequestHandler):
             print 'TCP - Closed connection to %s' % self.client_address[0]
 
         except Exception as e:
-            print "ERROR - TCP - Exception occurred during TCPHandler.handle() (%s)" % e
+            print '\n'
+            traceback.print_exc()
+            print '\n'
 
 
 ################

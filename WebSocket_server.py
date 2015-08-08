@@ -7,7 +7,7 @@ import json
 import os
 import threading
 
-import parse_message, TCP_client, socket, errno
+import parse_message, TCP_client, socket, errno, traceback
 
 class ws_server(WebSocketServerProtocol):
 
@@ -38,7 +38,10 @@ class ws_server(WebSocketServerProtocol):
                 
         
         except Exception as e:
-            print "\n\nWS - EXCEPTION OCCURRED DURING PARSING (%s)\n\n" % e
+            print '\n'
+            traceback.print_exc()
+            print '\n'
+            
 
     def onClose(self, wasClean, code, reason):
         print("WS - connection closed: {0}".format(reason))
@@ -69,9 +72,14 @@ class ws_server(WebSocketServerProtocol):
                 "Error": "TCP connection to %s failed (%s)" % (obj['DestinationAddress'], v)
             }
 
-            print "ERROR - WS - " + errmsg['Error']
-
+            # print "ERROR - WS - " + errmsg['Error']
             self.send(json.dumps(errmsg))
+
+            print '\n'
+            traceback.print_exc()
+            print '\n'
+
+
 
 
         

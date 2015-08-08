@@ -1,4 +1,4 @@
-import json, os, sys, time, datetime
+import json, os, sys, time, datetime, traceback
 
 
 pathname = os.path.dirname(sys.argv[0])        
@@ -17,7 +17,7 @@ def success(x):
     name = data_object['People'][x]['name']
     online = True
 
-    current_time = datetime.datetime.now().time().isoformat().split('.')[0]
+    current_time = str(datetime.datetime.now()).rsplit(".")[0].rsplit(":",1)[0]
 
     data_object['People'][x] = {
         
@@ -38,8 +38,10 @@ def fail(x):
 
     try:
         last_seen = data_object['People'][x]['last_seen']
-    except KeyError:
-        print "PING - KeyError: last_seen attribute not found"
+    except Exception:
+        print '\n'
+        traceback.print_exc()
+        print '\n'
 
     if last_seen == '':
         data_object['People'][x] = {
