@@ -37,10 +37,15 @@ class pin(object):
         
 # tested working
 def cmd_pin_out(obj):
+
     pnumber = int(obj['pin_number'])
-    pvalue = int(obj['value'])
+    GPIO.setup(pnumber, GPIO.OUT)    
+
+    if obj['value'] == "!":
+        pvalue = int(not GPIO.input(pnumber))
+    else:
+        pvalue = int(obj['value'])
     
-    GPIO.setup(pnumber, GPIO.OUT)
     GPIO.output(pnumber, pvalue)
 
     
