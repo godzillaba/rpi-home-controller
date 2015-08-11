@@ -26,11 +26,11 @@ class TCPHandler(SocketServer.BaseRequestHandler):
         try:
 
             # self.request is the TCP socket connected to the client
-            print "TCP - %s connected to socket" % self.client_address[0]
+            print "INFO: TCP - %s connected to socket" % self.client_address[0]
 
             self.data = self.request.recv(BUFFER_SIZE).strip()
             
-            print 'TCP - Received "%s" from %s' % (self.data, self.client_address[0])
+            print 'DEBUG: TCP - Received "%s" from %s' % (self.data, self.client_address[0])
 
             # just send back the same data, but upper-cased
             # self.request.sendall(self.data.upper())
@@ -38,7 +38,7 @@ class TCPHandler(SocketServer.BaseRequestHandler):
             obj = json.loads(self.data)
             parse_message.onMessage(obj, config_file, self.request.sendall)
             self.request.close()
-            print 'TCP - Closed connection to %s' % self.client_address[0]
+            print 'INFO: TCP - Closed connection to %s' % self.client_address[0]
 
         except Exception as e:
             print '\n'

@@ -16,7 +16,7 @@ class ws_server(WebSocketServerProtocol):
         self.sendMessage(message)
 
     def onConnect(self, request):
-        print("WS - Client connecting: {0}".format(request.peer))
+        print("INFO: WS - Client connecting: {0}".format(request.peer))
 
     def onOpen(self):
         pass
@@ -24,7 +24,7 @@ class ws_server(WebSocketServerProtocol):
     def onMessage(self, payload, isBinary):
         try:
             
-            print "WS - Received %s" % (payload.decode('utf8'))
+            print "DEBUG: WS - Received %s" % (payload.decode('utf8'))
 
             obj = json.loads(payload.decode('utf8'))
             
@@ -44,11 +44,11 @@ class ws_server(WebSocketServerProtocol):
             
 
     def onClose(self, wasClean, code, reason):
-        print("WS - connection closed: {0}".format(reason))
+        print("INFO: WS - connection closed: {0}".format(reason))
 
     def relayMessage(self, obj):
 
-        print "WS - Destination is not self - passing on to destination - %s" % obj['DestinationAddress']
+        print "DEBUG: WS - Destination is not self - passing on to destination - %s" % obj['DestinationAddress']
 
         dest_addr = obj['DestinationAddress'].split(':')[0]
         dest_port = obj['DestinationAddress'].split(':')[1]

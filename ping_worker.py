@@ -69,7 +69,7 @@ def pinghost(people, x):
     
         
     ip = os.system("ping -c 1 " + people[x]['hostname'] + " >> /dev/null")      
-    print "PING - pinging %s returned %s" % (people[x]['hostname'], ip)
+    print "INFO: PING - pinging %s returned %s" % (people[x]['hostname'], ip)
                
     if ip == 0:
         # msg = str("PERSON ," + person['name'] + ",IN")
@@ -120,7 +120,7 @@ def main():
         ### start pinging
         
         for x in range(0, len(people)):
-            print "PING - Trying to ping %s..." % people[x]['hostname']
+            print "DEBUG: PING - Trying to ping %s..." % people[x]['hostname']
             pinghost(people, x)
         
         
@@ -132,10 +132,10 @@ def main():
         with open(data_file, 'w') as d_file_out:
             d_file_out.write(data_to_file)
 
-        print "PING - Sleeping for %s seconds..." % delay
+        print "DEBUG: PING - Sleeping for %s seconds..." % delay
         time.sleep(delay)
 
-        print "PING - Updating people list..."
+        print "DEBUG: PING - Updating people list..."
         people = update_people_list()
 
 

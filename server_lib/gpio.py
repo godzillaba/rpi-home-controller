@@ -84,4 +84,4 @@ def toggle_all_relays(hilo):
     #         rp = pin(int(p['gpiopin']), "OUT", hilo)
     #         rp.toggle()
     #         logging.info('Initializing relay pin %s (%s)', p['gpiopin'], p['description'])
-    print "GPIO - toggle_all_relays() called -- doing nothing"
+    print "DEBUG: GPIO - toggle_all_relays() called -- doing nothing"

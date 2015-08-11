@@ -32,7 +32,7 @@ def threadmonitor():
     while 1:
         time.sleep(600)
         for thread in threads:
-            print "THREADMONITOR - %s Alive: %s" % (thread.name, thread.isAlive())
+            print "INFO: THREADMONITOR - %s Alive: %s" % (thread.name, thread.isAlive())
 
 if args.tcp:
 
