@@ -1,6 +1,7 @@
 from server_lib import gpio
 import json, os, sys
 import traceback
+import tailer
 
 pathname = os.path.dirname(sys.argv[0])        
 fullpath = os.path.abspath(pathname)
@@ -117,6 +118,19 @@ def onMessage(obj, config_file, send_function):
 
                 send_function(json.dumps(reply_object))
 
+            elif q == "Log":
+                print "PARSER - Received Log Query"
+
+                logarray = tailer.tail(open('nohup.out'), 600)
+
+                # logstr = '\n'.join(logarray)
+                reply_object = {
+                    "Sender": sender,
+                    "MessageType": "QueryReply",
+                    "Query": "Log",
+                    "Data": logarray
+                }
+                send_function(json.dumps(reply_object))
                         
             else:
                 print "PARSER Query not recognized (%s)" % q

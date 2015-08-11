@@ -12,7 +12,7 @@ import parse_message, TCP_client, socket, errno, traceback
 class ws_server(WebSocketServerProtocol):
 
     def send(self, message):
-        print "WS - Sending %s" % message
+        # print "WS - Sending %s" % message
         self.sendMessage(message)
 
     def onConnect(self, request):

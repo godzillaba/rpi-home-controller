@@ -114,6 +114,20 @@ function create(s) {
 
 
             }
+            else if (recvd_data.Query === "Log") {
+                console.log("received log data")
+                logarray = recvd_data.Data
+
+                $("#log p").remove();
+
+                for (var x = 0; x < logarray.length; x++) {
+                    $("#log").append("<p>" + logarray[x] + "</p>")
+                }
+                
+                $("#logcard")[0].scrollTop = $("#logcard")[0].scrollHeight;
+
+                filterchange()
+            }
             
             
         } else if (recvd_data.MessageType === "ErrorMessage") {
@@ -191,10 +205,21 @@ var get_people_stats = function() {
     sock.sendMessage(JSON.stringify(query_object))
 }
 
+get_log = function () {
+    query_object = {
+        "Sender": "WebClient",
+        "DestinationAddress": "self",
+        "MessageType": "Query",
+        "Query": "Log"
+    }
+    sock.sendMessage(JSON.stringify(query_object))
+}
+
 var get_stats = function() {
     get_people_stats()
     get_switch_stats()
     get_hvac_data()
+    get_log()
 }
 
 // get status at an interval
@@ -426,3 +451,21 @@ $( document ).ready(function() {
 });
 
 
+filterchange = function () {
+    filterstr = $("#filter").val()
+
+    if (filterstr == "") {
+        $("#log p").each(function () {
+            $(this).show()
+        })
+    }
+    else {
+        $("#log p").each(function () {
+            if ( $(this).html().indexOf(filterstr) < 0 ) {
+                $(this).hide()
+            } else {
+                $(this).show()
+            }
+        })
+    }
+}

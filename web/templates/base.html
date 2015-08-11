@@ -28,7 +28,18 @@
     <!-- css -->
 
     <style>
-        
+        #logcard {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            left: 0;
+            margin-top: 170px;
+            margin-left: 11px;
+            margin-right: 11px;
+            overflow: scroll;
+        }
+
         .temp {
             font-size: 100px
         }
@@ -102,6 +113,8 @@
 
             {{ m.sidenavli(data, 'Plot.ly', 'trending_up', 'plotly') }}
 
+            {{ m.sidenavli(data, 'Developer Tools', 'code', 'dev') }}
+
             <li class="no-padding">
                 <a id='sidenav_settings' class="collapsible-header {{ data.Web.UI.DropDownText }}"><i class="mdi-action-settings"></i>Settings</a>
 
@@ -139,6 +152,7 @@
                 {{ m.topnavli('', 'people', 'people') }}
                 {{ m.topnavli('', 'toys', 'hvac') }}
                 {{ m.topnavli('', 'trending_up', 'plotly') }}
+                {{ m.topnavli('', 'code', 'dev') }}
 
 
                 <li id='topnav_settings' class="topnavli">

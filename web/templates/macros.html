@@ -59,7 +59,8 @@
     $('.section').hide();
 
     $('#{{ id }}_section').show(); 
-    $('.button-collapse').sideNav('hide')
+    $('.button-collapse').sideNav('hide');
+    $('#logcard')[0].scrollTop = $('#logcard')[0].scrollHeight;
     "><i class="material-icons">{{ icon }}</i>{{ title }}</a>
 </li>
 
@@ -73,6 +74,7 @@
 
     $('.section').hide();
 
-    $('#{{ id }}_section').show();"><i class="material-icons">{{ icon }}</i></a>
+    $('#{{ id }}_section').show();
+    $('#logcard')[0].scrollTop = $('#logcard')[0].scrollHeight;"><i class="material-icons">{{ icon }}</i></a>
 </li>
 {%- endmacro %}
