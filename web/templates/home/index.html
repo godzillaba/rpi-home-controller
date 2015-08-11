@@ -181,13 +181,7 @@
 
                 </div>
 
-                <style>
-                    
-                    .temp {
-                        font-size: 100px
-                    }
-
-                </style>
+                
             </div>
             
         {% endfor %}
@@ -393,59 +387,18 @@
     
 </div>
 
-<style>
-    div.divider-spacer {
-        height: 1.5em;
-        background-color: transparent;
-    }
-    
-    div label span {
-        font-size: 2em;
-    }
-    
-    div.label-description-container {
-        margin-left: 20px;
-        display: inline;
-    }
-    
-    div.switch label div.levercontainer {
-        margin-top: 5px;
-        display: inline;
-        float: right;
-    }
-    
-    .switch label .lever::after {
-        background-color: {{ data.Web.UI.SwitchKnobColorOff }};
-    }
-    
-    .switch label input[type=checkbox]:checked + .lever::after {
-        background-color: {{ data.Web.UI.SwitchKnobColorOn }};
-    }
-    
-    .switch label .lever {
-        background-color: {{ data.Web.UI.SwitchBGColorOff }};
-    }
-    
-    .switch label input[type=checkbox]:checked + .lever {
-        background-color: {{ data.Web.UI.SwitchBGColorOn }};
-    }
-    
-    .waves-effect.waves-holo .waves-ripple {
-        background-color: rgba(0, 153, 204, 0.5);
-    }
-</style>
 
-<style type='text/css'>
-    div.submitcontainer {
-        float: right;
-        margin-bottom: 30px;
-        margin-right: 30px;
-        clear: both;
-    }
-    
-    html {
-        color: {{ data.Web.UI.SettingsFontColor }};
-    }
-</style>
+<div id="connection_closed_modal" class="modal">
+    <div class="modal-content">
+        <h4>Connection Closed</h4>
+        <p>You have been disconnected from <span id='address_in_modal'></span></p>
+        <p>sock.readyState == <span id='sock-readyState'></span></p>
+    </div>
+    <div class="modal-footer">
+        
+        <a href="#!" class=" modal-action modal-close waves-effect {{ data.Web.UI.WaveType }} btn-flat" onclick="window.onload()">Reconnect</a>
+
+    </div>
+</div>
 
 {% endblock %}

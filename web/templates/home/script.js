@@ -6,9 +6,10 @@ function create(s) {
         
         if (sock.readyState != 1) {
             
-            errmsg = "Not connected to WebSocket server. readyState: " + sock.readyState
-            Materialize.toast(errmsg, 5000)
-            console.log(errmsg)
+            // errmsg = "Not connected to WebSocket server. readyState: " + sock.readyState
+            // Materialize.toast(errmsg, 5000)
+            // console.log(errmsg)
+            alert_closed()
 
         } else {
             
@@ -122,8 +123,14 @@ function create(s) {
 
     s.onclose = function(e) {
         console.log("Connection closed.");
-        Materialize.toast("<span>Connection to " + s.url + " closed.<a href='#!' class='btn-flat red-text' onclick='window.onload()'><i class='material-icons'>refresh</i></a></span>")
+        // Materialize.toast("<span>Connection to " + s.url + " closed.<a href='#!' class='btn-flat red-text' onclick='window.onload()'><i class='material-icons'>refresh</i></a></span>")
+        alert_closed()
     }
+}
+
+alert_closed = function () {
+    $("#sock-readyState").html(sock.readyState)
+    $("#connection_closed_modal").openModal()
 }
 
 var get_config = function () {
@@ -242,6 +249,8 @@ window.onload = function() {
     var wsport = document.getElementById("wsport").content
     sock = new WebSocket("ws://" + hostname + ":" + wsport);
     create(sock)
+
+    $("#address_in_modal").html("ws://" + hostname + ":" + wsport)
 
 };
 
