@@ -12,10 +12,17 @@ fullpath = os.path.abspath(pathname)
 
 config_file = fullpath + "/config/config.json"
 
+declared_templates = {}
+
 def main(path):
     env = Environment(loader=PackageLoader('web', 'templates'))
-    template = env.get_template(path)
-
+    
+    if path in declared_templates:
+        template = declared_templates[path]
+    else:
+        template = env.get_template(path)
+        declared_templates[path] = template
+    
     with open(config_file) as data_file:
         data = json.load(data_file)
 
@@ -31,7 +38,7 @@ def main(path):
                 print '\n'
                 traceback.print_exc()
                 print '\n'
-                
+    
     html = template.render(data=data, embeds=embeds)
 
     return html
