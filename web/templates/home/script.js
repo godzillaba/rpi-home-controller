@@ -121,7 +121,7 @@ function create(s) {
                 $("#log p").remove();
 
                 for (var x = 0; x < logarray.length; x++) {
-                    $("#log").append("<p>" + logarray[x] + "</p>")
+                    $("#log").append("<p class='logentry'>" + logarray[x] + "</p>")
                 }
                 
                 $("#logcard")[0].scrollTop = $("#logcard")[0].scrollHeight;
@@ -447,9 +447,7 @@ nav_activate = function (id) {
 
 $( document ).ready(function() {
     console.log( "ready!" );
-    $('#main_section').hide().delay(1000).show();
 });
-
 
 filterchange = function () {
     filterstr = $("#filter").val()
@@ -459,6 +457,9 @@ filterchange = function () {
             $(this).show()
         })
     }
+
+
+
     else {
         $("#log p").each(function () {
             if ( $(this).html().indexOf(filterstr) < 0 ) {

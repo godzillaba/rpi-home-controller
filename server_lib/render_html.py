@@ -15,16 +15,16 @@ config_file = fullpath + "/config/config.json"
 declared_templates = {}
 
 def main(path):
+    with open(config_file) as data_file:
+        data = json.load(data_file)
+
     env = Environment(loader=PackageLoader('web', 'templates'))
     
-    if path in declared_templates:
+    if path in declared_templates and not data['WebDevMode']:
         template = declared_templates[path]
     else:
         template = env.get_template(path)
         declared_templates[path] = template
-    
-    with open(config_file) as data_file:
-        data = json.load(data_file)
 
     hvac_units = data['Web']['HVAC']
     

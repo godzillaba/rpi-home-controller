@@ -40,6 +40,27 @@
             overflow: scroll;
         }
 
+        p.logentry {
+            white-space: pre
+        }
+
+        /* label color */
+        .input-field label {
+            color: {{ data.Web.UI.InputFieldIdleColor }};
+        }
+        /* label focus color */
+        .input-field input[type=text]:focus + label {
+            color: {{ data.Web.UI.InputFieldActiveColor }};
+        }
+        /* label underline focus color */
+        .input-field input[type=text]:focus {
+            border-bottom: 1px solid {{ data.Web.UI.InputFieldActiveColor }};
+            box-shadow: 0 1px 0 0 {{ data.Web.UI.InputFieldActiveColor }};
+        }
+        .input-field .prefix.active {
+            color: {{ data.Web.UI.InputFieldActiveColor }};
+        }
+
         .temp {
             font-size: 100px
         }
