@@ -7,16 +7,18 @@ import json
 import os
 import threading
 
+import logging
 import parse_message, TCP_client, socket, errno, traceback
 
 class ws_server(WebSocketServerProtocol):
 
     def send(self, message):
-        # print "WS - Sending %s" % message
+
         self.sendMessage(message)
 
     def onConnect(self, request):
-        print("INFO: WS - Client connecting: {0}".format(request.peer))
+
+        logging.info("Client connecting: {0}".format(request.peer))
 
     def onOpen(self):
         pass
@@ -24,7 +26,8 @@ class ws_server(WebSocketServerProtocol):
     def onMessage(self, payload, isBinary):
         try:
             
-            print "DEBUG: WS - Received %s" % (payload.decode('utf8'))
+
+            logging.debug("Received %s" % (payload.decode('utf8')))
 
             obj = json.loads(payload.decode('utf8'))
             
@@ -38,17 +41,17 @@ class ws_server(WebSocketServerProtocol):
                 
         
         except Exception as e:
-            print '\n'
-            traceback.print_exc()
-            print '\n'
+            logging.exception('')
             
 
     def onClose(self, wasClean, code, reason):
-        print("INFO: WS - connection closed: {0}".format(reason))
+
+        logging.info("connection closed: {0}".format(reason))
 
     def relayMessage(self, obj):
 
-        print "DEBUG: WS - Destination is not self - passing on to destination - %s" % obj['DestinationAddress']
+
+        logging.debug("Destination is not self - passing on to destination - %s" % obj['DestinationAddress'])
 
         dest_addr = obj['DestinationAddress'].split(':')[0]
         dest_port = obj['DestinationAddress'].split(':')[1]
@@ -72,13 +75,10 @@ class ws_server(WebSocketServerProtocol):
                 "Error": "TCP connection to %s failed (%s)" % (obj['DestinationAddress'], v)
             }
 
-            # print "ERROR - WS - " + errmsg['Error']
+
             self.send(json.dumps(errmsg))
 
-            print '\n'
-            traceback.print_exc()
-            print '\n'
-
+            logging.exception('')
 
 
 
@@ -98,7 +98,7 @@ address = "ws://localhost:%s" % port
 threads = {}
 
 def main():
-    log.startLogging(sys.stdout)
+    # log.startLogging(sys.stdout)
     factory = WebSocketServerFactory(address, debug=False)
     factory.protocol = ws_server
     reactor.listenTCP(port, factory)

@@ -8,6 +8,9 @@ from datetime import datetime
 
 import traceback
 
+import logging
+
+
 ####### config code #######
 pathname = os.path.dirname(sys.argv[0])        
 fullpath = os.path.abspath(pathname)
@@ -21,6 +24,9 @@ with open(main_config_file) as mainconfig:
 
 with open(thermostat_config) as config_file:
     config = json.load(config_file)
+
+
+#
 
 ####### end config code #######
 
@@ -115,7 +121,7 @@ def hvac_off():
 
 def heat():
     if hvac_type != 'conventional':
-        print "CRITICAL: THERM - Only conventional hvac systems supported. For more info visit https://wiki.xtronics.com/index.php/Thermostat_signals_and_wiring"
+        logging.critical("Only conventional hvac systems supported. For more info visit https://wiki.xtronics.com/index.php/Thermostat_signals_and_wiring")
     else:
         GPIO.output(cool_pin, 1)
         GPIO.output(fan_pin, 1)
@@ -162,13 +168,13 @@ def loop():
 
     difference = actual - target
 
-    print "DEBUG: THERM - Target:%s Actual:%s Difference:%s Fan:%s System:%s" % (target, actual, difference, fan, system)
+    logging.debug("Target:%s Actual:%s Difference:%s Fan:%s System:%s" % (target, actual, difference, fan, system))
 
 
     thermostat_data['actual_temp'] = actual
 
     with open(thermostat_file, 'w') as data_file:
-        print 'DEBUG: THERM - Writing to file'
+        logging.debug('Writing to file')
         data_file.write(json.dumps(thermostat_data, indent=4))
 
 
@@ -176,7 +182,7 @@ def loop():
     if fan == 'auto':
 
         if 1 >= difference >= -1:
-            print "INFO: THERM - Turning off fan and compressor"
+            logging.info("Turning off fan and compressor")
             # turn off fan and compressor
             hvac_off()
 
@@ -185,23 +191,23 @@ def loop():
             
             if system == 'heat' or system == 'auto':
                 # turn on heater
-                print "INFO: THERM - turning on heat"
+                logging.info("turning on heat")
                 heat()
 
             elif system == 'cool':
-                print "INFO: THERM - turning off fan and compressor"
+                logging.info("turning off fan and compressor")
                 hvac_off()
 
 
         #above target
         elif difference >= 1:
             if system == 'heat':
-                print "INFO: THERM - turning off fan and compressor"
+                logging.info("turning off fan and compressor")
                 hvac_off()
 
             if system == 'cool' or system == 'auto':
                 # turn on ac
-                print "INFO: THERM - turning on ac"
+                logging.info("turning on ac")
                 cool()
 
     elif fan == 'on':
@@ -209,29 +215,29 @@ def loop():
         if system == 'auto':
 
             if 1 >= difference >= -1:
-                print 'INFO: THERM - turning on fan only'
+                logging.info('THERM - turning on fan only')
                 fan_only()
 
             #below target
             elif difference <= -1:
-                print "INFO: THERM - turning on heat"
+                logging.info("turning on heat")
                 heat()
 
             #above target
             elif difference >= 1:    
-                print "INFO: THERM - turning on ac"
+                logging.info("turning on ac")
                 cool()
 
         elif system == 'heat':
-            print "INFO: THERM - turning on heat"
+            logging.info("turning on heat")
             heat()
 
         elif system == 'cool':
-            print 'INFO: THERM - turning on ac'
+            logging.info('THERM - turning on ac')
             cool()
 
     elif fan == 'off':
-        print 'INFO: THERM - turning hvac system off'
+        logging.info('THERM - turning hvac system off')
         hvac_off()
 
 
@@ -243,6 +249,4 @@ def main():
             time.sleep(60)
 
         except Exception:
-            print '\n'
-            traceback.print_exc()
-            print '\n'
+            logging.exception('')

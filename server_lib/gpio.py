@@ -67,21 +67,3 @@ def q_pin_out(obj):
     reply_string = json.dumps(reply_object)
     
     return reply_string
-
-
-#def parse(data):
-#    pnumber = int((data.split('=')[1]).split(',')[0])
-#    ptype = data.split(',')[1]
-#    pstate = int(data.split(',')[2])
-#    p = pin(pnumber, ptype, pstate)
-#    return p
-
-
-def toggle_all_relays(hilo):
-    # relaypins = data1['Web']['Groups'][0]
-    # for p in relaypins:
-    #     if p != 'self':
-    #         rp = pin(int(p['gpiopin']), "OUT", hilo)
-    #         rp.toggle()
-    #         logging.info('Initializing relay pin %s (%s)', p['gpiopin'], p['description'])
-    print "DEBUG: GPIO - toggle_all_relays() called -- doing nothing"

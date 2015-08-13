@@ -2,6 +2,7 @@ from server_lib import gpio
 import json, os, sys
 import traceback
 import tailer
+import logging
 
 pathname = os.path.dirname(sys.argv[0])        
 fullpath = os.path.abspath(pathname)
@@ -15,6 +16,7 @@ with open(config_file) as data_file:
 
 sender = conf_obj['servername']
 
+
 def onMessage(obj, config_file, send_function):
 
     try:
@@ -26,14 +28,14 @@ def onMessage(obj, config_file, send_function):
             cmd = obj['Command']
             
             if cmd == "pin_out":
-                print "INFO: PARSER - Received pin_out Command - pin %s %s" % (obj['pin_number'], obj['value'])
+                logging.info("Received pin_out Command - pin %s %s" % (obj['pin_number'], obj['value']))
                 gpio.cmd_pin_out(obj)
                 
             elif cmd == "SaveConfig":    
                 config_object = obj['ConfigData']
                 
                 json_to_file = json.dumps(config_object, indent=4)
-                print "INFO: PARSER - Received SaveConfig Command \n %s" % json_to_file
+                logging.info("Received SaveConfig Command \n %s" % json_to_file)
                 
                 with open(config_file, 'w') as data_file:
                     data_file.truncate()
@@ -52,7 +54,7 @@ def onMessage(obj, config_file, send_function):
 
 
             else:
-                print "ERROR: PARSER - Command not recognized (%s)" % cmd
+                logging.error("Command not recognized (%s)" % cmd)
                 
                 
                 
@@ -62,13 +64,13 @@ def onMessage(obj, config_file, send_function):
             q = obj['Query']
             
             if q == "pin_out":
-                print "INFO: PARSER - Received pin_out Query - pin %s" % obj['pin_number']
+                logging.info("Received pin_out Query - pin %s" % obj['pin_number'])
                 # self.sendMessage(gpio.q_pin_out(obj))
                 send_function(gpio.q_pin_out(obj))
                 
             
             elif q == "Config":
-                print "INFO: PARSER - Received Config Query"
+                logging.info("Received Config Query")
                 
                 with open(config_file) as data_file:
                     config_object = json.load(data_file)
@@ -86,7 +88,7 @@ def onMessage(obj, config_file, send_function):
                 
             elif q == "People":
                 
-                print "INFO: PARSER - Received People Query"
+                logging.info("Received People Query")
 
                 with open(people_file) as d_file:
                     data_object = json.load(d_file)
@@ -104,7 +106,7 @@ def onMessage(obj, config_file, send_function):
                 send_function(json.dumps(reply_object))
 
             elif q == "ThermostatData":
-                print "INFO: PARSER - Received Thermostat Query"
+                logging.info("Received Thermostat Query")
 
                 with open(thermostat_file) as d_file:
                     data_object = json.load(d_file)
@@ -119,9 +121,9 @@ def onMessage(obj, config_file, send_function):
                 send_function(json.dumps(reply_object))
 
             elif q == "Log":
-                print "INFO: PARSER - Received Log Query"
+                logging.info("Received Log Query")
 
-                logarray = tailer.tail(open('nohup.out'), 800)
+                logarray = tailer.tail(open('nohup.out'), 500)
 
                 # logstr = '\n'.join(logarray)
                 reply_object = {
@@ -133,10 +135,8 @@ def onMessage(obj, config_file, send_function):
                 send_function(json.dumps(reply_object))
                         
             else:
-                print "ERROR: PARSER - Query not recognized (%s)" % q
+                logging.error("Query not recognized (%s)" % q)
                 
                 
     except Exception as e:
-        print '\n'
-        traceback.print_exc()
-        print '\n'
+        logging.exception('')

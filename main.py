@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
-import threading, argparse, time
+import threading, argparse, time, logging
+
+logging.basicConfig(format='[%(asctime)s][%(module)s][%(levelname)s] %(message)s', level=logging.DEBUG)
 
 
 ##### argparse stuff #####
@@ -19,6 +21,7 @@ args = parser.parse_args()
 
 threads = []
 
+
 def setupthread(thread_obj, name):
     thread_obj.setDaemon(True)
     thread_obj.name = name
@@ -32,7 +35,7 @@ def threadmonitor():
     while 1:
         time.sleep(600)
         for thread in threads:
-            print "INFO: THREADMONITOR - %s Alive: %s" % (thread.name, thread.isAlive())
+            logging.info("%s Alive: %s" % (thread.name, thread.isAlive()))
 
 if args.tcp:
 

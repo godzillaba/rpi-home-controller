@@ -4,7 +4,7 @@ import os, sys
 
 import plotly.tools as tls
 
-import traceback
+import traceback, logging
 
 
 pathname = os.path.dirname(sys.argv[0])        
@@ -35,9 +35,7 @@ def main(path):
             try:
                 embeds[unit['Address']] = tls.get_embed(unit['plotly']['url'])
             except Exception:
-                print '\n'
-                traceback.print_exc()
-                print '\n'
+                logging.exception('')
     
     html = template.render(data=data, embeds=embeds)
 

@@ -1,4 +1,4 @@
-import json, os, sys, time, datetime, traceback
+import json, os, sys, time, datetime, traceback, logging
 
 
 pathname = os.path.dirname(sys.argv[0])        
@@ -8,7 +8,6 @@ config_file = fullpath + "/config/config.json"
 data_file = fullpath + "/data.json"
 
 delay = 20
-
 
 
 def success(x):
@@ -39,9 +38,7 @@ def fail(x):
     try:
         last_seen = data_object['People'][x]['last_seen']
     except Exception:
-        print '\n'
-        traceback.print_exc()
-        print '\n'
+        logging.exception('')
 
     if last_seen == '':
         data_object['People'][x] = {
@@ -69,7 +66,7 @@ def pinghost(people, x):
     
         
     ip = os.system("ping -c 1 " + people[x]['hostname'] + " >> /dev/null")      
-    print "INFO: PING - pinging %s returned %s" % (people[x]['hostname'], ip)
+    logging.info("pinging %s returned %s" % (people[x]['hostname'], ip))
                
     if ip == 0:
         # msg = str("PERSON ," + person['name'] + ",IN")
@@ -120,7 +117,7 @@ def main():
         ### start pinging
         
         for x in range(0, len(people)):
-            print "DEBUG: PING - Trying to ping %s..." % people[x]['hostname']
+            logging.debug("Trying to ping %s..." % people[x]['hostname'])
             pinghost(people, x)
         
         
@@ -132,10 +129,10 @@ def main():
         with open(data_file, 'w') as d_file_out:
             d_file_out.write(data_to_file)
 
-        print "DEBUG: PING - Sleeping for %s seconds..." % delay
+        logging.debug("Sleeping for %s seconds..." % delay)
         time.sleep(delay)
 
-        print "DEBUG: PING - Updating people list..."
+        logging.debug("Updating people list...")
         people = update_people_list()
 
 

@@ -6,6 +6,7 @@ import parse_message
 
 import SocketServer
 import traceback
+import logging
 
 pathname = os.path.dirname(sys.argv[0])        
 fullpath = os.path.abspath(pathname)
@@ -26,11 +27,11 @@ class TCPHandler(SocketServer.BaseRequestHandler):
         try:
 
             # self.request is the TCP socket connected to the client
-            print "INFO: TCP - %s connected to socket" % self.client_address[0]
+            logging.info("%s connected to socket" % self.client_address[0])
 
             self.data = self.request.recv(BUFFER_SIZE).strip()
             
-            print 'DEBUG: TCP - Received "%s" from %s' % (self.data, self.client_address[0])
+            logging.debug('Received "%s" from %s' % (self.data, self.client_address[0]))
 
             # just send back the same data, but upper-cased
             # self.request.sendall(self.data.upper())
@@ -38,12 +39,10 @@ class TCPHandler(SocketServer.BaseRequestHandler):
             obj = json.loads(self.data)
             parse_message.onMessage(obj, config_file, self.request.sendall)
             self.request.close()
-            print 'INFO: TCP - Closed connection to %s' % self.client_address[0]
+            logging.info('Closed connection to %s' % self.client_address[0])
 
         except Exception as e:
-            print '\n'
-            traceback.print_exc()
-            print '\n'
+            logging.exception('')
 
 
 ################
