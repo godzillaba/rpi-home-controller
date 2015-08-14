@@ -121,10 +121,10 @@ function create(s) {
                 $("#log p").remove();
 
                 for (var x = 0; x < logarray.length; x++) {
-                    $("#log").append("<p class='logentry'>" + logarray[x] + "</p>")
+                    loglvl = get_loglevel(logarray[x])
+
+                    $("#log").append("<p class='logentry " + loglvl + "'>" + logarray[x] + "</p>")
                 }
-                
-                $("#logcard")[0].scrollTop = $("#logcard")[0].scrollHeight;
 
                 filterchange()
             }
@@ -219,7 +219,6 @@ var get_stats = function() {
     get_people_stats()
     get_switch_stats()
     get_hvac_data()
-    get_log()
 }
 
 // get status at an interval
@@ -445,9 +444,28 @@ nav_activate = function (id) {
     // nav_activate_link(id)
 }
 
-$( document ).ready(function() {
-    console.log( "ready!" );
-});
+get_loglevel = function (str) {
+    try {
+        loglvl = str.split("]")[2].split("[")[1]
+    } catch (err) {
+        loglvl = "LVLundefined"
+    }
+
+    if (!(loglvl in levels)) {
+        loglvl = "LVLundefined"
+    }
+
+    return loglvl
+}
+
+levels = {
+    "DEBUG": 1,
+    "INFO": 2,
+    "WARNING": 3,
+    "ERROR": 4,
+    "CRITICAL": 5,
+    "LVLundefined": 6
+}
 
 filterchange = function () {
     filterstr = $("#filter").val()
@@ -459,7 +477,6 @@ filterchange = function () {
     }
 
 
-
     else {
         $("#log p").each(function () {
             if ( $(this).html().indexOf(filterstr) < 0 ) {
@@ -469,4 +486,45 @@ filterchange = function () {
             }
         })
     }
+
+    minlevel = $("#loglevelfilter").val()
+
+    for (var key in levels) {
+        if (levels[key] < minlevel){
+            $("."+key).hide()
+        }
+    }
+
+    $("#logcard")[0].scrollTop = $("#logcard")[0].scrollHeight;
 }
+$(document).ready( function () {
+    $("#refresh_logs").click(function() {
+        
+        w = $(this).width() + 60
+
+        $(this).css("width", w)
+
+        $(this).parent().children().animate({
+            height: 0,
+            width: 0,
+            fontSize: 0
+        }, 400);
+
+
+
+        window.setTimeout(function() {
+            $("#refresh_logs").hide().parent().removeClass("valign-wrapper")
+        }, 800);
+
+
+        get_log(); 
+        window.setInterval(function(){get_log()}, 30000)
+
+    })
+})
+
+$(document).ready(function () {
+    $("#topnav_dev, #sidenav_dev").on("click", function(){
+        $('ul.tabs').tabs('select_tab', 'logdevsection');
+    })
+})

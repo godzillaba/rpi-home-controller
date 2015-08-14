@@ -101,7 +101,7 @@
                 
                 <div class="row">
                     <div class="col s12 m6">
-                        <div class="card {{ data.Web.UI.CardColor }}">
+                        <div class="card ">
                             <div id="actual_temp_div" class="card-content">
                                 
                                 <span class="card-title {{ data.Web.UI.LabelColor }}">Actual Temperature</span>
@@ -113,7 +113,7 @@
 
 
                     <div class="col s12 m6">
-                        <div class="card {{ data.Web.UI.CardColor }}">
+                        <div class="card ">
                             <div id="target_temp_div" class="card-content">
                                 <span class="card-title {{ data.Web.UI.LabelColor }}">Target Temperature</span>
                                 
@@ -135,7 +135,7 @@
 
                 <div class='row'> -->
                     <div class="col s6 m4 offset-m2">
-                        <div class="card {{ data.Web.UI.CardColor }}">
+                        <div class="card ">
                             <div id="fan_div" class="card-content">
                                 
                                 <span class="card-title {{ data.Web.UI.LabelColor }}">Fan</span>
@@ -157,7 +157,7 @@
                     </div>
 
                     <div class="col s6 m4">
-                        <div class="card {{ data.Web.UI.CardColor }}">
+                        <div class="card ">
                             <div id="compressor_div" class="card-content">
                                 
                                 <span class="card-title {{ data.Web.UI.LabelColor }}">Compressor</span>
@@ -205,27 +205,50 @@
 
 
     <div class='section' id='dev_section' style="display:none">
-        <div id='' class='row' style='margin-left: 11px; margin-right: 11px'>
-            <div id='' class='card_container'>
-                <div class='card {{ data.Web.UI.CardColor }}'>
-                    <div class="input-field col s12" >
-                        <i class="material-icons prefix">search</i>
-                        <input id="filter" type="text" class="">
-                        <label for="filter">Filter</label>
+        <div class="row" style="margin-bottom:0px">
+            <div class="card col s12" style="padding: 0px 0px 0px 0px; margin-top:-15px; margin-bottom: 0px; position: fixed">
+                <ul class="tabs">
+                    <li class="tab col s6"><a href="#logdevsection">Log</a></li>
+                    <li class="tab col s6"><a href="#test4">Other</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="logdevsection">
+            <div id='' class='row' style='margin-left: 11px; margin-right: 11px; margin-top:45px'>
+                <div id='' class='card_container'>
+                    <div class='card '>
+                        <div class="input-field col s8 valign-wrapper" >
+                            <i class="material-icons prefix">search</i>
+                            <input id="filter" type="text" class="">
+                            <label for="filter">Filter</label>
+                            
+                            <a href='#!' onclick="$('#filter').val(''); filterchange()" style="color: #9e9e9e"><i class="material-icons" style='font-size: 18px'>cancel</i></a>
+                        </div>
+
+                        <div class='input-field col s4'>
+                            <select id='loglevelfilter' class="browser-default">
+                                <option value="1">DEBUG</option>
+                                <option value="2" selected>INFO</option>
+                                <option value="3">WARNING</option>
+                                <option value="4">ERROR</option>
+                                <option value="5">CRITICAL</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card_container col s12">
+                <div id='logcard' class="card ">
+                    <div class='valign-wrapper' id='log' style='margin-left:20px; margin-right:20px; height: 100%'>
+                        <a id='refresh_logs' class="valign btn-large  light-blue valign-wrapper" style='margin: auto'><b>Fetch Logs</b></a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="card_container col s12">
-            <div id='logcard' class="card {{ data.Web.UI.CardColor }}">
-                <div id='log' style='margin-left:20px; margin-right:20px'>
-                </div>
-            </div>
-        </div>
         <script type="text/javascript">
-            $( "#filter" ).change(function() {
+            $( "#filter, #loglevelfilter" ).change(function() {
                 filterchange()
-            });
+            })
         </script>
 
     </div>
@@ -318,7 +341,7 @@
             <div>
                 {% for address in data.Web.Groups %}
 
-                <div class="card address_group {{ data.Web.UI.CardColor }}">
+                <div class="card address_group ">
                     <div>
                         <div class="row">
                             {{ m.input_text(address[0], "Address", "s10 l11", "address[0]", class='addr') }}
@@ -373,7 +396,7 @@
 
                 <!-- revise add new section -->
 
-                <div id='new_gpio_group' class="card address_group {{ data.Web.UI.CardColor }}" style="display:none">
+                <div id='new_gpio_group' class="card address_group " style="display:none">
 
                     <div class="row">
                         {{ m.input_text("", "Address", "s10 l11", "NEW_addr", class='addr') }}

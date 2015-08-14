@@ -28,20 +28,50 @@
     <!-- css -->
 
     <style>
+        .tabs .tab a {
+            color: {{ data.Web.UI.TabTextColor }};
+        }
+        .tabs .indicator {
+            background-color: {{ data.Web.UI.TabSelectorColor }}
+        }
+
+        .tabs .tab a:hover {
+            color: {{ data.Web.UI.TabTextHoverColor }}
+        }
+        .logentry.DEBUG {
+            color: {{ data.Web.UI.LogDEBUG }};
+        }
+        .logentry.INFO {
+            color: {{ data.Web.UI.LogINFO }}
+        }
+        .logenry.WARNING {
+            color: {{ data.Web.UI.LogWARNING }};
+        }
+        .logentry.ERROR {
+            color: {{ data.Web.UI.LogERROR }};
+        }
+        .logentry.CRITICAL {
+            color: {{ data.Web.UI.LogCRITICAL }};
+        }
+        .logentry.LVLundefined {
+            color: {{ data.Web.UI.LogUNDEFINED }};
+        }
+
         #logcard {
             position: absolute;
             right: 0;
             bottom: 0;
             top: 0;
             left: 0;
-            margin-top: 170px;
+            margin-top: 205px;
             margin-left: 11px;
             margin-right: 11px;
             overflow: scroll;
         }
 
         p.logentry {
-            white-space: pre
+            white-space: pre;
+            font-size: small
         }
 
         /* label color */
@@ -114,6 +144,14 @@
             font-weight: {{ data.Web.UI.FontWeight }};
         }
     </style>
+
+    <script type="text/javascript">
+
+    $(document).ready(function () {
+        $(".card").addClass("{{data.Web.UI.CardColor}}")
+    })
+    </script>
+
 </head>
 
 {% call m.body(data) %}

@@ -57,11 +57,11 @@ class render(SimpleHTTPServer.SimpleHTTPRequestHandler):
         subnet = addr.rsplit('.',1)[0]
 
         if subnet in exempt_subnets:
-            logging.debug("Client is exempt from authentication. Skipping basic auth")
+            logging.debug("%s GET %s {exempt_subnets=%s} | Exempt From Auth" % (addr, self.path, exempt_subnets))
             self.do_GET_authed()
 
         else:
-            logging.debug("Client is not exempt from authentication. Proceeding with basic auth")
+            logging.debug("%s GET %s {exempt_subnets=%s} | Not Exempt From Auth" % (addr, self.path, exempt_subnets))
             self.auth()
 
 
