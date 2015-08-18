@@ -120,10 +120,12 @@ function create(s) {
 
                 $("#log p").remove();
 
+                logobj = $("#log")
+
                 for (var x = 0; x < logarray.length; x++) {
                     loglvl = get_loglevel(logarray[x])
 
-                    $("#log").append("<p class='logentry " + loglvl + "'>" + logarray[x] + "</p>")
+                    logobj.append("<p class='logentry " + loglvl + "'>" + logarray[x] + "</p>")
                 }
 
                 filterchange()
@@ -503,18 +505,18 @@ $(document).ready( function () {
         w = $(this).width() + 60
 
         $(this).css("width", w)
+        $(this).children().hide()
 
         $(this).parent().children().animate({
             height: 0,
             width: 0,
-            fontSize: 0
-        }, 400);
+        }, 50);
 
 
 
         window.setTimeout(function() {
             $("#refresh_logs").hide().parent().removeClass("valign-wrapper")
-        }, 800);
+        }, 600);
 
 
         get_log(); 
@@ -526,5 +528,5 @@ $(document).ready( function () {
 $(document).ready(function () {
     $("#topnav_dev, #sidenav_dev").on("click", function(){
         $('ul.tabs').tabs('select_tab', 'logdevsection');
-    })
+    });
 })

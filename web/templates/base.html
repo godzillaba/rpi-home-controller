@@ -28,6 +28,30 @@
     <!-- css -->
 
     <style>
+        .switch label .lever:after {
+            transition: left 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .switch label .lever {
+            transition: background 0.15s ease;
+        }
+
+        [type="radio"]:checked + label:after {
+            border-radius: 50%;
+            border: 2px solid {{data.Web.UI.SwitchKnobColorOn}};
+            background-color: {{data.Web.UI.SwitchKnobColorOn}}
+        }
+
+        .temp i {
+            border-radius: 100%
+        }
+
+        #slide-out {
+            border: 0;
+        }
+        .modal-content p {
+            opacity: .7
+        }
         .tabs .tab a {
             color: {{ data.Web.UI.TabTextColor }};
         }
@@ -148,7 +172,9 @@
     <script type="text/javascript">
 
     $(document).ready(function () {
-        $(".card").addClass("{{data.Web.UI.CardColor}}")
+        $(".card, .modal, .modal-footer, .side-nav, .collapsible-body, ul.tabs, #loglevelfilter").addClass("{{data.Web.UI.CardColor}}")
+        $("[class$='btn'], [class^='btn'], .btn-large").not(".btn-flat, div").addClass("{{data.Web.UI.ButtonColor}}")
+        $(".modal-footer a, #loglevelfilter").addClass("{{data.Web.UI.LabelColor}}")
     })
     </script>
 
