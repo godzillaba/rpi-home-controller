@@ -38,32 +38,52 @@ class pin(object):
 # tested working
 def cmd_pin_out(obj):
 
-    pnumber = int(obj['pin_number'])
-    GPIO.setup(pnumber, GPIO.OUT)    
+    pnumber = obj['pin_number']
 
-    if obj['value'] == "!":
-        pvalue = int(not GPIO.input(pnumber))
-    else:
-        pvalue = int(obj['value'])
-    
-    GPIO.output(pnumber, pvalue)
+    if not isinstance(pnumber, list):
+        pnumber = [pnumber]
+
+    for pin in pnumber:
+
+        pin = int(pin)
+
+        GPIO.setup(pin, GPIO.OUT)    
+
+        if obj['value'] == "!":
+            pvalue = int(not GPIO.input(pin))
+        else:
+            pvalue = int(obj['value'])
+        
+        GPIO.output(pin, pvalue)
 
     
 # tested working
 def q_pin_out(obj):
-    pnumber = int(obj['pin_number'])
-    
-    GPIO.setup(pnumber, GPIO.OUT)
-    pvalue = int(GPIO.input(pnumber))
-    
-    reply_object = {
-        "Sender": data1['servername'],
-        "MessageType": "QueryReply",
-        "Query": "pin_out",
-        "pin_number": pnumber,
-        "value": pvalue
-    }
-    
-    reply_string = json.dumps(reply_object)
-    
-    return reply_string
+    pnumber = obj['pin_number']
+
+    if not isinstance(pnumber, list):
+        pnumber = [pnumber]
+
+    reply_objects = []
+
+
+    for pin in pnumber:
+        pin = int(pin)
+
+
+        GPIO.setup(pin, GPIO.OUT)
+        pvalue = int(GPIO.input(pin))
+        
+        reply_object = {
+            "Sender": data1['servername'],
+            "MessageType": "QueryReply",
+            "Query": "pin_out",
+            "pin_number": pin,
+            "value": pvalue
+        }
+
+        reply_objects.append(reply_object)
+        
+    return reply_objects
+
+

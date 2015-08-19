@@ -176,24 +176,25 @@ var get_switch_stats = function() {
 
 
 var get_switch_stats_ofaddr = function(boxes, addr) {
-    // var sock = sockets['self']
-    for (var x = 0; x < boxes.length; x++) {
+    pin_numbers = []
 
+    for (var x = 0; x < boxes.length; x++) {
         var pnumber = boxes[x].name
-        
-        var query_object = {
-            "Sender": "WebClient",
-            "DestinationAddress": addr,
-            "MessageType": "Query",
-            "Query": "pin_out",
-            "pin_number": pnumber
-        }
-        
-        var query_string = JSON.stringify(query_object)
-        
-        sock.sendMessage(query_string)
-        
+        pin_numbers.push(pnumber)
     }
+        
+    var query_object = {
+        "Sender": "WebClient",
+        "DestinationAddress": addr,
+        "MessageType": "Query",
+        "Query": "pin_out",
+        "pin_number": pin_numbers
+    }
+    
+    var query_string = JSON.stringify(query_object)
+    
+    sock.sendMessage(query_string)
+    
 }
 
 var get_people_stats = function() {
@@ -530,3 +531,35 @@ $(document).ready(function () {
         $('ul.tabs').tabs('select_tab', 'logdevsection');
     });
 })
+
+
+
+// schedule stuff
+
+// get schedule json from server
+
+scheduleJSON = {
+    "Schedule": [
+        {
+            "Time": "15:36",
+            "WeekDay": "monday",
+            "Date": "2015-08-10",
+            "Repeat": "Weekly",
+
+            "Address": "pi2:5432",
+            "MessageObject": {}
+        },
+        {
+            "Time": "15:36",
+            "WeekDay": "sunday",
+            "Date": "12-28",
+            "Repeat": "Weekly",
+
+            "Address": "pi2:5432",
+            "MessageObject": {"t":1}
+        }
+    ]
+}
+
+// create html elements for every schedule object
+

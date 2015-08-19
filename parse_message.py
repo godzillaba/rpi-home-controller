@@ -66,7 +66,10 @@ def onMessage(obj, config_file, send_function):
             if q == "pin_out":
                 logging.info("Received pin_out Query - pin %s" % obj['pin_number'])
                 # self.sendMessage(gpio.q_pin_out(obj))
-                send_function(gpio.q_pin_out(obj))
+                reply_objects = gpio.q_pin_out(obj)
+
+                for r_obj in reply_objects:
+                    send_function(json.dumps(r_obj))
                 
             
             elif q == "Config":
