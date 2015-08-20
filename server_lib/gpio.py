@@ -64,26 +64,22 @@ def q_pin_out(obj):
     if not isinstance(pnumber, list):
         pnumber = [pnumber]
 
-    reply_objects = []
 
+    reply_object = {
+        "Sender": data1['servername'],
+        "MessageType": "QueryReply",
+        "Query": "pin_out",
+        "pins": {}
+    }
 
     for pin in pnumber:
         pin = int(pin)
 
-
         GPIO.setup(pin, GPIO.OUT)
         pvalue = int(GPIO.input(pin))
         
-        reply_object = {
-            "Sender": data1['servername'],
-            "MessageType": "QueryReply",
-            "Query": "pin_out",
-            "pin_number": pin,
-            "value": pvalue
-        }
-
-        reply_objects.append(reply_object)
+        reply_object['pins'][pin] = pvalue
         
-    return reply_objects
+    return reply_object
 
 

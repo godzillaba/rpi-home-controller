@@ -48,22 +48,17 @@ function create(s) {
         if (recvd_data.MessageType === "QueryReply") {
             
             if (recvd_data.Query === "pin_out") {
-                
-                var pin_number = recvd_data.pin_number
-                var value = recvd_data.value
-                
-                var addressdiv = document.getElementById(recvd_data.Sender)
-                // elms = all inputs of a certain address
-                var elms = addressdiv.getElementsByTagName('input')
+            
+                var pins = recvd_data.pins
+                var sender = recvd_data.Sender.replace(":","\\:")
 
-                // select input based on pin number
-                for (var i = 0; i < elms.length; i++) {
-                    if (elms[i].name == pin_number) {
-                        var pin_switch = elms[i]
-                    }
+                addressdiv = $("#"+sender)
+
+                for (pin in pins) {
+                    input = addressdiv.find("input[name='"+pin+"']")[0]
+                    input.checked = !(Boolean(pins[pin]))
                 }
-                                
-                pin_switch.checked = !(Boolean(value)) 
+
             }
             else if (recvd_data.Query === "Config") {
                 
